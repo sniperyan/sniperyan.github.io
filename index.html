@@ -14,7 +14,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next pisces use-motion" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -72,7 +72,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Pisces',
     version: '7.0.0',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: false,
@@ -129,6 +129,16 @@
 
 
 
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7c650822a0bffab8067b7a6f7d23a120";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -230,6 +240,40 @@
         
         
           
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
           <li class="menu-item menu-item-archives">
 
     
@@ -248,9 +292,6 @@
       
     </ul>
   
-
-  
-    
 
   
 
@@ -272,6 +313,9 @@
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
+          
+            
+
           
           <div id="content" class="content">
             
@@ -297,7 +341,7 @@
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sniperyan">
       <meta itemprop="description" content="叫我起床的是梦想">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12254952?v=3&s=120">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
@@ -408,147 +452,20 @@
       
         
           
-            <p>翻译章节 <code>Collecting the Pick Up Objects</code></p>
-<h3 id="英文原文"><a href="#英文原文" class="headerlink" title="英文原文"></a>英文原文</h3><p>00:02 - 00:04<br>We want to be able to pick up our collectable game<br>00:04 - 00:07<br>objects when our player game object collides with them.<br>00:07 - 00:09<br>To do this we need to detect our collisions<br>00:09 - 00:11<br>between the player game object and<br>00:11 - 00:13<br>the PickUp game objects.<br>00:13 - 00:15<br>We will need to have these collisions<br>00:15 - 00:17<br>trigger a new behaviour and we will need to<br>00:17 - 00:19<br>test these collisions to make sure we are<br>00:19 - 00:21<br>picking up the correct objects.<br>00:21 - 00:23<br>The PickUp objects, the player’s sphere,<br>00:23 - 00:25<br>the ground plane and the walls all have<br>00:25 - 00:28<br>colliders that inform us about collisions.<br>00:29 - 00:30<br>If we didn’t test our collisions to find out<br>00:30 - 00:32<br>which objects we have collided with<br>00:32 - 00:34<br>we could collect the wrong objects.<br>00:35 - 00:37<br>We could collect the floor, or the walls.<br>00:37 - 00:40<br>As a matter of face if we didn’t test our collisions<br>00:40 - 00:42<br>on the very first frame of the game we would<br>00:42 - 00:44<br>come in contact with the ground plane<br>00:44 - 00:45<br>and we would collect the ground plane<br>00:45 - 00:48<br>and then we would fall in to the void of the scene space<br>00:48 - 00:50<br>and the game would essentially be over.<br>00:51 - 00:55<br>First, we don’t need our player to remain inactive.<br>00:55 - 00:56<br>so let’s tick the Active checkbox and<br>00:56 - 00:58<br>bring back our player.<br>01:00 - 01:02<br>Next let’s select the PlayerController script<br>01:02 - 01:04<br>and open it for editing.<br>01:04 - 01:06<br>Just a note, we could edit this<br>01:06 - 01:08<br>script regardless of whether the game<br>01:08 - 01:09<br>object is active or not.<br>01:11 - 01:13<br>Now that we have the script open,<br>01:13 - 01:14<br>what code are we going to write?<br>01:15 - 01:17<br>We could write collider<br>01:17 - 01:19<br>and then search the documentation using the<br>01:19 - 01:20<br>hot key combination.<br>01:21 - 01:24<br>But there is a different way that we could do this as well.<br>01:25 - 01:27<br>Let’s return to Unity and look at the details<br>01:27 - 01:29<br>of our player game object.<br>01:30 - 01:32<br>What we are interested in here is the<br>01:32 - 01:34<br>sphere collider component.<br>01:34 - 01:37<br>In the header of each component on the left<br>01:37 - 01:39<br>is the component’s turndown arrow,<br>01:39 - 01:42<br>the icon, the Enable checkbox<br>01:42 - 01:45<br>if it’s available, and the type of the component.<br>01:46 - 01:49<br>On the right is the context sensitive gear gizmo<br>01:49 - 01:52<br>and an icon of a little book with a question mark.<br>01:53 - 01:54<br>Now this is what we need.<br>01:54 - 01:57<br>This is the quick link to the component reference.<br>01:58 - 02:00<br>If we select this icon we are taken<br>02:00 - 02:02<br>not to the scripting reference but to the<br>02:02 - 02:04<br>component reference.<br>02:05 - 02:07<br>We would read this document to find out more<br>02:07 - 02:09<br>about how to use this component in the context<br>02:09 - 02:10<br>of the editor.<br>02:10 - 02:13<br>We, however, want to find out how to<br>02:13 - 02:15<br>script to this component’s class.<br>02:15 - 02:18<br>To do this we simply switch to scripting<br>02:19 - 02:21<br>and we are taken to the scripting reference<br>02:21 - 02:22<br>for the sphere collider.<br>02:23 - 02:26<br>We want to detect and test our collisions.<br>02:26 - 02:28<br>For this project we are going to use<br>02:28 - 02:30<br>OnTriggerEnter.<br>02:37 - 02:40<br>Just imagine if we were, say, a daring plumber<br>02:40 - 02:43<br>and we jumped up to collect a perfect arch of coins<br>02:43 - 02:45<br>and bounced off the very first one as we<br>02:45 - 02:47<br>collected it and fell back to the ground.<br>02:48 - 02:49<br>Not very elegant.<br>02:50 - 02:52<br>This code will give us the ability to detect<br>02:52 - 02:54<br>the contact between our player game object<br>02:54 - 02:56<br>and our PickUp game objects<br>02:56 - 02:59<br>without actually creating a physical collision.<br>03:00 - 03:02<br>The code example however is not exactly<br>03:02 - 03:03<br>what we’re looking for.<br>03:03 - 03:06<br>But that’s okay, we can change that.<br>03:06 - 03:08<br>First, let’s copy the code,<br>03:09 - 03:11<br>and then let’s return to our scripting application.<br>03:12 - 03:15<br>Now that we’re back in scripting let’s paste the code.<br>03:16 - 03:18<br>As we have copied this code from a webpage<br>03:18 - 03:20<br>let’s correct the indents.<br>03:20 - 03:21<br>In this case I’m going to make sure the<br>03:21 - 03:23<br>indents are tabs and that all of the tabs are<br>03:23 - 03:25<br>correctly aligned.<br>03:25 - 03:27<br>Next, let’s look at this code.<br>03:27 - 03:30<br>We are using the function OnTriggerEnter.<br>03:30 - 03:32<br>OnTriggerEnter will be called by Unity<br>03:32 - 03:34<br>when our player game object first touches<br>03:34 - 03:36<br>a trigger collider.<br>03:36 - 03:38<br>We are given as an argument<br>03:38 - 03:41<br>a reference to the trigger collider that we have touched.<br>03:42 - 03:44<br>This is the collider called Other.<br>03:44 - 03:46<br>This reference gives us a way to get a<br>03:46 - 03:48<br>hold of the colliders that we touch.<br>03:49 - 03:51<br>With this code, when we touch another trigger<br>03:51 - 03:54<br>collider we will destroy the game object<br>03:54 - 03:56<br>that the trigger collider is attached to<br>03:56 - 03:59<br>through the reference other.gameObject.<br>03:59 - 04:02<br>By destroying that game object, the game object,<br>04:02 - 04:04<br>all of it’s components and all of it’s<br>04:04 - 04:06<br>children and their components are removed<br>04:06 - 04:08<br>from the scene.<br>04:08 - 04:10<br>For the sake of example in this assignment<br>04:10 - 04:12<br>we won’t destroy the other game object<br>04:12 - 04:14<br>we will deactivate it.<br>04:14 - 04:16<br>Just like we deactivated the player object<br>04:16 - 04:19<br>when we were creating our PickUp objects.<br>04:20 - 04:23<br>First, let’s remove the Destroy(other.gameobject)<br>04:23 - 04:25<br>code from the function.<br>04:25 - 04:27<br>But let’s paste it down below our script<br>04:27 - 04:29<br>as a palette to work with.<br>04:30 - 04:33<br>How will we deactivate our PickUp objects?<br>04:34 - 04:35<br>Well what clues do we have?<br>04:36 - 04:38<br>We can address the other collider’s game<br>04:38 - 04:41<br>object through other.gameObject.<br>04:41 - 04:43<br>We can see this here in the sample code.<br>04:43 - 04:45<br>And we want to test the other game object<br>04:45 - 04:48<br>and if it’s a PickUp object we want to deactivate<br>04:48 - 04:49<br>that game object.<br>04:50 - 04:52<br>So let’s look up GameObject<br>04:52 - 04:55<br>with our hot key combination and see what we can find.<br>04:56 - 04:59<br>Now we have the page on GameObject.<br>04:59 - 05:01<br>There are two important items here that we want.<br>05:02 - 05:04<br>They are tag,<br>05:04 - 05:06<br>tag allows us to identify the game object<br>05:06 - 05:09<br>by comparing the tag value to a string.<br>05:09 - 05:11<br>And SetActive.<br>05:11 - 05:15<br>This is how we activate or deactivate a game object through code.<br>05:16 - 05:18<br>The last item we need to know about is<br>05:18 - 05:20<br>Compare Tag.<br>05:20 - 05:22<br>Compare Tag allows us to efficiently<br>05:22 - 05:27<br>compare the tag of any game object to a sting value.<br>05:28 - 05:32<br>Let’s open up these three items, each in their own tab.<br>05:35 - 05:39<br>Tag allows us to identify a game object by a tag value.<br>05:40 - 05:45<br>We must declare our tags in the Tags and Layers Panel before using them.<br>05:46 - 05:49<br>It is possible to test a tag against a string value directly<br>05:49 - 05:51<br>with code like<br>05:51 - 05:57<br>if gameObject.tag is the same as some string value.<br>05:57 - 06:01<br>But there is a more efficient built-in way to do this,<br>06:01 - 06:03<br>and that is CompareTag<br>06:04 - 06:06<br>With CompareTag we can efficiently<br>06:06 - 06:10<br>compare the tag of any game object with a string value.<br>06:12 - 06:14<br>Let’s copy the sample code and<br>06:14 - 06:16<br>paste it in to our working palette.<br>06:21 - 06:26<br>Now GameObject.SetActive.<br>06:27 - 06:30<br>This is how we activate or deactivate a game object.<br>06:31 - 06:33<br>This is the code equivalent of clicking<br>06:33 - 06:35<br>the Active check box next to the<br>06:35 - 06:37<br>Name field in the Inspector.<br>06:40 - 06:42<br>In our case, just like the code snippet,<br>06:42 - 06:46<br>we will call GameObject.SetActive (false)<br>06:46 - 06:48<br>to deactivate our PickUp game objects.<br>06:50 - 06:55<br>Let’s copy this code and returning to our script editor<br>06:55 - 06:57<br>paste it in to our palette as well.<br>06:59 - 07:01<br>I feel we have enough pieces to write our code<br>07:03 - 07:10<br>so let’s write if (other.gameObject.CompareTag<br>07:11 - 07:13<br>with the string value of PickUp<br>07:14 - 07:18<br>and we will have to define this tag in Unity later.<br>07:19 - 07:24<br>other.gameObject.SetActive (false);<br>07:26 - 07:28<br>Now this code will be called every time<br>07:28 - 07:30<br>we touch a trigger collider.<br>07:30 - 07:33<br>We are given a reference to the collider we touch,<br>07:33 - 07:34<br>we test it’s tag,<br>07:34 - 07:37<br>and if the tag is the same as the string value<br>07:37 - 07:40<br>PickUp we will take the other game object<br>07:40 - 07:42<br>and we will call SetActive (false),<br>07:42 - 07:45<br>which will deactivate that game object.<br>07:45 - 07:48<br>Now we don’t need this code we’ve been saving anymore<br>07:48 - 07:51<br>and keeping it will only confuse the compiler<br>07:51 - 07:52<br>so we can delete it.<br>07:54 - 07:56<br>Let’s save this script and return to Unity<br>07:56 - 07:57<br>and check for errors.<br>07:59 - 08:01<br>The first thing we need to do it set up the tag value<br>08:01 - 08:03<br>for the PickUp objects.<br>08:03 - 08:06<br>Select the prefab asset for the PickUp object.<br>08:06 - 08:08<br>When we look at the tag list<br>08:08 - 08:10<br>we don’t see any tag called PickUp<br>08:10 - 08:12<br>so we need to add one.<br>08:12 - 08:14<br>Select Add Tag.<br>08:15 - 08:19<br>This brings up the Tags and Layers Panel.<br>08:19 - 08:21<br>Here we can customise tags and layers.<br>08:22 - 08:25<br>Note that this list is empty.<br>08:26 - 08:29<br>To create a new custom tag select the + button<br>08:29 - 08:32<br>to add a new row to the tags list.<br>08:33 - 08:37<br>In the new empty element, in our case tag 0,<br>08:37 - 08:40<br>type PickUp, and this is case sensitive<br>08:40 - 08:43<br>and needs to be exactly the same string<br>08:43 - 08:45<br>that we have in our script.<br>08:45 - 08:47<br>If in doubt we can copy and paste<br>08:47 - 08:50<br>this string to get the exact value.<br>08:52 - 08:54<br>When we look back at the prefab asset<br>08:54 - 08:57<br>note that the asset is still untagged.<br>08:57 - 09:00<br>By selecting Add Tag we changed our focus<br>09:00 - 09:02<br>from the prefab asset to the Tag Manager<br>09:02 - 09:05<br>and in the Tag Manager we created our tag.<br>09:05 - 09:07<br>Now we need to apply that tag<br>09:07 - 09:08<br>to the prefab asset.<br>09:09 - 09:11<br>Select the Tag drop down again<br>09:11 - 09:14<br>and see how we now have PickUp in the list.<br>09:14 - 09:16<br>Select this tag from the list and the asset<br>09:16 - 09:17<br>is now tagged PickUp.<br>09:17 - 09:20<br>And with the power of prefabs<br>09:20 - 09:23<br>all of the instances are now tagged PickUp as well.<br>09:25 - 09:27<br>Now let’s test our game.<br>09:27 - 09:29<br>Save the scene and enter play mode.<br>09:33 - 09:36<br>Hmm, okay, our tag is set to PickUp<br>09:36 - 09:38<br>but we are still bouncing off the PickUp cubes<br>09:38 - 09:41<br>just like we are bouncing off the walls.<br>09:41 - 09:43<br>So let’s exit play mode.<br>09:43 - 09:45<br>Before we discuss why we are bouncing off<br>09:45 - 09:47<br>the PickUp cubes rather than picking them up<br>09:47 - 09:49<br>we need to have a brief discussion about<br>09:49 - 09:50<br>Unity’s physics system.<br>09:51 - 09:54<br>I’m going to enter play mode for this discussion.<br>09:58 - 10:01<br>Let’s look at one of our cubes and our player.<br>10:01 - 10:03<br>As an aside we can select two or<br>10:03 - 10:05<br>more game objects at the same time<br>10:05 - 10:07<br>and inspect them all.<br>10:07 - 10:09<br>We do this by holding down the command key<br>10:09 - 10:12<br>on the mac or the control key on the PC,<br>10:12 - 10:13<br>and selecting the game objects.<br>10:14 - 10:16<br>When we select multiple game objects<br>10:16 - 10:18<br>note how the inspector changes to show<br>10:18 - 10:20<br>the common components and property<br>10:20 - 10:22<br>values of the selected game objects.<br>10:23 - 10:26<br>The inspector also allows for multi-object editing.<br>10:26 - 10:28<br>Using multi-object editing I’m going to<br>10:28 - 10:30<br>disable the mesh renderer on both the<br>10:30 - 10:33<br>player’s sphere and the selected cube with a single click.<br>10:34 - 10:36<br>This leaves us with the two green outlines<br>10:36 - 10:39<br>of the collider volumes for these two objects.<br>10:40 - 10:43<br>How do collisions work in Unity’s physics engine?<br>10:44 - 10:46<br>The physics engine does not allow two collider<br>10:46 - 10:47<br>volumes to overlap.<br>10:47 - 10:49<br>When the physics engine detects that any two<br>10:49 - 10:52<br>or more colliders will overlap that frame<br>10:52 - 10:54<br>the physics engine will look at the objects and<br>10:54 - 10:57<br>analyse their speed and rotation and shape<br>10:57 - 10:59<br>and calculate a collision.<br>10:59 - 11:01<br>One of the major factors in this calculation<br>11:01 - 11:03<br>is whether the colliders are static<br>11:03 - 11:05<br>or dynamic.<br>11:05 - 11:08<br>Static colliders are usually non-moving<br>11:08 - 11:10<br>parts of your scene, like the walls, the floor,<br>11:10 - 11:12<br>or the fountain in the courtyard.<br>11:12 - 11:15<br>Dynamic colliders are things that move<br>11:15 - 11:17<br>like the player’s sphere or a car.<br>11:18 - 11:20<br>When calculating a collision the static geometry<br>11:20 - 11:22<br>will not be affected by the collision.<br>11:23 - 11:25<br>But the dynamic objects will be.<br>11:25 - 11:27<br>In our case the player’s sphere is dynamic,<br>11:27 - 11:29<br>or moving geometry, and it is bouncing<br>11:29 - 11:31<br>off the static geometry of the cubes.<br>11:32 - 11:34<br>Just as it bounces off the static geometry<br>11:34 - 11:36<br>of the walls.<br>11:36 - 11:38<br>The physics engine can however allow the<br>11:38 - 11:41<br>penetration or overlap of collider volumes.<br>11:41 - 11:43<br>When it does this the physics engine<br>11:43 - 11:45<br>still calculates the collider volumes and<br>11:45 - 11:47<br>keeps track of the collider overlap.<br>11:48 - 11:50<br>But it doesn’t physically act on the overlapping<br>11:50 - 11:53<br>objects, it doesn’t cause a collision.<br>11:53 - 11:56<br>We do this by making our colliders in to<br>11:56 - 11:58<br>triggers, or trigger colliders.<br>11:58 - 12:00<br>When we make our colliders in to a trigger,<br>12:00 - 12:02<br>or trigger collider, we can detect<br>12:02 - 12:05<br>the contact with that trigger through the<br>12:05 - 12:07<br>OnTrigger event messages.<br>12:07 - 12:09<br>When a collider is a trigger you can do<br>12:09 - 12:11<br>clever things like place a trigger in the middle<br>12:11 - 12:14<br>of a doorway in, say, an adventure game,<br>12:14 - 12:15<br>and when the player enters the trigger<br>12:15 - 12:17<br>the mini-map updates and a message plays<br>12:17 - 12:19<br>‘you have discovered this room’.<br>12:20 - 12:22<br>Or every time your player walks around<br>12:22 - 12:24<br>that corner spiders drop from the ceiling<br>12:24 - 12:26<br>because the player has walked through a trigger.<br>12:27 - 12:30<br>For more information on OnCollision and on<br>12:30 - 12:32<br>trigger messages see the lessons linked below.<br>12:33 - 12:35<br>We are using OnTriggerEnter in our code<br>12:35 - 12:37<br>rather than OnCollisionEnter.<br>12:37 - 12:39<br>So we need to change our collider volumes<br>12:39 - 12:41<br>in to trigger volumes.<br>12:41 - 12:44<br>To do this we must be out of play mode.<br>12:46 - 12:48<br>Let’s select the prefab asset and look at<br>12:48 - 12:50<br>the box collider component.<br>12:50 - 12:52<br>Here we select Is Trigger<br>12:52 - 12:54<br>and again the power of prefabs<br>12:54 - 12:58<br>all of our PickUp objects are now using trigger colliders.<br>12:58 - 13:02<br>Let’s save our scene, enter play mode and test.<br>13:02 - 13:04<br>And as our player enters the trigger<br>13:04 - 13:06<br>we pickup the objects.<br>13:06 - 13:08<br>Excellent.<br>13:09 - 13:11<br>Let’s exit play mode.<br>13:12 - 13:14<br>Everything looks great.<br>13:14 - 13:16<br>We only have one issue.<br>13:16 - 13:19<br>We have made one small mistake,<br>13:19 - 13:21<br>and this is related to how Unity<br>13:21 - 13:22<br>optimises it’s physics.<br>13:23 - 13:25<br>As a performance optimisation Unity<br>13:25 - 13:27<br>calculates all the volumes<br>13:27 - 13:29<br>of all the static colliders in a scene<br>13:29 - 13:32<br>and holds this information in a cache.<br>13:32 - 13:34<br>This makes sense as static colliders<br>13:34 - 13:37<br>shouldn’t move, and this saves recalculating this<br>13:37 - 13:39<br>information every frame.<br>13:39 - 13:42<br>Where we have made our mistake is by rotating our cubes.<br>13:42 - 13:46<br>Any time we move, rotate, or scale a static collider<br>13:46 - 13:49<br>Unity will recalculate all the static colliders again<br>13:49 - 13:51<br>and update the static collider cache.<br>13:51 - 13:54<br>To recalculate the cache takes resources.<br>13:55 - 13:57<br>We can move, rotate or scale dynamic<br>13:57 - 14:00<br>colliders as often as we want and Unity won’t<br>14:00 - 14:02<br>recache any collider volumes.<br>14:02 - 14:04<br>Unity expects us to move colliders.<br>14:04 - 14:06<br>We simply need to indicate to Unity which<br>14:06 - 14:09<br>colliders are dynamic before we move them.<br>14:09 - 14:12<br>We do this by using the rigid body component.<br>14:12 - 14:14<br>Any game object with a collider<br>14:14 - 14:17<br>and a rigid body is considered dynamic.<br>14:18 - 14:20<br>Any game object with a collider attached<br>14:20 - 14:24<br>but no physics rigid body is expected to be static.<br>14:24 - 14:26<br>Currently our PickUp game objects have a<br>14:26 - 14:29<br>box collider but no rigid body.<br>14:29 - 14:31<br>So Unity is recalculating our static<br>14:31 - 14:33<br>collider cache every frame.<br>14:34 - 14:36<br>The solution is to add a rigid body<br>14:36 - 14:38<br>to the PickUp objects.<br>14:38 - 14:41<br>This will move the cubes from being static colliders<br>14:41 - 14:43<br>to being dynamic colliders.<br>14:43 - 14:45<br>Let’s save and play.<br>14:46 - 14:48<br>And our cubes fall through the floor.<br>14:48 - 14:51<br>Gravity pulls them down, and as they are triggers<br>14:51 - 14:53<br>they don’t collide with the floor.<br>14:53 - 14:55<br>Let’s exit play mode.<br>14:55 - 14:58<br>If we look at the rigid body component<br>14:58 - 15:01<br>we could simply disable Use Gravity,<br>15:01 - 15:04<br>which would prevent the cubes from being pulled downwards.<br>15:04 - 15:06<br>This is only a partial solution however.<br>15:07 - 15:09<br>If we did this, even though our cubes<br>15:09 - 15:11<br>would not respond to gravity they would still<br>15:11 - 15:13<br>respond to physics forces<br>15:13 - 15:15<br>There is a better solution.<br>15:15 - 15:18<br>And that is to select Is Kinematic.<br>15:19 - 15:22<br>When we do this we set this rigid body component to be<br>15:22 - 15:24<br>a kinematic rigid body.<br>15:24 - 15:26<br>A kinematic rigid body will not react<br>15:26 - 15:29<br>to physics forces and it can be animated<br>15:29 - 15:31<br>and moved by it’s transform.<br>15:32 - 15:35<br>This is great for everything from objects with colliders<br>15:35 - 15:37<br>like elevators and moving platforms,<br>15:37 - 15:39<br>to objects with triggers, like our collectables<br>15:39 - 15:42<br>that need to be animated or moved by their transform.<br>15:42 - 15:44<br>For more information on the rigid body<br>15:44 - 15:48<br>and Is Kinematic see the lessons linked below.<br>15:49 - 15:52<br>Let’s save our scene and enter play mode to test.<br>15:52 - 15:56<br>Now our behaviour is identical and performant.<br>15:56 - 15:59<br>So, static colliders shouldn’t move,<br>15:59 - 16:01<br>like walls and floors.<br>16:01 - 16:03<br>Dynamic colliders can move,<br>16:03 - 16:05<br>and have a rigid body attached.<br>16:05 - 16:08<br>Standard rigid bodies are moved using physics forces.<br>16:08 - 16:10<br>Kinematic rigid bodies are moved using<br>16:10 - 16:12<br>their transform.<br>16:13 - 16:15<br>In the next assignment we will count our<br>16:15 - 16:17<br>collectable object and make a simple UI<br>16:17 - 16:20<br>to display our score and messages.</p>
-<h3 id="译文"><a href="#译文" class="headerlink" title="译文"></a>译文</h3><p>00:02 - 00:07<br>我们想要拾起可捡起的物体当我们的player撞到它们的时候</p>
-<p>00:07 - 00:13<br>因此我们需要探测到player和可捡起的小方块之间的碰撞</p>
-<p>00:13 - 00:15<br>我们需要这些碰撞触发一个行为，并且这些碰撞能够保证我们捡起正确的物体</p>
-<p>00:21 - 00:23<br>可捡起的小方块，玩家的小球，地板和墙都是可以通知我们有碰撞了的碰撞物体</p>
-<p>00:29 - 00:30<br>如果我们不检测哪个物体发生了碰撞，我们可能会捡起错误的物体</p>
-<p>00:35 - 00:37<br>我们可能会捡起地板或者墙</p>
-<p>00:37 - 00:40<br>事实上如果我们不检测碰撞，我们在进入游戏的第一帧就会把地板给捡起来，然后我们会掉入一个空的场景，游戏就结束了</p>
-<p>00:51 - 00:55<br>首先我们要让player可见</p>
-<p>00:55 - 00:56<br>所以我们要让player回来，勾选上player的框框</p>
-<p>01:00 - 01:02<br>接下爱我们选择PlayerController 脚本，打开编辑</p>
-<p>01:04 - 01:06<br>注意一下，我们可以编辑这个脚本，不管这个物体是否可见</p>
-<p>01:11 - 01:13<br>既然我们打开了这个脚本，那么我们写什么呢？</p>
-<p>01:15 - 01:17<br>我们可以写一个collider，然后用快捷键搜索文档</p>
-<p>01:21 - 01:24<br>但是这里我们可以用一个不同的方法</p>
-<p>01:25 - 01:27<br>我们回到Unity界面看一下player的细节</p>
-<p>01:30 - 01:32<br>注意看Inspector里的 sphere collider 组件</p>
-<p>01:34 - 01:37<br>在每个组件的头部左边有一个可以折叠组建的箭头，一个图标，一个选择框可以控制是否有效，还有一个组件类型的文字</p>
-<p>01:46 - 01:49<br>右边有一个下啦菜单，还有一个带有问号的书的图标</p>
-<p>01:53 - 01:54<br>带有问号的书的图标是这里我们需要的</p>
-<p>01:54 - 01:57<br>这是一个快捷链接到组件参考内容</p>
-<p>01:58 - 02:00<br>选择这个图标会连接到组件参考而不是脚本参考信息</p>
-<p>02:05 - 02:07<br>我们阅读这个文档去了解如何在编辑器中使用组件</p>
-<p>02:10 - 02:13<br>我们也要了解组件的相关脚本</p>
-<p>02:15 - 02:18<br>我们可以选择“switch to scripting”，就会跳转到sphere collider的脚本参考页面</p>
-<p>02:23 - 02:26<br>我们需要探测碰撞</p>
-<p>02:26 - 02:28<br>这个项目，我们需要使用OnTriggerEnter方法</p>
-<p>02:37 - 02:40<br>仅仅想象一下，我们是一个水管工人，我们跳起来捡起每一个硬币然后弹开，硬币落到地面</p>
-<p>02:48 - 02:49<br>不是很优雅的比喻</p>
-<p>02:50 - 02:52<br>OnTriggerEnter方法可以让我们不用创建physical collision就能检测player和可拾起的小方块之间的碰撞</p>
-<p>03:00 - 03:02<br>事例代码不是很适合我们</p>
-<p>03:03 - 03:06<br>我们可以修改一下，回到脚本编辑的页面</p>
-<p>03:12 - 03:15<br>复制一下代码</p>
-<p>03:16 - 03:18<br>调整一下缩进</p>
-<p>03:25 - 03:27<br>接下来看一下代码</p>
-<p>03:27 - 03:30<br>我们使用OnTriggerEnter方法</p>
-<p>03:30 - 03:32<br>当player 第一次碰到触发碰撞的物体，OnTriggerEnter就会调用</p>
-<p>03:36 - 03:38<br>OnTriggerEnter提供了一个参数指代我们碰到的物体</p>
-<p>03:42 - 03:44<br>这个碰撞体叫other</p>
-<p>03:44 - 03:46<br>这样我们就能得到碰撞的物体</p>
-<p>03:49 - 03:51<br>在事例代码里，发生碰撞的时候我们通过other.gameObject关联到物体<br>就可以销毁这个物体</p>
-<p>03:59 - 04:02<br>通过销毁物体，物体的所有组件和子元素都会被从场景里移除</p>
-<p>04:08 - 04:10<br>这里为了示例，我们不销毁它而是使物体无效</p>
-<p>04:14 - 04:16<br>就像取消player的勾选框一样</p>
-<p>04:20 - 04:23<br>首先我们移除“Destroy(other.gameobject)”</p>
-<p>04:25 - 04:27<br>但是我们复制到脚本下面去作为参考用</p>
-<p>04:30 - 04:33<br>我们如何让小方块无效呢？</p>
-<p>04:36 - 04:38<br>我们可以通过other.gameObject得到碰撞的物体</p>
-<p>04:41 - 04:43<br>我们想检测一下物体当我们要让小方块实效的时候</p>
-<p>04:50 - 04:52<br>用快捷键查阅 GameObject脚本</p>
-<p>04:56 - 04:59<br>看下 GameObject页面.</p>
-<p>04:59 - 05:01<br>两个我们需要的属性</p>
-<p>05:02 - 05:04<br>tag，tag可以通过字符串来比较和标记游戏物体和设置是否有效</p>
-<p>05:16 - 05:18<br>最后一个是Compare Tag，Compare Tag可以更高效的比较tag</p>
-<p>05:28 - 05:32<br>我们打开这3个项目，Tag可以定义一个物体，在用之前我们需要声明一下</p>
-<p>05:46 - 05:49<br>用CompareTag方法比较tag更高效</p>
-<p>06:12 - 06:14<br>复制一下代码</p>
-<p>06:21 - 06:26<br>GameObject.SetActive和在Inspector里点击勾选框设置有效和无效效果是一样的</p>
-<p>06:40 - 06:42<br>我们这里通过调用 GameObject.SetActive (false)来让小方块无效</p>
-<p>06:50 - 06:55<br>再复制一下代码</p>
-<p>06:59 - 07:01<br>后面我们需要在Unity中定义tag</p>
-<p>07:26 - 07:28<br>现在每次触发碰撞的时候都会调用我们的方法</p>
-<p>07:59 - 08:01<br>首先我们需要设置一下小方块的tag</p>
-<p>08:03 - 08:06<br>选中prefab资源</p>
-<p>08:06 - 08:08<br>当我们看tag list，我们找不到我们需要的“PickUp”</p>
-<p>08:12 - 08:14<br>选择Add Tag</p>
-<p>08:15 - 08:19<br>增加一个tag<br>在prefab中设置好tag之后，所有的实例的tag都设置好了</p>
-<p>09:25 - 09:27<br>现在测试一下游戏，保存场景，进入游戏模式，但是player仍然被小方块弹开，就像被墙弹开一样</p>
-<p>09:41 - 09:43<br>退出游戏模式</p>
-<p>09:43 - 09:45<br>在我们讨论被弹开而不是拾起物体之前，我们先讨论一下Unity’s physics system.</p>
-<p>09:51 - 09:54<br>我进入游戏模式讨论</p>
-<p>09:58 - 10:01<br>我们看一下player和一个小方块</p>
-<p>10:01 - 10:03<br>我们可以同时选中多个物体，在检查器中操作它们</p>
-<p>10:07 - 10:09<br>按住“command”键来选择物体</p>
-<p>10:14 - 10:16<br>选中多个物体的时候，可以同时对多个物体编辑，在mesh renderer取消勾选框，会看到两个绿色的方框</p>
-<p>10:44 - 10:46<br>物理引擎不允许两个碰撞体重叠（译者注：并不绝对，看后面），</p>
-<p>10:47 - 10:49<br>当物理引擎探测到两个或更多碰撞体可能重叠的时候，物理引擎会分析它们的速度，旋转角度，还有形状等来计算碰撞</p>
-<p>10:59 - 11:01<br>在这个计算中一个主要的因素是碰撞体是静态的还是动态的</p>
-<p>11:05 - 11:08<br>静态的碰撞体通常是不会动的，像墙，地板或者院子里的喷泉</p>
-<p>11:12 - 11:15<br>动态的碰撞体是可以移动的，像player的小球，汽车</p>
-<p>11:18 - 11:20<br>当计算碰撞的时候，一个静态的几何物体不会受碰撞的影响，动态的会受影响</p>
-<p>11:25 - 11:27<br>在我们的案例中，小球是动态的，它被静态的小方块弹开了</p>
-<p>11:32 - 11:34<br>就像被静态的墙弹开了</p>
-<p>11:36 - 11:38<br>然而，我们通过给碰撞体设置triggers，或者triggers碰撞体，物理引擎可以允许碰撞体的穿透或重叠。</p>
-<p>11:41 - 11:43<br>当它这样做时，物理引擎仍然计算碰撞体体积并且跟踪碰撞体重叠</p>
-<p>11:48 - 11:50<br>但它不会物理地作用于重叠的对象，它不会导致碰撞</p>
-<p>12:00 - 12:02<br>我们通过OnTrigger检测到碰撞</p>
-<p>12:33 - 12:35<br>我在我们的代码中使用OnTriggerEnter而不是OnCollisionEnter</p>
-<p>12:37 - 12:39<br>所以我们需要改变我们的碰撞器为一个trigger值</p>
-<p>12:41 - 12:44<br>我们需要离开play模式</p>
-<p>12:46 - 12:48<br>我们选中prefab资源，在collider组件中选中Trigger，这一次所有的小方块都会使用trigger碰撞器</p>
-<p>12:58 - 13:02<br>保存场景，进入play模式测试</p>
-<p>13:02 - 13:04<br>当我们的小球进入到触发器时我们捡起了小方块</p>
-<p>13:06 - 13:08<br>完美<br>13:09 - 13:11<br>离开play模式</p>
-<p>13:12 - 13:14<br>看起来很好</p>
-<p>13:14 - 13:16<br>我们仅有一个问题</p>
-<p>13:16 - 13:19<br>我们犯了一个小错误关于Unity如何优化物理操作</p>
-<p>13:23 - 13:25<br>作为一个性能优化Unity会计算场景中所有静态碰撞体的值并且保存在缓存中</p>
-<p>13:32 - 13:34<br>这是有道理的，因为静态碰撞者不应该移动，这将保存每帧重新计算的信息</p>
-<p>13:39 - 13:42<br>我们犯错的地方在于我们旋转了小方块</p>
-<p>13:42 - 13:46<br>每一次我们移动，旋转或者缩放静态碰撞体，Unity会重新计算静态碰撞并且更新他的缓存</p>
-<p>13:51 - 13:54<br>重新计算占用资源了</p>
-<p>13:55 - 13:57<br>只要Unity不重新计算缓存碰撞值，我们就可以移动，旋转或者缩放静态碰撞体</p>
-<p>14:02 - 14:04<br>Unity期望我们移动碰撞</p>
-<p>14:04 - 14:06<br>在我们移动物体之前，我们需要告诉Unity哪些碰撞体是动态的</p>
-<p>14:09 - 14:12<br>我们可以使用rigid body组件</p>
-<p>14:12 - 14:14<br>只要game object拥有碰撞体和rigid body就可以被认为是动态的</p>
-<p>14:18 - 14:20<br>任何一个game object都有碰撞体属性但是没有rigid body，所以就会被认为是静态的了</p>
-<p>14:24 - 14:26<br>当前我们的小方块有box collider但是没有刚体</p>
-<p>14:29 - 14:31<br>所以Unity会在每帧重新计算静态collider缓存</p>
-<p>14:34 - 14:36<br>解决办法是给小方块加上刚体属性就可以捡起物体了</p>
-<p>14:38 - 14:41<br>这会让小方块从静态碰撞体变为动态碰撞体</p>
-<p>14:43 - 14:45<br>保存，play</p>
-<p>14:46 - 14:48<br>所有的小方块都会往下掉</p>
-<p>14:48 - 14:51<br>重力会把它们拉下去，因为他们是触发器，他们不会与地板碰撞。</p>
-<p>14:53 - 14:55<br>退出play模式</p>
-<p>14:55 - 14:58<br>看一下刚体组件我们可以简单的让重力失效就可以阻止小方块被下拉</p>
-<p>15:04 - 15:06<br>但这只是一个部分解决方案</p>
-<p>15:07 - 15:09<br>如果我们这样做了，即使小方块不会在重力作用上被影响也会被其他的物理作用力所影响</p>
-<p>15:13 - 15:15<br>这里有一个更好的解决办法</p>
-<p>15:15 - 15:18<br>我们选择Kinematic</p>
-<p>15:19 - 15:22<br>选中了之后我们会设置刚体成为一个运动学刚体</p>
-<p>15:24 - 15:26<br>运动学刚体不受物理作用力的影响，但是可以动画运动</p>
-<p>15:32 - 15:35<br>这对一些像升降机，移动平台，类似我们小方块带触发器并且需要动画控制变化的物体来说太棒了</p>
-<p>15:49 - 15:52<br>保存场景退出play模式</p>
-<p>15:52 - 15:56<br>现在看起来不错</p>
-<p>15:56 - 15:59<br>所以，静态碰撞体不应该动，像墙和地板，动态碰撞体可移动，并且有rigid body组件</p>
-<p>16:05 - 16:08<br>标准的刚体在外力作用下运动，Kinematic刚体通过变形动画运动</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这章节概念比较多，所以需要好好理解，下面总结一下</p>
-<ol>
-<li>新建一个game object，此时这个物体只有transform属性，没有其他属性，在场景里看不到</li>
-<li>新建的3d物体，比如sphere，cube是静态的，但是它们默认具体碰撞体属性</li>
-<li>一般情况下，物理引擎不允许两个碰撞体重叠，当物理引擎检测到发生碰撞时，动态的碰撞体会被弹开，不会发生重叠或者穿透，静态的碰撞体依旧保持不动</li>
-<li>当我们给碰撞体添加了触发器之后，碰撞体就可以重叠或者穿透了，通过OnTriggerEnter检测碰撞</li>
-<li>Unity会计算场景中所有静态碰撞体的值并且保存在缓存中，如果静态碰撞体发生动画变形运动，那么Unity每一帧都会计算该静态碰撞体的值并且缓存在缓存中，这会占用大量的资源，解决办法是给小方块添加刚体属性，一个物体具有碰撞体和刚体属性就会被认为是一个动态的碰撞体，这样就不会每一帧都会缓存碰撞值（小方块cube天生就具有碰撞体的组件，所以只需要添加刚体组件就行）</li>
-<li>给小方块添加刚体组件之后，小方块不能被地板接住，会直接掉下去，解决办法是在刚体组件里选择Kinematic刚体属性，Kinematic刚体不受物理作用力的影响，但是可以动画运动</li>
-<li>为什么小方块添加刚体组件不能被地板托举住而小球可以被地板托举住不往下掉？因为小方块在碰撞体里面勾选了触发器选项，带触发器的碰撞体可以在碰撞的时候穿透和重叠，所以就需要小方块在刚体里面勾选Kinematic刚体属性，这样就不受外力的影响了</li>
-</ol>
-
+            <p>
+              翻译章节 Collecting the Pick Up Objects
+英文原文00:02 - 00:04We want to be able to pick up our collectable game00:04 - 00:07objects when our player game objec
+              ...
+            </p>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2017/02/12/u3d-collider/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -608,7 +525,7 @@
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sniperyan">
       <meta itemprop="description" content="叫我起床的是梦想">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12254952?v=3&s=120">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
@@ -726,45 +643,21 @@
       
         
           
-            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>现在公司给我配了mac，一直在mac上做rn开发，体验非常棒。不过春节在家用mac玩rn的时候，突然发现现在的40版本居然有了watchman，之前版本的<code>reloadjs</code>的Bug也被脸书修复了，现在在windows上做rn开发体验也不错，但是只能做android开发。</p>
-<h2 id="一个开源电影app"><a href="#一个开源电影app" class="headerlink" title="一个开源电影app"></a>一个开源电影app</h2><p><a href="https://github.com/sniperyan/movie" target="_blank" rel="noopener">源码</a></p>
-<p>ios运行效果:</p>
-<p><img src="/uploads/rn-movie/movie-ios.gif" alt="运行效果"></p>
-<p>android运行截图:</p>
-<p><img src="/uploads/rn-movie/android-1.jpg" alt="运行效果"><br><img src="/uploads/rn-movie/android-2.jpg" alt="运行效果"></p>
-<h2 id="如果运行报错，请检查"><a href="#如果运行报错，请检查" class="headerlink" title="如果运行报错，请检查"></a>如果运行报错，请检查</h2><ol>
-<li><code>react-native-vector-icons</code>是否配置</li>
-<li><code>/android/app</code>下是否有<code>my-release-key.keystore</code></li>
-<li>是不是用了cnpm安装依赖，换用npm就没问题（我在公司用的mac，回家用的windows，开始用的cnpm，报的奇葩的错误，换了npm就好了）</li>
-<li>再看看错误信息，自行查找解决方案，如果解决不了，可以提<code>issue</code></li>
-</ol>
-<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><ol>
-<li>豆瓣API参考 <a href="https://developers.douban.com/wiki/?title=api_v2" target="_blank" rel="noopener">https://developers.douban.com/wiki/?title=api_v2</a></li>
-<li>开发过程中最好使用mock server，豆瓣的api有调用限制，频繁调用会被封ip，mock server地址<a href="https://github.com/sniperyan/doubanMock" target="_blank" rel="noopener">https://github.com/sniperyan/doubanMock</a></li>
-<li>字体图标使用<code>react-native-vector-icons</code>，安卓和ios使用都需要配置，具体使用方法请参考官方文档<a href="https://github.com/oblador/react-native-vector-icons" target="_blank" rel="noopener">https://github.com/oblador/react-native-vector-icons</a></li>
-<li>豆瓣的API有比较坑的地方，比如<code>/v2/movie/subject/</code>返回的数据里，directors和casts字段里avatars与id属性都可能为null值，所以需要特殊处理，见代码<code>src/components/FilmDetail.js</code></li>
-</ol>
-<h2 id="开发总结"><a href="#开发总结" class="headerlink" title="开发总结"></a>开发总结</h2><ol>
-<li>debug js remotely 看不到fetch的请求，mac下用charles抓包</li>
-<li>debug js remotely 调试js时候，es6，es7语法是未编译的（目前还未发现类似react开发时候在webpack里配置sourceMap的方法），导致部分地方断点进不去，可以使用<code>console.log</code>输出关键信息</li>
-<li>写样式的时候，没有了chorme方便的样式调试工具，开始的时候非常不习惯也不好排错。可以给组件添加<code>backgroundColor</code>辅助检查，其实后来发现很多错误都是没有设置宽和高造成的，同时也可以用<code>show inspector</code></li>
-<li>当年搞react时候的react dev tools 不能用了，非常的不爽</li>
-<li>适配手机屏幕，用<code>Dimensions.get(&#39;window&#39;).width</code>取到屏幕宽度，然后按比例算宽和高度</li>
-<li>不要看中文文档！不要看中文文档！不要看中文文档！重要的事情说3遍，直接看facebook的英文文档！</li>
-</ol>
-<h2 id="run-on-iphone"><a href="#run-on-iphone" class="headerlink" title="run on iphone"></a>run on iphone</h2><ol>
-<li>点击<code>movie.xcodeproj</code>文件，启动xcode</li>
-<li>在工程目录下，把movieTest目录删除</li>
-<li>添加signing team,修改bundle identifier,如图<img src="/uploads/rn-movie/movie1.png" alt="如图"></li>
-<li>选中自己的iPhone，点击build按钮</li>
-<li>build success之后，在手机 设置-通用-描述文件与设备管理-开发者应用 内选择信任应用</li>
-</ol>
-<h2 id="应用打包"><a href="#应用打包" class="headerlink" title="应用打包"></a>应用打包</h2><ol>
-<li>ios app 需要688RMB买一个帐号才能上App Store，实在没钱就算了</li>
-<li>安卓利用gradle打包很简单，修改应用名称：<code>android\app\src\main\res\values\strings.xml</code>, <code>&lt;string name=&quot;app_name&quot;&gt;MyProject&lt;/string&gt;</code>MyProject改成你需要的名字就好了。图标在android\app\src\main\res文件夹下每个mipmap开头的文件夹下有一个不同尺寸的版本，可以自行输出</li>
-</ol>
-
+            <p>
+              前言现在公司给我配了mac，一直在mac上做rn开发，体验非常棒。不过春节在家用mac玩rn的时候，突然发现现在的40版本居然有了watchman，之前版本的reloadjs的Bug也被脸书修复了，现在在windows上做rn开发体验也不错，但是只能做android开发。
+一个开源电影app源码
+i
+              ...
+            </p>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2017/01/27/rn-movie/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -824,7 +717,7 @@
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sniperyan">
       <meta itemprop="description" content="叫我起床的是梦想">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12254952?v=3&s=120">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
@@ -935,49 +828,19 @@
       
         
           
-            <h2 id="什么是Web缓存"><a href="#什么是Web缓存" class="headerlink" title="什么是Web缓存"></a>什么是Web缓存</h2><p>Web缓存是指一个Web资源（如html页面，图片，js，数据等）存在于Web服务器和客户端（浏览器）之间的副本。缓存会根据进来的请求保存输出内容的副本；当下一个请求来到的时候，如果是相同的URL，缓存会根据缓存机制决定是直接使用副本响应访问请求，还是向源服务器再次发送请求。比较常见的就是浏览器会缓存访问过网站的网页，当再次访问这个URL地址的时候，如果网页没有更新，就不会再次下载网页，而是直接使用本地缓存的网页。只有当网站明确标识资源已经更新，浏览器才会再次下载网页。</p>
-<h2 id="Web缓存的作用"><a href="#Web缓存的作用" class="headerlink" title="Web缓存的作用"></a>Web缓存的作用</h2><ol>
-<li>减少网络带宽消耗</li>
-<li>降低服务器压力</li>
-<li>减少网络延迟，加快页面打开速度</li>
-</ol>
-<h2 id="Web缓存的类型"><a href="#Web缓存的类型" class="headerlink" title="Web缓存的类型"></a>Web缓存的类型</h2><ol>
-<li>数据库数据缓存,如redis,memcached等</li>
-<li>服务器端缓存,如代理服务器缓存，CDN缓存</li>
-<li>浏览器端缓存</li>
-<li>Web应用层缓存</li>
-</ol>
-<h2 id="浏览器缓存的控制"><a href="#浏览器缓存的控制" class="headerlink" title="浏览器缓存的控制"></a>浏览器缓存的控制</h2><p>最有效的一个方法是<strong>使用缓存有关的HTTP消息报头</strong><br>在HTTP请求和响应的消息报头中，常见的与缓存有关的消息报头有：<br><img src="/uploads/webcache/c1.png" alt="alt text"></p>
-<h2 id="用户操作行为与缓存"><a href="#用户操作行为与缓存" class="headerlink" title="用户操作行为与缓存"></a>用户操作行为与缓存</h2><p>用户在使用浏览器的时候，会有各种操作，比如输入地址后回车，按F5刷新等，这些行为会对缓存有什么影响呢？<br><img src="/uploads/webcache/c2.png" alt="alt text"></p>
-<p><strong>当用户使用Ctrl+F5进行强制刷新的时候，只是所有的缓存机制都将失效，重新从服务器拉去资源。</strong></p>
-<h2 id="哪些请求不能被缓存？"><a href="#哪些请求不能被缓存？" class="headerlink" title="哪些请求不能被缓存？"></a>哪些请求不能被缓存？</h2><ol>
-<li>HTTP信息头中包含Cache-Control:no-cache，pragma:no-cache，或Cache-Control:max-age=0等告诉浏览器不用缓存的请求</li>
-<li>需要根据Cookie，认证信息等决定输入内容的动态请求是不能被缓存的</li>
-<li>经过HTTPS安全加密的请求（有人也经过测试发现，ie其实在头部加入Cache-Control：max-age信息，firefox在头部加入Cache-Control:Public之后，能够对HTTPS的资源进行缓存)</li>
-<li>POST请求无法被缓存(GET可以)</li>
-<li>HTTP响应头中不包含Last-Modified/Etag，也不包含Cache-Control/Expires的请求无法被缓存</li>
-</ol>
-<h2 id="如何构建可缓存站点"><a href="#如何构建可缓存站点" class="headerlink" title="如何构建可缓存站点"></a>如何构建可缓存站点</h2><ol>
-<li>对于不经常修改的静态资源，比如Css，js，图片等，可以设置一个较长的过期的时间，或者至少加上Last-Modified/Etag，而对于html页面这种入口文件，不建议设置缓存。这样既能保证在静态资源不变了情况下，可以不重发请求或直接通过304避免重复下载，又能保证在资源有更新的，只要通过给资源增加时间戳或者更换路径，就能让用户访问最新的资源</li>
-<li>过多的使用Cookie会大大增加HTTP请求的负担，每次GET或POST请求，都会把Cookie都带上，增加网络传输流量，导致增长交互时间；同时Cache是很难被缓存的，应该尽量少使用，或者这在动态页面上使用。</li>
-<li>通过HTTPS请求的资源，默认是不会被缓存的，必须通过特殊的配置，才能让资源得到缓存。建议只对涉及敏感信息的请求使用HTTPS传输，其他类似Css，Js，图片这些静态资源，尽量避免使用。</li>
-<li>虽然POST的请求方式比Get更安全，可以避免类似密码这种敏感信息在网络传输，被代理或其他人截获，但是Get请求方式更快，效率更高，而且能被缓存，建议对于那些不涉及敏感信息提交的请求尽量使用Get方式请求</li>
-</ol>
-<h2 id="如何给站点增加缓存机制"><a href="#如何给站点增加缓存机制" class="headerlink" title="如何给站点增加缓存机制"></a>如何给站点增加缓存机制</h2><p>HTTP请求/响应头中缓存报头对有效利用站点缓存，作为一个Web前端开发者，我要做什么呢？答案是：啥都不用做。不过要去推动Web运营人员、Web后端开发人员分别给服务器和动态脚本CGI增加合适的缓存报头。可以从以下方面入手：</p>
-<ol>
-<li>服务器配置:<a href="http://httpd.apache.org/docs/2.0/mod/mod_expires.html" target="_blank" rel="noopener">Apache相关配置参考</a></li>
-<li>编写可缓存的动态脚本:服务器配置的方法比较简单通用，但是如果遇到没有权限修改服务器配置或者需要添加更细致的Expires/Cache-Control/Etag等信息时，不妨可以试试从代码层面去添加这些信息。不同语言写法实现略有不同，但思路都是一致的。可以在单独开辟一个独立模块，调用语言库提供的添加报头的接口，根据需要设置报头信息。当某个请求的动态脚本需要被缓存时，可以采用类似include，require等模块引用方式调用公共模块，实现缓存机制。</li>
-</ol>
-<h2 id="缓存Ajax请求"><a href="#缓存Ajax请求" class="headerlink" title="缓存Ajax请求"></a>缓存Ajax请求</h2><p>Ajax调用就像任何其他的HTTP请求一样可以用来构建一个网页。然而，由于其动态的性质人们常常忽略了可以缓存它们而从中受益。<br><strong>Ajax缓存和HTTP缓存效果相同</strong>,当然，如果您使用Ajax的POST方法，这并不适用，因为POST请求不会被缓存。如果您的Ajax请求有安全性要求，你应该总是使用POST方法，例如：银行帐户的资金转账。</p>
-<h2 id="通过Javascript实现内存缓存"><a href="#通过Javascript实现内存缓存" class="headerlink" title="通过Javascript实现内存缓存"></a>通过Javascript实现内存缓存</h2><p>跟缓存Ajax请求的结果类似，程序运行过程中的其他数据，其实也可以采用类似的方式在顶级容器的Javascript上下文中缓存(其实就是设置一个全局变量，将数据写入全局变量中)。</p>
-<h2 id="实际测试浏览器缓存"><a href="#实际测试浏览器缓存" class="headerlink" title="实际测试浏览器缓存"></a>实际测试浏览器缓存</h2><p>以在chrome中打开腾讯为例，<br><strong>首次打开无缓存：</strong><br><img src="/uploads/webcache/c3.png" alt="alt text"><br><strong>第二次打开有缓存：</strong><br><img src="/uploads/webcache/c4.png" alt="alt text"><br><img src="/uploads/webcache/c5.png" alt="alt text"></p>
-<h2 id="memoryCache和diskCache"><a href="#memoryCache和diskCache" class="headerlink" title="memoryCache和diskCache"></a>memoryCache和diskCache</h2><p>MemoryCache顾名思义，就是将资源缓存到内存中，等待下次访问时不需要重新下载资源，而直接从内存中获取。Webkit早已支持memoryCache。<br>diskCache就是将资源缓存到磁盘中，等待下次访问时不需要重新下载资源，而直接从磁盘中获取，它的直接操作对象为CurlCacheManager。它与memoryCache最大的区别在于，当退出进程时，内存中的数据会被清空，而磁盘的数据不会，所以，当下次再进入该进程时，该进程仍可以从diskCache中获得数据，而memoryCache则不行。</p>
-<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ol>
-<li>Web缓存的作用与类型<a href="http://www.alloyteam.com/2012/03/web-cache-1-web-cache-overview/" target="_blank" rel="noopener">http://www.alloyteam.com/2012/03/web-cache-1-web-cache-overview/</a></li>
-<li>Ajax 缓存: 两个重要的事实<a href="http://www.cnblogs.com/yslow/archive/2009/08/28/1555777.html" target="_blank" rel="noopener">http://www.cnblogs.com/yslow/archive/2009/08/28/1555777.html</a></li>
-</ol>
-
+            <p>
+              什么是Web缓存Web缓存是指一个Web资源（如html页面，图片，js，数据等）存在于Web服务器和客户端（浏览器）之间的副本。缓存会根据进来的请求保存输出内容的副本；当下一个请求来到的时候，如果是相同的URL，缓存会根据缓存机制决定是直接使用副本响应访问请求，还是向源服务器再次发送请求。比较常见
+              ...
+            </p>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2016/12/17/webcache/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -1037,7 +900,7 @@
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sniperyan">
       <meta itemprop="description" content="叫我起床的是梦想">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12254952?v=3&s=120">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
@@ -1148,23 +1011,20 @@
       
         
           
-            <p>抓包（packet capture）就是将网络传输发送与接收的数据包进行截获、重发、编辑、转存等操作，也用来检查网络安全。在windows下我用fiddler，mac下用charles，下面来介绍一下mac下如何用charles抓包</p>
-<h2 id="下载安装charles"><a href="#下载安装charles" class="headerlink" title="下载安装charles"></a>下载安装charles</h2><p>下载链接<a href="http://pan.baidu.com/s/1o80KYcq" target="_blank" rel="noopener">http://pan.baidu.com/s/1o80KYcq</a>,密码：<code>4jbl</code>。下载完成后将 Charles.app 拖至 应用程序 文件夹复制 charles.jar 至 /Applications/Charles.app/Contents/Java/，使用 SN.txt 中的序列码即可</p>
-<h2 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h2><p>如图配置：<img src="/uploads/charles/charles-1.png" alt="alt text"><br><strong>注意</strong>：界面上的红点处于打开状态，界面右下角状态为Recording，这时候就会对mac抓包。如果抓不到，你的电脑是不是有蓝灯之类的代理，关了就能抓到请求（如果状态为stop recording则抓不到包）</p>
-<h2 id="https抓包"><a href="#https抓包" class="headerlink" title="https抓包"></a>https抓包</h2><p>抓https请求会乱码。解决办法：Proxy-&gt;SSL Proxying Settings-&gt;勾上Enable SSL Proxying，再点击Add按钮，在弹出的表单中Host填写域名。比如填api.instagram.com，Port填443（443为https默认端口号，http为80） 然后再抓https的请求，就不乱码了</p>
-<h2 id="抓ios请求"><a href="#抓ios请求" class="headerlink" title="抓ios请求"></a>抓ios请求</h2><ol>
-<li>前提是需要手机和MAC在同一网段。查看电脑IP地址<img src="/uploads/charles/charles-2.png" alt="alt text"></li>
-<li>点击“设置-&gt;无线局域网-&gt;连接的WiFi”，设置HTTP代理：服务器为电脑IP地址：如192.168.1.169 ,端口：8888<img src="/uploads/charles/charles-3.png" alt="alt text"></li>
-</ol>
-<h2 id="在ios上抓https请求"><a href="#在ios上抓https请求" class="headerlink" title="在ios上抓https请求"></a>在ios上抓https请求</h2><p>需要安装SSL证书到手机设备</p>
-<ol>
-<li>点击 Help -&gt; SSL Proxying -&gt; Install Charles Root Certificate on a Mobile Device<img src="/uploads/charles/charles-4.png" alt="alt text"></li>
-<li>出现弹窗得到地址 chls.pro/ssl<img src="/uploads/charles/charles-5.png" alt="alt text"></li>
-<li>在手机Safari浏览器输入地址 chls.pro/ssl，出现证书安装页面，点击安装<img src="/uploads/charles/charles-6.png" alt="alt text"></li>
-</ol>
-<h2 id="一点疑问"><a href="#一点疑问" class="headerlink" title="一点疑问"></a>一点疑问</h2><p>我要抓微信小程序的包，结果发现在手机上运行时可以抓，但在mac上什么包都抓不到，这么说是不是在电脑上微信小程序走了代理？</p>
-
+            <p>
+              抓包（packet capture）就是将网络传输发送与接收的数据包进行截获、重发、编辑、转存等操作，也用来检查网络安全。在windows下我用fiddler，mac下用charles，下面来介绍一下mac下如何用charles抓包
+下载安装charles下载链接http://pan.baidu.c
+              ...
+            </p>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2016/12/15/charles/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -1224,7 +1084,7 @@
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sniperyan">
       <meta itemprop="description" content="叫我起床的是梦想">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12254952?v=3&s=120">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
@@ -1335,22 +1195,19 @@
       
         
           
-            <p>在写react的时候经常会用到bind函数指定this对象，除了bind方法，JavaScrtipt动态变换运行时上下文特性,还体现在apply, call两个方法的运用上。call, apply都属于Function.prototype的一个方法，这2个方法的用途都是在特定的作用域中调用函数，实际上等于设置函数体内this对象的值。</p>
-<h2 id="理解apply"><a href="#理解apply" class="headerlink" title="理解apply"></a>理解apply</h2><p>首先，apply()方法接收2个参数值，一个是在其中运行函数的作用域，，另一个是参数数组。其中第二个参数可以是Array的实例，也可以是arguments对象，例如：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 下面这个例子中callSum1()在执行sum()函数时传入了this（实际上this为window对象）和arguments对象，而</span></span><br><span class="line"><span class="comment"> * callSum2同样也调用了sum函数，但它传入的是this和一个数组，两个函数都能返回正确的结果</span></span><br><span class="line"><span class="comment"> * @param num1</span></span><br><span class="line"><span class="comment"> * @param num2</span></span><br><span class="line"><span class="comment"> * @returns &#123;*&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">num1,num2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> num1+num2;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callSum1</span>(<span class="params">num1,num2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> sum.apply(<span class="keyword">this</span>,<span class="built_in">arguments</span>); <span class="comment">//传入arguments对象</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callSum2</span>(<span class="params">num1,num2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> sum.apply(<span class="keyword">this</span>,[num1,num2]);  <span class="comment">//传入数组</span></span><br><span class="line">&#125;</span><br><span class="line">alert(callSum1(<span class="number">10</span>,<span class="number">10</span>));  <span class="comment">//20</span></span><br><span class="line">alert(callSum2(<span class="number">10</span>,<span class="number">10</span>));  <span class="comment">//20</span></span><br></pre></td></tr></table></figure>
-<h2 id="理解call"><a href="#理解call" class="headerlink" title="理解call"></a>理解call</h2><p>call()方法与apply()方法的作用相同，他们的区别仅仅在于接收参数的方式不同，对于call()而言，第一个参数是this没有变，变化得是其余的参数都需要一一列举出来传递而不是传递一个Array。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">num1,num2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> num1+num2;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callSum1</span>(<span class="params">num1,num2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> sum.call(<span class="keyword">this</span>,num1,num2); <span class="comment">//传入arguments对象</span></span><br><span class="line">&#125;</span><br><span class="line">alert(callSum1(<span class="number">10</span>,<span class="number">10</span>));  <span class="comment">//20</span></span><br></pre></td></tr></table></figure>
-<h2 id="apply-与-call总结"><a href="#apply-与-call总结" class="headerlink" title="apply 与 call总结"></a>apply 与 call总结</h2><p>在使用call()方法的情况下,callsum()方法必须明确的传入每个参数，结果与apply()方法并没有什么不同，至于是使用apply()还是call()方法完全取决于你如何传递参数最方便。如果你打算直接传入arguments对象或者一个数组，那么使用apply()肯定更方便，否则选择call()更合适（在不给函数传递参数的时候，使用哪个方法都无所谓）</p>
-<p><strong>事实上，传递参数并非call()与apply()真正的用武之地，他们真正强大地方在于扩展函数的作用域</strong>，看下面的例子：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> color = <span class="string">'red'</span>;</span><br><span class="line"><span class="keyword">var</span> o =&#123;</span><br><span class="line">    color:<span class="string">'blue'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayColor</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.color);</span><br><span class="line">&#125;</span><br><span class="line">sayColor.call(<span class="keyword">this</span>);  <span class="comment">//red</span></span><br><span class="line">sayColor.call(<span class="built_in">window</span>); <span class="comment">//red</span></span><br><span class="line">sayColor.call(o);  <span class="comment">//blue</span></span><br><span class="line">sayColor.apply(<span class="keyword">this</span>);  <span class="comment">//red</span></span><br><span class="line">sayColor.apply(<span class="built_in">window</span>);  <span class="comment">//red</span></span><br><span class="line">sayColor.apply(o);  <span class="comment">//blue</span></span><br></pre></td></tr></table></figure>
-<p>上面例子中sayColor()作为全局函数挂在window上，传入的this即window，所以输出的都是red，但当传入o时，函数的执行环境就变了，此时函数内部的this指向了o对象，所以输出blue。<br>使用call()或者apply()扩充作用域最大的好处，就是对象不需要与方法有任何的耦合关系。</p>
-<h2 id="bind"><a href="#bind" class="headerlink" title="bind"></a>bind</h2><p>ECMAScript5 还定义了一个方法bind()，这个方法会创建一个实例，其this值会被绑定到传给bind函数的值，例如：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> color = <span class="string">'red'</span>;</span><br><span class="line"><span class="keyword">var</span> o =&#123;</span><br><span class="line">    color:<span class="string">'blue'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayColor</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.color);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> objSayColor = sayColor.bind(o)</span><br><span class="line">objSayColor();  <span class="comment">//blue</span></span><br></pre></td></tr></table></figure>
-<p>在这里sayColor调用bind并传入对象o，并且创建了objSayColor()函数，objSayColor()函数中this值指向o，因此即使在全局作用域中调用该函数，也会看到’blue’。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>区分apply,call就一句话：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">foo.call(this, arg1,arg2,arg3) == foo.apply(this, arguments)==this.foo(arg1, arg2, arg3)</span><br></pre></td></tr></table></figure>
-
+            <p>
+              在写react的时候经常会用到bind函数指定this对象，除了bind方法，JavaScrtipt动态变换运行时上下文特性,还体现在apply, call两个方法的运用上。call, apply都属于Function.prototype的一个方法，这2个方法的用途都是在特定的作用域中调用函数，实际
+              ...
+            </p>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2016/11/30/apply-and-call/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -1410,7 +1267,7 @@
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sniperyan">
       <meta itemprop="description" content="叫我起床的是梦想">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12254952?v=3&s=120">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
@@ -1528,62 +1385,20 @@
       
         
           
-            <h3 id="1-浏览器渲染的图层"><a href="#1-浏览器渲染的图层" class="headerlink" title="1.浏览器渲染的图层"></a>1.浏览器渲染的图层</h3><p> <strong>网上的说法</strong>：选择『Show composited layer borders』以后，就能看到有动画3d变换的元素会被一个黄色的边框圈起来，表示放到了一个新的『复合层（composited layer）』中渲染</p>
-<p><strong>个人的体会</strong>：控制好渲染的图层，解决了我在开发过程中 如果页面内容过多，ios端css3动画出不来的问题（页面整体下拉拉不动）<br><img src="/uploads/tru-app-pic1.png" alt="Alt text"></p>
-<p>(这个兄弟跟我的问题类似)</p>
-<p><strong>解决办法</strong>：开启3D加速  (css中添加 <code>transform:translateZ(0);</code>)</p>
-<p><strong>原理</strong>：webkit在绘制页面时会将结构分为各种层，当层足够大时就会变成很大的平铺层。这各一来webkit在每次页面结构发生变化时不需要都渲染整个页面而是渲染对应层了，这对渲染速度来说相当的重要。webkit会给各种层分配一定大小的“备份存储区”在内存里缓存起来，这就是绘制层的上下文，通过这个上下文就可以很容易的实现各种效果（动画，3D变换等），“备份存储区”内存占用大小不仅依层而定，跟设备和显示方式也是有关的，假设这在普通屏幕下是1：1的，但在Retina屏幕下则是1：2的，并且放大时这个量会成倍增加；一张图片是10X10，普通屏幕分配的就是10X10，Retina初始则是20X20。这也表明Retina是更加消耗内存的。当层很大时，意味着“备份存储区”会消耗更大的内存，为了避免这点，webkit并不会绘制一个很大的层来存储一个很大的页面，比如说平铺层则会拆分成很多的块来绘制，即尽占用尽可能小的内存，只是将可视范围内的那部分渲染出来。这就是为什么我们在大页面滚动时会发现下面的内容慢慢显示，向上滚动时上面的内容还慢慢显示的原因。(抄来的)</p>
-<p><strong>还有一个小问题</strong>：所有安卓机都有，如果页面上有不停的repaint的地方并且页面是分层渲染的而不是一个整体，当页面上的元素发生transform变化的时候，如果该变化，不是一个连续的变化，页面会有渲染的瑕疵。（这个问题貌似网上没有相关的描述，我不知道是不是我搜索的关键字不对，反正没有搜到）该问题对应的场景是安卓机的列表页上，有倒计时在不停的变化，如果下拉一下页面，页面就会渲染混乱，感觉有什么层隐藏在底部一样，而ios没有这个问题，我尝试了将页面做成一个层渲染，就不存在该问题，但是一个层渲染，ios又会有拉不动的问题，最后，我加了一个<code>this.refs.slipDiv.style.webkitTransition = &#39;-webkit-transform 0.2s ease 0s&#39;;</code> 使动画线性变化，这样就解决了渲染瑕疵的问题！</p>
-<p><strong>总结</strong>：这个和PC上的情况完全不同，因为在PC上，由于其高性能的硬件，加上强劲的显卡，使得页面渲染的性能非常之高。而在手机上完全不同，有限的硬件性能，加上没有显卡这类专门处理显示的硬件，使得所有页面渲染的工作都由CPU来执行。加上CPU本身的执行频率有限，就会造成页面渲染缓慢。3D加速非常的牛逼，以前的只知道可以开启gpu加速（图形处理器 英语：Graphics Processing Unit，缩写：GPU），具体更深层次的，也没理解过。现在知道了，<strong>还可以在备份存储区，用上缓存</strong>。</p>
-<p>相关文档地址：</p>
-<ol>
-<li><p><a href="http://div.io/topic/1348" target="_blank" rel="noopener">CSS3硬件加速也有坑</a></p>
-</li>
-<li><p><a href="https://www.zhihu.com/question/34556725" target="_blank" rel="noopener">在做 iOS 和 Android 的 HTML5 开发时，你都掉到过哪些坑里？</a></p>
-</li>
-<li><p><a href="http://www.iunbug.com/archives/2012/09/19/411.html" target="_blank" rel="noopener">运用webkit绘制渲染页面原理解决iscroll4闪动的问题</a></p>
-</li>
-</ol>
-<h3 id="2-部分安卓机webview没有touchend事件"><a href="#2-部分安卓机webview没有touchend事件" class="headerlink" title="2.部分安卓机webview没有touchend事件"></a>2.部分安卓机webview没有touchend事件</h3><p>论坛截图：</p>
-<p><img src="/uploads/tru-app-pic2.png" alt="Alt text"></p>
-<p>我自己亲自用田总小米测试的结果：</p>
-<p><img src="/uploads/h5-scroll-pic1.png" alt="Alt text"></p>
-<p><strong>给我造成的问题</strong>：页面滚动的时候，正常的事件触发顺序为touchstart -&gt; touchmove -&gt; touchend -&gt;scroll ，我的小米测试机有时候不触发touchend事件，而我在touchend中添加了滚动条回复位置的方法，方法没执行会造成页面中滚动条错位。</p>
-<p><strong>解决办法</strong>：论坛给的方法更像做广告的，给了一个花钱用的框架<code>Sencha  Touch</code>，我也没法实验。暂时没有什么有效的解决办法，事件取不到，只能用别的方法处理。</p>
-<p>网上看了一个模拟touchend的方法：他的方法是每隔100ms检测两次的滚动条位置是否相同，如果相同，那么就是滚动结束了，我测试了一下，可以模拟touchend事件，而且我的小米手机，滚动的时候，看上去没有卡顿，但是我总感觉这种方法，太牵强了。</p>
-<p>我的变通解决办法：在滚动事件监听的方法里，判断如果是安卓机并且滚动到页面的头部，给滚动区域强制恢复位置，测试完了发现效果还不错</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(Tool.isAndroid() &amp;&amp; <span class="built_in">document</span>.body.scrollTop)&#123;</span><br><span class="line">        <span class="keyword">this</span>.refs.slipDiv.style.webkitTransform = <span class="string">'translate('</span> + <span class="number">0</span> + <span class="string">'px, '</span> + <span class="number">0</span> + <span class="string">'px)'</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p><strong>总结</strong>：这个问题很坑爹，除了小米外还有不少安卓机有这个问题，遇到了要特殊对待。</p>
-<p>相关文档地址：</p>
-<ol>
-<li><a href="http://www.miui.com/forum.php?mod=viewthread&amp;tid=1653419" target="_blank" rel="noopener">米3自带浏览器和webview不支持touchstart,touchmove,touchend事件怎搞</a></li>
-</ol>
-<h3 id="3-React使用总结"><a href="#3-React使用总结" class="headerlink" title="3.React使用总结"></a>3.React使用总结</h3><p>感觉各个生命周期还是需要熟练掌握，个人体会就如下几点：</p>
-<ol>
-<li><p><code>shouldComponentUpdate</code> 需要好好的理解一下。返回false就不需要render，默认是返回true。</p>
-</li>
-<li><p><code>componentWillReceiveProps</code> container中有一个组件有props接受，该页面所有的组件都会触发这个方法</p>
-</li>
-<li><p>同一个router（#/smOrderListfinish），工程师端列表已完成页面，如果改变页面后面的参数，比如这样：（#/smOrderListfinish?&amp;col=col2&amp;StartDate=2016-11-01&amp;EndDate=2016-12-01&amp;_k=1qampo）。你猜页面会刷新吗？<br>答案：<strong>不会</strong>，那如何在一个页面，通过改变url参数，不改变hash值（也就是路由不跳转，而让页面刷新呢）。我们可以手动的修改state，state变化了，页面也就刷新了</p>
-</li>
-</ol>
-<p>其实这段逻辑不容易写，我们要利用好<code>componentWillReceiveProps</code>里的默认参数<code>nextProps</code>，我的实现方法：</p>
-<p><img src="/uploads/tru-app-pic4.png" alt="Alt text"></p>
-<p><img src="/uploads/tru-app-pic3.png" alt="Alt text"></p>
-<p>上面代码在<code>componentWillReceiveProps</code>里判断前后的path是否相同，如果不同则对state进行操作，从而达到页面内容变化的目的，我在这个项目里不少地方都用了类似的逻辑，这段逻辑是通用的</p>
-<p><strong>总结</strong>：还是要以官方的API为准</p>
-<h3 id="4-chrome-TimeLine"><a href="#4-chrome-TimeLine" class="headerlink" title="4.chrome TimeLine"></a>4.chrome TimeLine</h3><p>60fps是理想值，30-60fps不会卡顿，不过实际中，肯定会有低于30fps的</p>
-<p>相关文档地址：</p>
-<ol>
-<li><a href="https://segmentfault.com/a/1190000003991459?_ea=537807" target="_blank" rel="noopener">使用Chrome DevTools的Timeline分析页面性能</a></li>
-</ol>
-<h3 id="5-app到后台，js不会执行"><a href="#5-app到后台，js不会执行" class="headerlink" title="5.app到后台，js不会执行"></a>5.app到后台，js不会执行</h3><p>ios是这样，安卓部分是这样，这种情况会造成页面上的计时器会不准确，解决办法看下面文档：</p>
-<p>相关文档地址：</p>
-<ol>
-<li><a href="https://imququ.com/post/mobile-web-and-js-timer.html" target="_blank" rel="noopener">移动 Web 与 JavaScript 定时器</a></li>
-</ol>
-
+            <p>
+              1.浏览器渲染的图层 网上的说法：选择『Show composited layer borders』以后，就能看到有动画3d变换的元素会被一个黄色的边框圈起来，表示放到了一个新的『复合层（composited layer）』中渲染
+个人的体会：控制好渲染的图层，解决了我在开发过程中 如果页面内容过多
+              ...
+            </p>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2016/11/29/leaving-share/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -1643,7 +1458,7 @@
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sniperyan">
       <meta itemprop="description" content="叫我起床的是梦想">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12254952?v=3&s=120">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
@@ -1754,64 +1569,22 @@
       
         
           
-            <h2 id="下面全是本人在移动端开发中亲历问题与经验的总结，持续更新……"><a href="#下面全是本人在移动端开发中亲历问题与经验的总结，持续更新……" class="headerlink" title="下面全是本人在移动端开发中亲历问题与经验的总结，持续更新……"></a>下面全是本人在移动端开发中亲历问题与经验的总结，持续更新……</h2><ol>
-<li><p>手机页面开发，怎么能离开远程调试工具呢，这里推荐<a href="http://people.apache.org/~pmuellr/weinre/docs/latest/Home.html" target="_blank" rel="noopener">weinre</a></p>
-</li>
-<li><p>开启3D GPU加速，使用 <code>translateZ(0)</code> 。最大的好处，它使用了硬件加速功能。适用问题：IOS webview滚动动画失效（见我的博客–<a href="../h5-scroll">移动端下拉刷新与滚动加载踩坑</a>），滚动时页面抖动，提升滚动流畅性，部分安卓机事件失效（例如focus、touch、click等事件均无效）</p>
-</li>
-<li><p>叠加区高亮，在部分android机型中点击页面某一块区域可能会出现如图所示的黄色框秒闪，这是部分机型系统自身的默认定制样式，给该元素一个CSS样式重置掉：  <code>-webkit-tap-highlight-color:rgba(0,0,0,0);</code></p>
-</li>
-<li><p>页面进行惯性滑动的时候（手指松开的滑动），处于性能的考虑，浏览器是会把页面上的渲染进行锁定的状态。也就说，当页面进行滑动的时候，js动态修改上面的元素是无效的。直到页面滚动停止，这是个非常特殊的规则。在IOS和android上都会存在，在ios上显得突出。在日常评估的时候，一定需要这个特性，这个特性决定了某些滑动中的功能是无法实现的，比如说某个元素到某个位置从static变成fixed的状态，或者进行状态转换。在滑动的时候，即使js动态设置了，页面也不会响应，直到滚动结束。</p>
-</li>
-<li><p>我之前在做ios webapp时，在ios的系统里，网页头了，还能继续往上面拉，有一个力反馈的效果，看上去是把整个页面往下拉了。这个问题是ios的设置的问题，IOS开发可以设置解决，前端开发就不懂怎么设置了</p>
-</li>
-<li><p>meta的viewport，设置initial-scale的时候，部分安卓机只支持1.0的缩放，所以安卓机一律不做高清适配，统一1.0，IOS系统需要根据设备像素比做高清适配</p>
-</li>
-<li><p>meta功能要用好，屏蔽电话号码等功能很实用,第1个meta标签是iphone设备中的safari私有meta标签，它表示：允许全屏模式浏览； 第2个meta标签也是iphone的私有标签，它指定的iphone中safari顶端的状态条的样式； 第3个meta标签表示：告诉设备忽略将页面中的数字识别为电话号码，第4个不识别邮箱</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta content=&quot;yes&quot; name=&quot;apple-mobile-web-app-capable&quot; /&gt;</span><br><span class="line">&lt;meta content=&quot;black&quot; name=&quot;apple-mobile-web-app-status-bar-style&quot; /&gt;</span><br><span class="line">&lt;meta content=&quot;telephone=no&quot; name=&quot;format-detection&quot; /&gt;</span><br><span class="line">&lt;meta content=&quot;email=no&quot; name=&quot;format-detection&quot; /&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用css动画，不要使用js动画</p>
-</li>
-<li><p>css动画请使用transform，而非直接控制width,height,margin，否则会造成大量的计算，性能堪忧。transfrom会把元素独立出来单独计算的。如果非要直接控制宽高，可以开启3D加速</p>
-</li>
-<li><p>click的300ms延迟响应，需要使用fastclick库，通过touch的事件完成tap，替代click（所谓的 tap 事件由 touchstart 事件 + touchmove 判断 + touchend 事件封装组成）</p>
-</li>
-<li><p>当网页上图片比较多的时候，使用lazyload，原理： 添加data-src属性保存图片的url，当图片出现在可视区域内，通过js代码把data-src属性拷贝到src，给Img添加src属性</p>
-</li>
-<li><p>跨域问题。手机浏览器也是浏览器，在ajax调用外部api的时候也存在跨域问题。当然利用 cordova 打包后，由于协议不一样就不存在跨域问题了。让后端加上两个http头：第一个头可以避免跨域问题，第二个头可以方便ajax请求设置content-type等配置项</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Origin &quot;*&quot;</span><br><span class="line">Access-Control-Allow-Headers &quot;Origin, X-Requested-With, Content-Type, Accept&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用rem做适配</p>
-</li>
-<li><p>使用flex布局，同时使用auto-prefixer保证兼容性</p>
-</li>
-<li><p>部分安卓机touchstart,touchmove,touchend事件失效,可以添加<code>e.preventDefault()</code>，如果还不行再开启3D加速试试。touchstart和touchend添加<code>e.preventDefault()</code>会造成单击事件失效,a标签也会失效</p>
-</li>
-<li><p>关于在touch事件中设置 <code>e.preventDefault()</code>，这样会阻止浏览器的默认行为，比如touchstart与touchend中添加了<code>e.preventDefault()</code>，如果里面包含a标签，那么跳转将会失效。另外，touch事件在往上拉或者往下拉的时候，由于惯性，在安卓机中，会把奇怪的背景色拉出来盖到页面上，虽然时间很短，但是仔细观察还是可以发现</p>
-</li>
-<li><p>IOS 浏览器上 new Date(“2016-09-30”) 会报 <code>invalid date</code>，把 <code>-</code>换成<code>/</code>则没有问题，安卓和chorme不存在该问题</p>
-</li>
-<li><p>在网页上拨打电话，使用<code>&lt;a href=”tel:12345678 ”&gt;拨打电话&lt;/a&gt;</code>，不要使用<code>location.href=&#39;tel:12345678&#39;</code>，经测试<code>location.href=&#39;tel:12345678&#39;</code>这种方法在安卓上可以，但在ios上失效</p>
-</li>
-<li><p>ios系统和部分安卓系统，在应用进入后台运行时，页面上的js会停止运行，这个特性可能会带来一系列问题，我遇到的一个问题是页面上跑的计时器失效。<strong> 解决办法： </strong> 进入页面的时候获取服务器时间，再通过js获取本地时间，通过服务器时间-本地时间得到一个时间差diffValue，后面需要取服务器时间的时候，只需要js获取本地时间再加上diffValue即可。因为应用进入后台，手机系统的时间不会变，js取当前时间取得是手机时间</p>
-</li>
-<li><p>webview下写的页面,当弹出一个半透明全屏的弹框后,在弹框上用手指滑动，弹框下面的页面是会跟着动的。即滚动穿透问题，解决办法：在弹框下的滚动页面的容器上加了一个<code>overflow：auto</code>滚动就不穿透了。最好是在弹框出现时给下层加上属性，弹框取消时该属性去掉，因为可能会造成touchmove中e.preventDefault等属性带来的兼容性问题。</p>
-</li>
-</ol>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
-<li><p><a href="http://am-team.github.io/amg/dev-exp-doc.html" target="_blank" rel="noopener">无线Web开发经验谈</a></p>
-</li>
-<li><p><a href="http://www.iunbug.com/archives/2012/09/19/411.html" target="_blank" rel="noopener">运用webkit绘制渲染页面原理解决iscroll4闪动的问题</a></p>
-</li>
-<li><p><a href="http://tgideas.qq.com/webplat/info/news_version3/804/808/811/m579/201411/290576.shtml" target="_blank" rel="noopener">移动前端系列——移动端页面坑与排坑技巧</a></p>
-</li>
-<li><p><a href="https://www.zhihu.com/question/34556725" target="_blank" rel="noopener">在做 iOS 和 Android 的 HTML5 开发时，你都掉到过哪些坑里</a></p>
-</li>
-<li><p><a href="https://github.com/jieyou/remote_inspect_web_on_real_device" target="_blank" rel="noopener">各种真机远程调试方法汇总</a></p>
-</li>
-</ol>
+            <p>
+              下面全是本人在移动端开发中亲历问题与经验的总结，持续更新……
+手机页面开发，怎么能离开远程调试工具呢，这里推荐weinre
 
+开启3D GPU加速，使用 translateZ(0) 。最大的好处，它使用了硬件加速功能。适用问题：IOS webview滚动动画失效（见我的博客–移动端下拉刷新与滚动加载
+              ...
+            </p>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2016/10/18/mobile-issues/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -1871,7 +1644,7 @@
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sniperyan">
       <meta itemprop="description" content="叫我起床的是梦想">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12254952?v=3&s=120">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
@@ -1982,24 +1755,19 @@
       
         
           
-            <p>最近在做hybrid APP，其中的下拉刷新与滚动加载把我折腾的够呛，不是说效果有多难实现，而是各种手机都要适配。安卓机坑爹，安卓机坑爹，安卓机坑爹（重要的事情说三遍）。个人感觉，安卓机浏览器比之前的IE还要坑爹，所以我们有理由相信，未来的某一天，安卓机的各式坑爹的浏览器，终究会被我们抛弃，就如现在的IE一样，我不觉能够适配各种安卓机是一种非常牛逼的本领，毕竟它们是一种BUG，是一个异类。理想总是美好的，现实是我还要吃饭，只能顺着老板的意思，去做兼容。</p>
-<h3 id="坑1：列表页数据太多，下拉的时候动画效果出不来"><a href="#坑1：列表页数据太多，下拉的时候动画效果出不来" class="headerlink" title="坑1：列表页数据太多，下拉的时候动画效果出不来"></a>坑1：列表页数据太多，下拉的时候动画效果出不来</h3><p>最初遇到这个问题，我怀疑是我的DOM结构有问题，各种改DOM结构都无法解决，而安卓机却没有问题。这时，我对安卓机充满了好感（可能是唯一的好感吧）。我跟IOS开发的同事交流，得知原生的IOS列表页性能非常好，列表页看起来是很多数据滚动，而实际上只有部分数据在列表当中，当滚动到顶部的时候，数据会往顶部加载，此时底部的数据会被从列表中清除，往下滚动同理。这么做是为了让IOS APP的滚动时性能更好。这时我想：IOS浏览器会不会也是有同样的需求，当页面数据过多的时候，也需要做同样的加载呢？此时我先验证我的想法是正确的，我把原先的七八十条数据的列表，缩减到只有10几条，就这样下拉的时候动画出来了。<br>问题原因找到了，那么解决办法呢？首先我想试试模拟同事说的原生IOS加载列表的算法，感觉实现起来有点难度，于是就另辟蹊径—-开启3D加速。<br><strong>方法：</strong>  给列表页中的每一项的最外层添加样式 <code>-webkit-transform:translateZ(0);</code><br><strong>原因：</strong>  webkit在绘制页面时会将结构分为各种层，当层足够大时就会变成很大的平铺层。这样一来webkit在每次页面结构发生变化时不需要都渲染整个页面而是渲染对应层了，这对渲染速度来说相当的重要。webkit会给各种层分配一定大小的“备份存储区”在内存里缓存起来，这就是绘制层的上下文，通过这个上下文就可以很容易的实现各种效果（动画，3D变换等），“备份存储区”内存占用大小不仅依层而定，跟设备和显示方式也是有关的，假设这在普通屏幕下是1：1的，但在Retina屏幕下则是1：2的，并且放大时这个量会成倍增加；一张图片是10X10，普通屏幕分配的就是10X10，Retina初始则是20X20。这也表明Retina是更加消耗内存的。当层很大时，意味着“备份存储区”会消耗更大的内存，为了避免这点，webkit并不会绘制一个很大的层来存储一个很大的页面，比如说平铺层则会拆分成很多的块来绘制，即尽占用尽可能小的内存，只是将可视范围内的那部分渲染出来。这就是为什么我们在大页面滚动时会发现下面的内容慢慢显示，向上滚动时上面的内容还慢慢显示的原因。添加 <code>-webkit-transform:translateZ(0);</code>可以将滚动区域可视范围的列表项元素缓存起来，记webkit强制缓存起来即是将他们独立成一个层，而且这个层当然不会很大否则会被视为平铺层处理了。一般列表里项里的元素不会像页面主容器一样的大的。</p>
-<h3 id="坑2：页面向下滚动的时候，fixed固定的元素会错位，甚至抖动"><a href="#坑2：页面向下滚动的时候，fixed固定的元素会错位，甚至抖动" class="headerlink" title="坑2：页面向下滚动的时候，fixed固定的元素会错位，甚至抖动"></a>坑2：页面向下滚动的时候，fixed固定的元素会错位，甚至抖动</h3><p>这个问题严重影响了web的展示效果，包括安卓和IOS都会有这个问题，解决办法同坑1，3D加速设置之后这个问题也解决了</p>
-<h3 id="坑3：适配小米手机"><a href="#坑3：适配小米手机" class="headerlink" title="坑3：适配小米手机"></a>坑3：适配小米手机</h3><p>问题出现在touchmove事件，touchmove事件只触发一次不能连续触发，除了touchmove，touchend更加惨，压根没有触发。<br>其他部分安卓机也可能会有类似的问题（我还没测试），在小米的论坛上，早就有人贴出了<a href="http://www.miui.com/thread-1653419-1-1.html" target="_blank" rel="noopener">问题帖子</a>，“危害武林”的小米却没有解决。不过这个兄弟的解决办法，更像是做广告的，他在给一个付费的移动端框架打广告。我直接PASS了他的方法。我查找了相关资料，终于找到了一个貌似正解的描述：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">On Android ICS if no preventDefault is called on touchstart or the first touchmove, </span><br><span class="line">further touchmove events and the touchend will not be fired.</span><br><span class="line">As a workaround we need to decide in the first touchmove if </span><br><span class="line">this is a scroll (so we don’t call preventDefault) and then manually trigger touchend.</span><br></pre></td></tr></table></figure>
-<p>我给touchstart,touchmove,touchend都加上了<code>e.preventDefault();</code>小米可以全部监听到这三个事件了。不过这带来了更为严重的问题— 列表页中的a标签全部失效无法点击。<code>e.preventDefault();</code>阻止了浏览器的事件的默认效果，所以也就阻止了a标签的跳转，看来这个方法还不能乱加。后来突然脑袋灵光一闪，既然在<code>touchstart</code>中加了<code>event.preventDefault</code>会导致不触发click事件，那我在touchmove中加可以吧？后来经过测试，只能够在touchmove中添加，start和end都不能添加。touchmove中有event.preventDefault()方法，还需要加上方向判断，比如我做的下拉刷新功能，所以我就添加了逻辑：如果手指是往下拉的时候，就在touchmove里添加<code>e.preventDefault();</code> 此时如果不加这个方法，小米手机的浏览器touchmove事件只会触发一次，不能连续触发，所以就不能够出现下拉刷新的效果了，添加该方法就可以连续触发touchmove事件了。<br><strong>出现该问题的原因:</strong>该问题多出现在 Android 4.0 和 4.4 版本里，在touchmove触发的瞬间就触发了touchcancel，然后就没有然后了，所以要在touchmove触发的时候禁止它的默认行为</p>
-<h3 id="坑4：小米手机最后的touchend事件有时候不触发"><a href="#坑4：小米手机最后的touchend事件有时候不触发" class="headerlink" title="坑4：小米手机最后的touchend事件有时候不触发"></a>坑4：小米手机最后的touchend事件有时候不触发</h3><p>页面滚动的时候，正常的事件触发顺序为<code>touchstart -&gt; touchmove -&gt; touchend -&gt;scroll</code> ，我的小米测试机有时候不触发touchend事件，而我在touchend中添加了滚动条回复位置的方法，方法没执行会造成页面中滚动条错位。<br>小米手机测试图：<img src="/uploads/h5-scroll-pic1.png" alt="Alt text"></p>
-<p><strong>别人的解决方法:</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">listenTouchEndForAndroid()&#123;</span><br><span class="line">        <span class="keyword">this</span>.timer = setInterval(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.newTop = <span class="built_in">document</span>.body.scrollTop;</span><br><span class="line">            <span class="comment">//console.log(++count,oldTop,newTop);</span></span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">this</span>.newTop === <span class="keyword">this</span>.oldTop &amp;&amp; <span class="keyword">this</span>.refs.slipDiv.style.webkitTransform !==<span class="string">'translate(0px, 0px)'</span>) &#123;</span><br><span class="line">                <span class="comment">//clearTimeout(this.timer);</span></span><br><span class="line">                <span class="comment">//已停止，写入业务代码</span></span><br><span class="line">                <span class="keyword">this</span>.refs.slipDiv.style.webkitTransform = <span class="string">'translate('</span> + <span class="number">0</span> + <span class="string">'px, '</span> + <span class="number">0</span> + <span class="string">'px)'</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">this</span>.oldTop = <span class="keyword">this</span>.newTop;</span><br><span class="line">                <span class="comment">//this.timer = setTimeout(this.listenTouchEndForAndroid,100);</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,<span class="number">100</span>)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>他的方法是每隔100ms检测两次的滚动条位置是否相同，如果相同，那么就是滚动结束了，我测试了一下，可以模拟touchend事件，而且我的小米手机，滚动的时候，看上去没有卡顿，但是我总感觉这种方法，太牵强了。</p>
-<p><strong>我的解决方法:</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 处理页面滚动加载的方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    handleScroll(e) &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123;networkType&#125; = <span class="keyword">this</span>.props;</span><br><span class="line">        <span class="keyword">if</span> (Tool.reachBottom() &amp;&amp; (Tool.isDownScroll() === <span class="string">"down"</span>) &amp;&amp; (networkType != <span class="string">'No network connection'</span>)) &#123;</span><br><span class="line">            <span class="comment">//到达底部，分页加载数据</span></span><br><span class="line">            <span class="keyword">const</span> &#123;loadState&#125; = <span class="keyword">this</span>.props;</span><br><span class="line">            <span class="keyword">if</span> (!loadState) &#123;</span><br><span class="line">                <span class="keyword">this</span>.loadData();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//解决部分手机，监测不到touchEnd事件，滚动条错位的情况，比如小米</span></span><br><span class="line">        <span class="keyword">if</span>(Tool.isAndroid() &amp;&amp; <span class="built_in">document</span>.body.scrollTop)&#123;</span><br><span class="line">            <span class="keyword">this</span>.refs.slipDiv.style.webkitTransform = <span class="string">'translate('</span> + <span class="number">0</span> + <span class="string">'px, '</span> + <span class="number">0</span> + <span class="string">'px)'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>在滚动事件监听的方法里，判断如果是安卓机并且滚动到页面的头部，给滚动区域强制恢复位置，测试完了发现效果还不错，实现了我的需求。</p>
-<h3 id="坑5：安卓机下拉的时候，会把顶部的状态栏的背景色部分拉到web区域"><a href="#坑5：安卓机下拉的时候，会把顶部的状态栏的背景色部分拉到web区域" class="headerlink" title="坑5：安卓机下拉的时候，会把顶部的状态栏的背景色部分拉到web区域"></a>坑5：安卓机下拉的时候，会把顶部的状态栏的背景色部分拉到web区域</h3><p>测试了部分安卓机，当scroll到顶部的时候，会把机器最顶部的状态栏的背景色部分拉到web区域，会有很奇怪的效果，如果加了e.preventDefault()，将不会触发该效果。</p>
-<h3 id="部分代码"><a href="#部分代码" class="headerlink" title="部分代码"></a>部分代码</h3><p>直接截取我的项目部分中下拉刷新与滚动加载的代码，希望对你有所启发（react框架）：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constructor</span>(props, context) &#123;</span><br><span class="line">        <span class="keyword">super</span>(props, context);</span><br><span class="line">        <span class="keyword">this</span>.handleScroll = <span class="keyword">this</span>.handleScroll.bind(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">this</span>.netChange = <span class="keyword">this</span>.netChange.bind(<span class="keyword">this</span>);</span><br><span class="line">        <span class="comment">//初始touch y坐标</span></span><br><span class="line">        <span class="keyword">this</span>.startY = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//是否需要更新</span></span><br><span class="line">        <span class="keyword">this</span>.needUpdate = <span class="literal">false</span>;</span><br><span class="line">        <span class="comment">//是否展示没有数据</span></span><br><span class="line">        <span class="keyword">this</span>.state = &#123;</span><br><span class="line">            <span class="string">"noData"</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="string">"firstPage"</span>: <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 处理页面滚动加载的方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    handleScroll(e) &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123;networkType&#125; = <span class="keyword">this</span>.props;</span><br><span class="line">        <span class="keyword">if</span> (Tool.reachBottom() &amp;&amp; (Tool.isDownScroll() === <span class="string">"down"</span>) &amp;&amp; (networkType != <span class="string">'No network connection'</span>)) &#123;</span><br><span class="line">            <span class="comment">//到达底部，分页加载数据</span></span><br><span class="line">            <span class="keyword">const</span> &#123;loadState&#125; = <span class="keyword">this</span>.props;</span><br><span class="line">            <span class="keyword">if</span> (!loadState) &#123;</span><br><span class="line">                <span class="keyword">this</span>.loadData();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//解决部分手机，监测不到touchEnd事件，滚动条错位的情况，比如小米</span></span><br><span class="line">        <span class="keyword">if</span>(Tool.isAndroid() &amp;&amp; <span class="built_in">document</span>.body.scrollTop)&#123;</span><br><span class="line">            <span class="keyword">this</span>.refs.slipDiv.style.webkitTransform = <span class="string">'translate('</span> + <span class="number">0</span> + <span class="string">'px, '</span> + <span class="number">0</span> + <span class="string">'px)'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    handleTouchStart(e) &#123;</span><br><span class="line">        <span class="comment">//e.preventDefault();</span></span><br><span class="line">        <span class="keyword">let</span> touch = e.touches[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">this</span>.startY = touch.pageY;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    handleTouchMove(e) &#123;</span><br><span class="line">        <span class="keyword">let</span> touch = e.touches[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">this</span>.startY || (<span class="keyword">this</span>.startY = touch.pageY);</span><br><span class="line">        <span class="keyword">let</span> y = touch.pageY - <span class="keyword">this</span>.startY;</span><br><span class="line">        <span class="comment">//  touch.pageY&gt;this.startY向上滚动</span></span><br><span class="line">        <span class="comment">//手指下拉为true，手指上滑为false</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">document</span>.body.scrollTop === <span class="number">0</span> &amp;&amp; touch.pageY &gt; <span class="keyword">this</span>.startY) &#123;</span><br><span class="line">            <span class="comment">/*如果不加e.preventDefault()，部分安卓机touchmove事件只会触发一次，不能连续触发，</span></span><br><span class="line"><span class="comment">            而且当scroll到顶部的时候，会把机器最顶部的状态栏的背景色部分拉到web区域，会有很奇怪的效果</span></span><br><span class="line"><span class="comment">            如果加了e.preventDefault()，将不会触发scroll事件，事件触发顺序为 start-move*n-end  很奇葩</span></span><br><span class="line"><span class="comment">            */</span></span><br><span class="line">            e.preventDefault();</span><br><span class="line">        &#125;</span><br><span class="line">        (y &gt;= <span class="number">0</span>) &amp;&amp; (<span class="keyword">this</span>.refs.slipDiv.style.webkitTransform = <span class="string">'translate('</span> + <span class="number">0</span> + <span class="string">'px, '</span> + y / <span class="number">2</span> + <span class="string">'px)'</span>);</span><br><span class="line">        <span class="comment">//搜索框下拉超过60px才展示</span></span><br><span class="line">        <span class="keyword">if</span> (y &gt; <span class="number">120</span> &amp;&amp; <span class="built_in">document</span>.body.scrollTop === <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//更新</span></span><br><span class="line">            <span class="keyword">this</span>.needUpdate = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    handleTouchEnd(e) &#123;</span><br><span class="line">        <span class="comment">//e.preventDefault();</span></span><br><span class="line">        <span class="keyword">const</span> &#123;actions, networkType&#125; = <span class="keyword">this</span>.props;</span><br><span class="line">        <span class="keyword">this</span>.refs.slipDiv.style.webkitTransform = <span class="string">'translate('</span> + <span class="number">0</span> + <span class="string">'px, '</span> + <span class="number">0</span> + <span class="string">'px)'</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.needUpdate &amp;&amp; (networkType != <span class="string">'No network connection'</span>)) &#123;</span><br><span class="line">            <span class="keyword">this</span>.timeTypeArr = []</span><br><span class="line">            <span class="keyword">this</span>.loadData(<span class="keyword">this</span>.props, <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">this</span>.refreshBadge();</span><br><span class="line">            <span class="keyword">this</span>.needUpdate = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
+            <p>
+              最近在做hybrid APP，其中的下拉刷新与滚动加载把我折腾的够呛，不是说效果有多难实现，而是各种手机都要适配。安卓机坑爹，安卓机坑爹，安卓机坑爹（重要的事情说三遍）。个人感觉，安卓机浏览器比之前的IE还要坑爹，所以我们有理由相信，未来的某一天，安卓机的各式坑爹的浏览器，终究会被我们抛弃，就如现在
+              ...
+            </p>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2016/10/18/h5-scroll/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -2059,7 +1827,7 @@
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sniperyan">
       <meta itemprop="description" content="叫我起床的是梦想">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12254952?v=3&s=120">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
@@ -2170,21 +1938,20 @@
       
         
           
-            <h2 id="exports-和-module-exports-的区别"><a href="#exports-和-module-exports-的区别" class="headerlink" title="exports 和 module.exports 的区别"></a>exports 和 module.exports 的区别</h2><p>很多新手可能会迷惑于 exports 和 module.exports 的区别，下面我来说一下两者的区别</p>
-<h4 id="exports-和-module-exports-都指向同一个空对象"><a href="#exports-和-module-exports-都指向同一个空对象" class="headerlink" title="exports 和 module.exports 都指向同一个空对象"></a>exports 和 module.exports 都指向同一个空对象</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">module</span>.exports);</span><br><span class="line"><span class="built_in">console</span>.log(exports);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">module</span>.exports===exports);</span><br></pre></td></tr></table></figure>
-<p>代码输出结果如下图<br><img src="/uploads/exports-pic1.png" alt="Alt text"></p>
-<h4 id="exports-导出一个function"><a href="#exports-导出一个function" class="headerlink" title="exports 导出一个function"></a>exports 导出一个function</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//test.js</span></span><br><span class="line">exports.name = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'My name is sniperyan'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//index.js</span></span><br><span class="line"><span class="keyword">var</span> rocker = <span class="built_in">require</span>(<span class="string">'./test.js'</span>);</span><br><span class="line">rocker.name(); <span class="comment">//My name is sniperyan</span></span><br><span class="line"><span class="keyword">import</span> rocker <span class="keyword">from</span> <span class="string">'./test'</span></span><br><span class="line">rocker.name(); <span class="comment">//My name is sniperyan</span></span><br></pre></td></tr></table></figure>
-<p>我这是用babel编译的es6的写法，export导出name方法，require和import导入都可以执行</p>
-<h4 id="module-exports-导出一个function"><a href="#module-exports-导出一个function" class="headerlink" title="module.exports 导出一个function"></a>module.exports 导出一个function</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//test.js</span></span><br><span class="line"><span class="built_in">module</span>.exports.name = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'My name is sniperyan'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//index.js</span></span><br><span class="line"><span class="keyword">var</span> rocker = <span class="built_in">require</span>(<span class="string">'./test.js'</span>);</span><br><span class="line">rocker.name(); <span class="comment">//My name is sniperyan</span></span><br><span class="line"><span class="keyword">import</span> rocker <span class="keyword">from</span> <span class="string">'./test'</span></span><br><span class="line">rocker.name(); <span class="comment">//My name is sniperyan</span></span><br></pre></td></tr></table></figure>
-<p>module.exports导出的方法，require和import导入都可以执行</p>
-<h4 id="Module-exports是真正的接口，exports只不过是它的一个辅助工具"><a href="#Module-exports是真正的接口，exports只不过是它的一个辅助工具" class="headerlink" title="Module.exports是真正的接口，exports只不过是它的一个辅助工具"></a>Module.exports是真正的接口，exports只不过是它的一个辅助工具</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//test.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'module console'</span>);</span><br><span class="line">&#125;;</span><br><span class="line">exports.name = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'My name is sniperyan'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//index.js</span></span><br><span class="line"><span class="keyword">var</span> rocker = <span class="built_in">require</span>(<span class="string">'./test.js'</span>);</span><br><span class="line"><span class="comment">//import rocker from './test'</span></span><br><span class="line">rocker.name();</span><br></pre></td></tr></table></figure>
-<p>这段代码中index.js报错，<code>rocker.name is not a function</code> , 这说明rocker模块忽略了exports收集的name方法，最终返回给调用的是Module.exports而不是exports，但是如果module.exports和exports都指向同一个变量，那最终的结果就如js中的对象引用同理。</p>
-<h4 id="你的模块可以是任何你设置给它的东西。如果你没有显式的给Module-exports设置任何属性和方法，那么你的模块就是exports设置给Module-exports的属性"><a href="#你的模块可以是任何你设置给它的东西。如果你没有显式的给Module-exports设置任何属性和方法，那么你的模块就是exports设置给Module-exports的属性" class="headerlink" title="你的模块可以是任何你设置给它的东西。如果你没有显式的给Module.exports设置任何属性和方法，那么你的模块就是exports设置给Module.exports的属性"></a>你的模块可以是任何你设置给它的东西。如果你没有显式的给Module.exports设置任何属性和方法，那么你的模块就是exports设置给Module.exports的属性</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//test.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">    <span class="keyword">this</span>.about = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name +<span class="string">' is '</span>+ <span class="keyword">this</span>.age +<span class="string">' years old'</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//index.js</span></span><br><span class="line"><span class="keyword">var</span> rocker = <span class="built_in">require</span>(<span class="string">'./test.js'</span>);</span><br><span class="line"><span class="keyword">var</span> r = <span class="keyword">new</span> rocker(<span class="string">'Ozzy'</span>, <span class="number">62</span>);</span><br><span class="line">r.about(); <span class="comment">// Ozzy is 62 years old</span></span><br></pre></td></tr></table></figure>
-<p>如上代码，index.js中使用require方法，因为在模块导出的时候，没有显示的给模块设置任何的属性，如果使用export方法，将会报错，这也就解释了在react-router配置按需加载的时候，container导出的时候需要使用 <code>module.exports</code>而不用 <code>export</code> ，因为配置按需加载的语法使用的是<code>require()</code>引入</p>
-<h4 id="没有显式的给Module-exports设置任何属性和方法，你也可以使用import方法导入"><a href="#没有显式的给Module-exports设置任何属性和方法，你也可以使用import方法导入" class="headerlink" title="没有显式的给Module.exports设置任何属性和方法，你也可以使用import方法导入"></a>没有显式的给Module.exports设置任何属性和方法，你也可以使用import方法导入</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//test.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">    <span class="keyword">this</span>.about = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name +<span class="string">' is '</span>+ <span class="keyword">this</span>.age +<span class="string">' years old'</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//index.js</span></span><br><span class="line"><span class="keyword">import</span> rocker <span class="keyword">from</span> <span class="string">'./test'</span></span><br><span class="line"><span class="keyword">var</span> r = <span class="keyword">new</span> rocker(<span class="string">'Ozzy'</span>, <span class="number">62</span>);</span><br><span class="line">r.about(); <span class="comment">// Ozzy is 62 years old</span></span><br></pre></td></tr></table></figure>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>你的模块并不一定非得返回“实例化对象”。你的模块可以是任何合法的javascript对象–boolean, number, date, JSON, string, function, array等等。如果你想你的模块是一个特定的类型就用Module.exports。如果你想的模块是一个典型的“实例化对象”就用exports。前面已经提到module.exports是真正的接口，exports只不过是它的辅助工具。推荐使用exports导出。</p>
-
+            <p>
+              exports 和 module.exports 的区别很多新手可能会迷惑于 exports 和 module.exports 的区别，下面我来说一下两者的区别
+exports 和 module.exports 都指向同一个空对象console.log(module.exports);console
+              ...
+            </p>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2016/10/11/exports/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -2244,7 +2011,7 @@
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sniperyan">
       <meta itemprop="description" content="叫我起床的是梦想">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12254952?v=3&s=120">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
@@ -2362,15 +2129,19 @@
       
         
           
-            <h2 id="YYYY-MM-DD-ios不能解析"><a href="#YYYY-MM-DD-ios不能解析" class="headerlink" title="YYYY-MM-DD ios不能解析"></a>YYYY-MM-DD ios不能解析</h2><p>我正在做一个webapp，需要跨平台，选用了cordova框架，今天在写订单管理根据时间搜索的时候，遇到一个大坑… …<br>订单管理需要根据时间搜索，我做了一系列date format的封装，由于后台需要<code>YYYY-MM-DD</code>的时间格式，所以我在页面上的时间全部转成这种格式的，包括用时间计算，也是用的这样格式，我调试用的是chrome浏览器，我生成date对象是用的如下方法：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">"2016-09-30"</span>);</span><br></pre></td></tr></table></figure>
-<p>这种方法在chrome上运行正常，但是拿到Ios上的时候，就有问题了，这个方法会报<code>invalid date</code>的错误，所以导致了我后续的一系列方法全部不能正常执行。我发现Ios上 <code>2016/09/30</code> 是可以的，包括 <code>2016-09-30T22:27:07.08</code> 这样也是可以的。</p>
-<h2 id="时区的问题"><a href="#时区的问题" class="headerlink" title="时区的问题"></a>时区的问题</h2><p>上午还正常的，临近下班测试的时候发现日期有一个Bug。因为今天是2016.9.30，在下午的时候，传一个时间进来，比如<br><code>2016-09-30T22:27:07.08</code> ，使用<code>new Date(2016-09-30T22:27:07.08)</code>  生成一个时间对象，接着看浏览器里的效果：<br><img src="/uploads/date-format-in-ios-pic1.png" alt="Alt text"><br>再看date的值，竟然变成了10月1号，不过仿佛时间增加了8个小时… 不过好在自己高中地理课没有睡觉，这明显是中国时间是东8区，存在一个格林威治时间，东8区比格林威治时间要早8个小时。那我这里需要的结果是，不管你传进来的是几点几分几秒，我需要展现的还是几点几分几秒，不允许时间快8个小时，所以我在new date()之后，操作时间的话，必须要在new date()的时候，立马减去这8小时的时差.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> time = <span class="string">'2016-09-30T22:27:07.08'</span>;</span><br><span class="line"><span class="keyword">var</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>(time);</span><br><span class="line">date.setHours(date.getHours() - <span class="number">8</span>);</span><br><span class="line"><span class="keyword">var</span> year = date.getFullYear();</span><br><span class="line"><span class="keyword">var</span> month = date.getMonth()+<span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> day = date.getDate();</span><br><span class="line"><span class="built_in">console</span>.log(year + <span class="string">'-'</span> + month + <span class="string">'-'</span> + day);</span><br></pre></td></tr></table></figure>
-<p>上面的一段代码可以返回 <code>YYYY-MM-DD</code> 格式的时间，需要注意，month从的范围是0-11，另外还有个小技巧，<br><strong> 在进行时间计算的时候，如果增加或减少天数，增加或减少之后需要夸月了，只要dateObj.setDate(xxx)，最后生成的date会自动调整成为一个正确的日期值，月份计算的时候也是同理 </strong></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>时间的format真是一项非常耗时的工作，后面我会把一些常用格式时间的format，总结一个库出来方便以后复用</p>
-
+            <p>
+              YYYY-MM-DD ios不能解析我正在做一个webapp，需要跨平台，选用了cordova框架，今天在写订单管理根据时间搜索的时候，遇到一个大坑… …订单管理需要根据时间搜索，我做了一系列date format的封装，由于后台需要YYYY-MM-DD的时间格式，所以我在页面上的时间全部转成这种格
+              ...
+            </p>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2016/09/30/date-format-in-ios/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -2445,6 +2216,8 @@
       <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars.githubusercontent.com/u/12254952?v=3&s=120" alt="Sniperyan">
             
               <p class="site-author-name" itemprop="name">Sniperyan</p>
               <p class="site-description motion-element" itemprop="description">叫我起床的是梦想</p>
@@ -2562,7 +2335,7 @@
 
 
 
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.0.0</div>
 
 
 
@@ -2650,7 +2423,9 @@
   
 
 
-  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
 
 
 
