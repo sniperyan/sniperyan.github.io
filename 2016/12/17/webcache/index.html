@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="什么是Web缓存Web缓存是指一个Web资源（如html页面，图片，js，数据等）存在于Web服务器和客户端（浏览器）之间的副本。缓存会根据进来的请求保存输出内容的副本；当下一个请求来到的时候，如果是相同的URL，缓存会根据缓存机制决定是直接使用副本响应访问请求，还是向源服务器再次发送请求。比较常见的就是浏览器会缓存访问过网站的网页，当再次访问这个URL地址的时候，如果网页没有更新，就不会再次下载">
+<meta name="keywords" content="前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web缓存总结">
+<meta property="og:url" content="https://sniperyan.github.io/2016/12/17/webcache/index.html">
+<meta property="og:site_name" content="Sniperyan的个人博客">
+<meta property="og:description" content="什么是Web缓存Web缓存是指一个Web资源（如html页面，图片，js，数据等）存在于Web服务器和客户端（浏览器）之间的副本。缓存会根据进来的请求保存输出内容的副本；当下一个请求来到的时候，如果是相同的URL，缓存会根据缓存机制决定是直接使用副本响应访问请求，还是向源服务器再次发送请求。比较常见的就是浏览器会缓存访问过网站的网页，当再次访问这个URL地址的时候，如果网页没有更新，就不会再次下载">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://sniperyan.github.io/uploads/webcache/c1.png">
+<meta property="og:image" content="https://sniperyan.github.io/uploads/webcache/c2.png">
+<meta property="og:image" content="https://sniperyan.github.io/uploads/webcache/c3.png">
+<meta property="og:image" content="https://sniperyan.github.io/uploads/webcache/c4.png">
+<meta property="og:image" content="https://sniperyan.github.io/uploads/webcache/c5.png">
+<meta property="og:updated_time" content="2019-02-02T07:45:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web缓存总结">
+<meta name="twitter:description" content="什么是Web缓存Web缓存是指一个Web资源（如html页面，图片，js，数据等）存在于Web服务器和客户端（浏览器）之间的副本。缓存会根据进来的请求保存输出内容的副本；当下一个请求来到的时候，如果是相同的URL，缓存会根据缓存机制决定是直接使用副本响应访问请求，还是向源服务器再次发送请求。比较常见的就是浏览器会缓存访问过网站的网页，当再次访问这个URL地址的时候，如果网页没有更新，就不会再次下载">
+<meta name="twitter:image" content="https://sniperyan.github.io/uploads/webcache/c1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://sniperyan.github.io/2016/12/17/webcache/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>web缓存总结 | Sniperyan的个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sniperyan的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Full Stack攻城狮</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sniperyan.github.io/2016/12/17/webcache/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sniperyan">
+      <meta itemprop="description" content="叫我起床的是梦想">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sniperyan的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">web缓存总结
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-12-17 22:14:53" itemprop="dateCreated datePublished" datetime="2016-12-17T22:14:53+08:00">2016-12-17</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-02 15:45:46" itemprop="dateModified" datetime="2019-02-02T15:45:46+08:00">2019-02-02</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/js/" itemprop="url" rel="index"><span itemprop="name">js</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="什么是Web缓存"><a href="#什么是Web缓存" class="headerlink" title="什么是Web缓存"></a>什么是Web缓存</h2><p>Web缓存是指一个Web资源（如html页面，图片，js，数据等）存在于Web服务器和客户端（浏览器）之间的副本。缓存会根据进来的请求保存输出内容的副本；当下一个请求来到的时候，如果是相同的URL，缓存会根据缓存机制决定是直接使用副本响应访问请求，还是向源服务器再次发送请求。比较常见的就是浏览器会缓存访问过网站的网页，当再次访问这个URL地址的时候，如果网页没有更新，就不会再次下载网页，而是直接使用本地缓存的网页。只有当网站明确标识资源已经更新，浏览器才会再次下载网页。</p>
+<h2 id="Web缓存的作用"><a href="#Web缓存的作用" class="headerlink" title="Web缓存的作用"></a>Web缓存的作用</h2><ol>
+<li>减少网络带宽消耗</li>
+<li>降低服务器压力</li>
+<li>减少网络延迟，加快页面打开速度</li>
+</ol>
+<h2 id="Web缓存的类型"><a href="#Web缓存的类型" class="headerlink" title="Web缓存的类型"></a>Web缓存的类型</h2><ol>
+<li>数据库数据缓存,如redis,memcached等</li>
+<li>服务器端缓存,如代理服务器缓存，CDN缓存</li>
+<li>浏览器端缓存</li>
+<li>Web应用层缓存</li>
+</ol>
+<h2 id="浏览器缓存的控制"><a href="#浏览器缓存的控制" class="headerlink" title="浏览器缓存的控制"></a>浏览器缓存的控制</h2><p>最有效的一个方法是<strong>使用缓存有关的HTTP消息报头</strong><br>在HTTP请求和响应的消息报头中，常见的与缓存有关的消息报头有：<br><img src="/uploads/webcache/c1.png" alt="alt text"></p>
+<h2 id="用户操作行为与缓存"><a href="#用户操作行为与缓存" class="headerlink" title="用户操作行为与缓存"></a>用户操作行为与缓存</h2><p>用户在使用浏览器的时候，会有各种操作，比如输入地址后回车，按F5刷新等，这些行为会对缓存有什么影响呢？<br><img src="/uploads/webcache/c2.png" alt="alt text"></p>
+<p><strong>当用户使用Ctrl+F5进行强制刷新的时候，只是所有的缓存机制都将失效，重新从服务器拉去资源。</strong></p>
+<h2 id="哪些请求不能被缓存？"><a href="#哪些请求不能被缓存？" class="headerlink" title="哪些请求不能被缓存？"></a>哪些请求不能被缓存？</h2><ol>
+<li>HTTP信息头中包含Cache-Control:no-cache，pragma:no-cache，或Cache-Control:max-age=0等告诉浏览器不用缓存的请求</li>
+<li>需要根据Cookie，认证信息等决定输入内容的动态请求是不能被缓存的</li>
+<li>经过HTTPS安全加密的请求（有人也经过测试发现，ie其实在头部加入Cache-Control：max-age信息，firefox在头部加入Cache-Control:Public之后，能够对HTTPS的资源进行缓存)</li>
+<li>POST请求无法被缓存(GET可以)</li>
+<li>HTTP响应头中不包含Last-Modified/Etag，也不包含Cache-Control/Expires的请求无法被缓存</li>
+</ol>
+<h2 id="如何构建可缓存站点"><a href="#如何构建可缓存站点" class="headerlink" title="如何构建可缓存站点"></a>如何构建可缓存站点</h2><ol>
+<li>对于不经常修改的静态资源，比如Css，js，图片等，可以设置一个较长的过期的时间，或者至少加上Last-Modified/Etag，而对于html页面这种入口文件，不建议设置缓存。这样既能保证在静态资源不变了情况下，可以不重发请求或直接通过304避免重复下载，又能保证在资源有更新的，只要通过给资源增加时间戳或者更换路径，就能让用户访问最新的资源</li>
+<li>过多的使用Cookie会大大增加HTTP请求的负担，每次GET或POST请求，都会把Cookie都带上，增加网络传输流量，导致增长交互时间；同时Cache是很难被缓存的，应该尽量少使用，或者这在动态页面上使用。</li>
+<li>通过HTTPS请求的资源，默认是不会被缓存的，必须通过特殊的配置，才能让资源得到缓存。建议只对涉及敏感信息的请求使用HTTPS传输，其他类似Css，Js，图片这些静态资源，尽量避免使用。</li>
+<li>虽然POST的请求方式比Get更安全，可以避免类似密码这种敏感信息在网络传输，被代理或其他人截获，但是Get请求方式更快，效率更高，而且能被缓存，建议对于那些不涉及敏感信息提交的请求尽量使用Get方式请求</li>
+</ol>
+<h2 id="如何给站点增加缓存机制"><a href="#如何给站点增加缓存机制" class="headerlink" title="如何给站点增加缓存机制"></a>如何给站点增加缓存机制</h2><p>HTTP请求/响应头中缓存报头对有效利用站点缓存，作为一个Web前端开发者，我要做什么呢？答案是：啥都不用做。不过要去推动Web运营人员、Web后端开发人员分别给服务器和动态脚本CGI增加合适的缓存报头。可以从以下方面入手：</p>
+<ol>
+<li>服务器配置:<a href="http://httpd.apache.org/docs/2.0/mod/mod_expires.html" target="_blank" rel="noopener">Apache相关配置参考</a></li>
+<li>编写可缓存的动态脚本:服务器配置的方法比较简单通用，但是如果遇到没有权限修改服务器配置或者需要添加更细致的Expires/Cache-Control/Etag等信息时，不妨可以试试从代码层面去添加这些信息。不同语言写法实现略有不同，但思路都是一致的。可以在单独开辟一个独立模块，调用语言库提供的添加报头的接口，根据需要设置报头信息。当某个请求的动态脚本需要被缓存时，可以采用类似include，require等模块引用方式调用公共模块，实现缓存机制。</li>
+</ol>
+<h2 id="缓存Ajax请求"><a href="#缓存Ajax请求" class="headerlink" title="缓存Ajax请求"></a>缓存Ajax请求</h2><p>Ajax调用就像任何其他的HTTP请求一样可以用来构建一个网页。然而，由于其动态的性质人们常常忽略了可以缓存它们而从中受益。<br><strong>Ajax缓存和HTTP缓存效果相同</strong>,当然，如果您使用Ajax的POST方法，这并不适用，因为POST请求不会被缓存。如果您的Ajax请求有安全性要求，你应该总是使用POST方法，例如：银行帐户的资金转账。</p>
+<h2 id="通过Javascript实现内存缓存"><a href="#通过Javascript实现内存缓存" class="headerlink" title="通过Javascript实现内存缓存"></a>通过Javascript实现内存缓存</h2><p>跟缓存Ajax请求的结果类似，程序运行过程中的其他数据，其实也可以采用类似的方式在顶级容器的Javascript上下文中缓存(其实就是设置一个全局变量，将数据写入全局变量中)。</p>
+<h2 id="实际测试浏览器缓存"><a href="#实际测试浏览器缓存" class="headerlink" title="实际测试浏览器缓存"></a>实际测试浏览器缓存</h2><p>以在chrome中打开腾讯为例，<br><strong>首次打开无缓存：</strong><br><img src="/uploads/webcache/c3.png" alt="alt text"><br><strong>第二次打开有缓存：</strong><br><img src="/uploads/webcache/c4.png" alt="alt text"><br><img src="/uploads/webcache/c5.png" alt="alt text"></p>
+<h2 id="memoryCache和diskCache"><a href="#memoryCache和diskCache" class="headerlink" title="memoryCache和diskCache"></a>memoryCache和diskCache</h2><p>MemoryCache顾名思义，就是将资源缓存到内存中，等待下次访问时不需要重新下载资源，而直接从内存中获取。Webkit早已支持memoryCache。<br>diskCache就是将资源缓存到磁盘中，等待下次访问时不需要重新下载资源，而直接从磁盘中获取，它的直接操作对象为CurlCacheManager。它与memoryCache最大的区别在于，当退出进程时，内存中的数据会被清空，而磁盘的数据不会，所以，当下次再进入该进程时，该进程仍可以从diskCache中获得数据，而memoryCache则不行。</p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ol>
+<li>Web缓存的作用与类型<a href="http://www.alloyteam.com/2012/03/web-cache-1-web-cache-overview/" target="_blank" rel="noopener">http://www.alloyteam.com/2012/03/web-cache-1-web-cache-overview/</a></li>
+<li>Ajax 缓存: 两个重要的事实<a href="http://www.cnblogs.com/yslow/archive/2009/08/28/1555777.html" target="_blank" rel="noopener">http://www.cnblogs.com/yslow/archive/2009/08/28/1555777.html</a></li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/15/charles/" rel="next" title="Mac 下使用charles抓包">
+                <i class="fa fa-chevron-left"></i> Mac 下使用charles抓包
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/27/rn-movie/" rel="prev" title="react-native 电影app">
+                react-native 电影app <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Sniperyan</p>
+              <p class="site-description motion-element" itemprop="description">叫我起床的是梦想</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Web缓存"><span class="nav-number">1.</span> <span class="nav-text">什么是Web缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web缓存的作用"><span class="nav-number">2.</span> <span class="nav-text">Web缓存的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web缓存的类型"><span class="nav-number">3.</span> <span class="nav-text">Web缓存的类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器缓存的控制"><span class="nav-number">4.</span> <span class="nav-text">浏览器缓存的控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户操作行为与缓存"><span class="nav-number">5.</span> <span class="nav-text">用户操作行为与缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哪些请求不能被缓存？"><span class="nav-number">6.</span> <span class="nav-text">哪些请求不能被缓存？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何构建可缓存站点"><span class="nav-number">7.</span> <span class="nav-text">如何构建可缓存站点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何给站点增加缓存机制"><span class="nav-number">8.</span> <span class="nav-text">如何给站点增加缓存机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存Ajax请求"><span class="nav-number">9.</span> <span class="nav-text">缓存Ajax请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过Javascript实现内存缓存"><span class="nav-number">10.</span> <span class="nav-text">通过Javascript实现内存缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实际测试浏览器缓存"><span class="nav-number">11.</span> <span class="nav-text">实际测试浏览器缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#memoryCache和diskCache"><span class="nav-number">12.</span> <span class="nav-text">memoryCache和diskCache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">13.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sniperyan</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

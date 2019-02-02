@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言现在公司给我配了mac，一直在mac上做rn开发，体验非常棒。不过春节在家用mac玩rn的时候，突然发现现在的40版本居然有了watchman，之前版本的reloadjs的Bug也被脸书修复了，现在在windows上做rn开发体验也不错，但是只能做android开发。 一个开源电影app源码 ios运行效果:  android运行截图:  如果运行报错，请检查 react-native-vec">
+<meta name="keywords" content="前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react-native 电影app">
+<meta property="og:url" content="https://sniperyan.github.io/2017/01/27/rn-movie/index.html">
+<meta property="og:site_name" content="Sniperyan的个人博客">
+<meta property="og:description" content="前言现在公司给我配了mac，一直在mac上做rn开发，体验非常棒。不过春节在家用mac玩rn的时候，突然发现现在的40版本居然有了watchman，之前版本的reloadjs的Bug也被脸书修复了，现在在windows上做rn开发体验也不错，但是只能做android开发。 一个开源电影app源码 ios运行效果:  android运行截图:  如果运行报错，请检查 react-native-vec">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://sniperyan.github.io/uploads/rn-movie/movie-ios.gif">
+<meta property="og:image" content="https://sniperyan.github.io/uploads/rn-movie/android-1.jpg">
+<meta property="og:image" content="https://sniperyan.github.io/uploads/rn-movie/android-2.jpg">
+<meta property="og:image" content="https://sniperyan.github.io/uploads/rn-movie/movie1.png">
+<meta property="og:updated_time" content="2019-02-02T07:45:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="react-native 电影app">
+<meta name="twitter:description" content="前言现在公司给我配了mac，一直在mac上做rn开发，体验非常棒。不过春节在家用mac玩rn的时候，突然发现现在的40版本居然有了watchman，之前版本的reloadjs的Bug也被脸书修复了，现在在windows上做rn开发体验也不错，但是只能做android开发。 一个开源电影app源码 ios运行效果:  android运行截图:  如果运行报错，请检查 react-native-vec">
+<meta name="twitter:image" content="https://sniperyan.github.io/uploads/rn-movie/movie-ios.gif">
+
+
+
+
+
+
+  <link rel="canonical" href="https://sniperyan.github.io/2017/01/27/rn-movie/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>react-native 电影app | Sniperyan的个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sniperyan的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Full Stack攻城狮</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sniperyan.github.io/2017/01/27/rn-movie/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sniperyan">
+      <meta itemprop="description" content="叫我起床的是梦想">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sniperyan的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">react-native 电影app
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-01-27 19:06:52" itemprop="dateCreated datePublished" datetime="2017-01-27T19:06:52+08:00">2017-01-27</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-02 15:45:46" itemprop="dateModified" datetime="2019-02-02T15:45:46+08:00">2019-02-02</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/js/" itemprop="url" rel="index"><span itemprop="name">js</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/js/React-Native/" itemprop="url" rel="index"><span itemprop="name">React-Native</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>现在公司给我配了mac，一直在mac上做rn开发，体验非常棒。不过春节在家用mac玩rn的时候，突然发现现在的40版本居然有了watchman，之前版本的<code>reloadjs</code>的Bug也被脸书修复了，现在在windows上做rn开发体验也不错，但是只能做android开发。</p>
+<h2 id="一个开源电影app"><a href="#一个开源电影app" class="headerlink" title="一个开源电影app"></a>一个开源电影app</h2><p><a href="https://github.com/sniperyan/movie" target="_blank" rel="noopener">源码</a></p>
+<p>ios运行效果:</p>
+<p><img src="/uploads/rn-movie/movie-ios.gif" alt="运行效果"></p>
+<p>android运行截图:</p>
+<p><img src="/uploads/rn-movie/android-1.jpg" alt="运行效果"><br><img src="/uploads/rn-movie/android-2.jpg" alt="运行效果"></p>
+<h2 id="如果运行报错，请检查"><a href="#如果运行报错，请检查" class="headerlink" title="如果运行报错，请检查"></a>如果运行报错，请检查</h2><ol>
+<li><code>react-native-vector-icons</code>是否配置</li>
+<li><code>/android/app</code>下是否有<code>my-release-key.keystore</code></li>
+<li>是不是用了cnpm安装依赖，换用npm就没问题（我在公司用的mac，回家用的windows，开始用的cnpm，报的奇葩的错误，换了npm就好了）</li>
+<li>再看看错误信息，自行查找解决方案，如果解决不了，可以提<code>issue</code></li>
+</ol>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><ol>
+<li>豆瓣API参考 <a href="https://developers.douban.com/wiki/?title=api_v2" target="_blank" rel="noopener">https://developers.douban.com/wiki/?title=api_v2</a></li>
+<li>开发过程中最好使用mock server，豆瓣的api有调用限制，频繁调用会被封ip，mock server地址<a href="https://github.com/sniperyan/doubanMock" target="_blank" rel="noopener">https://github.com/sniperyan/doubanMock</a></li>
+<li>字体图标使用<code>react-native-vector-icons</code>，安卓和ios使用都需要配置，具体使用方法请参考官方文档<a href="https://github.com/oblador/react-native-vector-icons" target="_blank" rel="noopener">https://github.com/oblador/react-native-vector-icons</a></li>
+<li>豆瓣的API有比较坑的地方，比如<code>/v2/movie/subject/</code>返回的数据里，directors和casts字段里avatars与id属性都可能为null值，所以需要特殊处理，见代码<code>src/components/FilmDetail.js</code></li>
+</ol>
+<h2 id="开发总结"><a href="#开发总结" class="headerlink" title="开发总结"></a>开发总结</h2><ol>
+<li>debug js remotely 看不到fetch的请求，mac下用charles抓包</li>
+<li>debug js remotely 调试js时候，es6，es7语法是未编译的（目前还未发现类似react开发时候在webpack里配置sourceMap的方法），导致部分地方断点进不去，可以使用<code>console.log</code>输出关键信息</li>
+<li>写样式的时候，没有了chorme方便的样式调试工具，开始的时候非常不习惯也不好排错。可以给组件添加<code>backgroundColor</code>辅助检查，其实后来发现很多错误都是没有设置宽和高造成的，同时也可以用<code>show inspector</code></li>
+<li>当年搞react时候的react dev tools 不能用了，非常的不爽</li>
+<li>适配手机屏幕，用<code>Dimensions.get(&#39;window&#39;).width</code>取到屏幕宽度，然后按比例算宽和高度</li>
+<li>不要看中文文档！不要看中文文档！不要看中文文档！重要的事情说3遍，直接看facebook的英文文档！</li>
+</ol>
+<h2 id="run-on-iphone"><a href="#run-on-iphone" class="headerlink" title="run on iphone"></a>run on iphone</h2><ol>
+<li>点击<code>movie.xcodeproj</code>文件，启动xcode</li>
+<li>在工程目录下，把movieTest目录删除</li>
+<li>添加signing team,修改bundle identifier,如图<img src="/uploads/rn-movie/movie1.png" alt="如图"></li>
+<li>选中自己的iPhone，点击build按钮</li>
+<li>build success之后，在手机 设置-通用-描述文件与设备管理-开发者应用 内选择信任应用</li>
+</ol>
+<h2 id="应用打包"><a href="#应用打包" class="headerlink" title="应用打包"></a>应用打包</h2><ol>
+<li>ios app 需要688RMB买一个帐号才能上App Store，实在没钱就算了</li>
+<li>安卓利用gradle打包很简单，修改应用名称：<code>android\app\src\main\res\values\strings.xml</code>, <code>&lt;string name=&quot;app_name&quot;&gt;MyProject&lt;/string&gt;</code>MyProject改成你需要的名字就好了。图标在android\app\src\main\res文件夹下每个mipmap开头的文件夹下有一个不同尺寸的版本，可以自行输出</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/17/webcache/" rel="next" title="web缓存总结">
+                <i class="fa fa-chevron-left"></i> web缓存总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/12/u3d-collider/" rel="prev" title="U3D Roll-a-ball tutorial">
+                U3D Roll-a-ball tutorial <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Sniperyan</p>
+              <p class="site-description motion-element" itemprop="description">叫我起床的是梦想</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个开源电影app"><span class="nav-number">2.</span> <span class="nav-text">一个开源电影app</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如果运行报错，请检查"><span class="nav-number">3.</span> <span class="nav-text">如果运行报错，请检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-number">4.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开发总结"><span class="nav-number">5.</span> <span class="nav-text">开发总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#run-on-iphone"><span class="nav-number">6.</span> <span class="nav-text">run on iphone</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用打包"><span class="nav-number">7.</span> <span class="nav-text">应用打包</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sniperyan</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

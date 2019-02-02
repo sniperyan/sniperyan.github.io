@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="最近在做hybrid APP，其中的下拉刷新与滚动加载把我折腾的够呛，不是说效果有多难实现，而是各种手机都要适配。安卓机坑爹，安卓机坑爹，安卓机坑爹（重要的事情说三遍）。个人感觉，安卓机浏览器比之前的IE还要坑爹，所以我们有理由相信，未来的某一天，安卓机的各式坑爹的浏览器，终究会被我们抛弃，就如现在的IE一样，我不觉能够适配各种安卓机是一种非常牛逼的本领，毕竟它们是一种BUG，是一个异类。理想总是">
+<meta name="keywords" content="前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动端下拉刷新与滚动加载踩坑">
+<meta property="og:url" content="https://sniperyan.github.io/2016/10/18/h5-scroll/index.html">
+<meta property="og:site_name" content="Sniperyan的个人博客">
+<meta property="og:description" content="最近在做hybrid APP，其中的下拉刷新与滚动加载把我折腾的够呛，不是说效果有多难实现，而是各种手机都要适配。安卓机坑爹，安卓机坑爹，安卓机坑爹（重要的事情说三遍）。个人感觉，安卓机浏览器比之前的IE还要坑爹，所以我们有理由相信，未来的某一天，安卓机的各式坑爹的浏览器，终究会被我们抛弃，就如现在的IE一样，我不觉能够适配各种安卓机是一种非常牛逼的本领，毕竟它们是一种BUG，是一个异类。理想总是">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://sniperyan.github.io/uploads/h5-scroll-pic1.png">
+<meta property="og:updated_time" content="2019-02-02T07:45:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="移动端下拉刷新与滚动加载踩坑">
+<meta name="twitter:description" content="最近在做hybrid APP，其中的下拉刷新与滚动加载把我折腾的够呛，不是说效果有多难实现，而是各种手机都要适配。安卓机坑爹，安卓机坑爹，安卓机坑爹（重要的事情说三遍）。个人感觉，安卓机浏览器比之前的IE还要坑爹，所以我们有理由相信，未来的某一天，安卓机的各式坑爹的浏览器，终究会被我们抛弃，就如现在的IE一样，我不觉能够适配各种安卓机是一种非常牛逼的本领，毕竟它们是一种BUG，是一个异类。理想总是">
+<meta name="twitter:image" content="https://sniperyan.github.io/uploads/h5-scroll-pic1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://sniperyan.github.io/2016/10/18/h5-scroll/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>移动端下拉刷新与滚动加载踩坑 | Sniperyan的个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sniperyan的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Full Stack攻城狮</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sniperyan.github.io/2016/10/18/h5-scroll/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sniperyan">
+      <meta itemprop="description" content="叫我起床的是梦想">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sniperyan的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">移动端下拉刷新与滚动加载踩坑
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-10-18 22:13:08" itemprop="dateCreated datePublished" datetime="2016-10-18T22:13:08+08:00">2016-10-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-02 15:45:46" itemprop="dateModified" datetime="2019-02-02T15:45:46+08:00">2019-02-02</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/js/" itemprop="url" rel="index"><span itemprop="name">js</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近在做hybrid APP，其中的下拉刷新与滚动加载把我折腾的够呛，不是说效果有多难实现，而是各种手机都要适配。安卓机坑爹，安卓机坑爹，安卓机坑爹（重要的事情说三遍）。个人感觉，安卓机浏览器比之前的IE还要坑爹，所以我们有理由相信，未来的某一天，安卓机的各式坑爹的浏览器，终究会被我们抛弃，就如现在的IE一样，我不觉能够适配各种安卓机是一种非常牛逼的本领，毕竟它们是一种BUG，是一个异类。理想总是美好的，现实是我还要吃饭，只能顺着老板的意思，去做兼容。</p>
+<h3 id="坑1：列表页数据太多，下拉的时候动画效果出不来"><a href="#坑1：列表页数据太多，下拉的时候动画效果出不来" class="headerlink" title="坑1：列表页数据太多，下拉的时候动画效果出不来"></a>坑1：列表页数据太多，下拉的时候动画效果出不来</h3><p>最初遇到这个问题，我怀疑是我的DOM结构有问题，各种改DOM结构都无法解决，而安卓机却没有问题。这时，我对安卓机充满了好感（可能是唯一的好感吧）。我跟IOS开发的同事交流，得知原生的IOS列表页性能非常好，列表页看起来是很多数据滚动，而实际上只有部分数据在列表当中，当滚动到顶部的时候，数据会往顶部加载，此时底部的数据会被从列表中清除，往下滚动同理。这么做是为了让IOS APP的滚动时性能更好。这时我想：IOS浏览器会不会也是有同样的需求，当页面数据过多的时候，也需要做同样的加载呢？此时我先验证我的想法是正确的，我把原先的七八十条数据的列表，缩减到只有10几条，就这样下拉的时候动画出来了。<br>问题原因找到了，那么解决办法呢？首先我想试试模拟同事说的原生IOS加载列表的算法，感觉实现起来有点难度，于是就另辟蹊径—-开启3D加速。<br><strong>方法：</strong>  给列表页中的每一项的最外层添加样式 <code>-webkit-transform:translateZ(0);</code><br><strong>原因：</strong>  webkit在绘制页面时会将结构分为各种层，当层足够大时就会变成很大的平铺层。这样一来webkit在每次页面结构发生变化时不需要都渲染整个页面而是渲染对应层了，这对渲染速度来说相当的重要。webkit会给各种层分配一定大小的“备份存储区”在内存里缓存起来，这就是绘制层的上下文，通过这个上下文就可以很容易的实现各种效果（动画，3D变换等），“备份存储区”内存占用大小不仅依层而定，跟设备和显示方式也是有关的，假设这在普通屏幕下是1：1的，但在Retina屏幕下则是1：2的，并且放大时这个量会成倍增加；一张图片是10X10，普通屏幕分配的就是10X10，Retina初始则是20X20。这也表明Retina是更加消耗内存的。当层很大时，意味着“备份存储区”会消耗更大的内存，为了避免这点，webkit并不会绘制一个很大的层来存储一个很大的页面，比如说平铺层则会拆分成很多的块来绘制，即尽占用尽可能小的内存，只是将可视范围内的那部分渲染出来。这就是为什么我们在大页面滚动时会发现下面的内容慢慢显示，向上滚动时上面的内容还慢慢显示的原因。添加 <code>-webkit-transform:translateZ(0);</code>可以将滚动区域可视范围的列表项元素缓存起来，记webkit强制缓存起来即是将他们独立成一个层，而且这个层当然不会很大否则会被视为平铺层处理了。一般列表里项里的元素不会像页面主容器一样的大的。</p>
+<h3 id="坑2：页面向下滚动的时候，fixed固定的元素会错位，甚至抖动"><a href="#坑2：页面向下滚动的时候，fixed固定的元素会错位，甚至抖动" class="headerlink" title="坑2：页面向下滚动的时候，fixed固定的元素会错位，甚至抖动"></a>坑2：页面向下滚动的时候，fixed固定的元素会错位，甚至抖动</h3><p>这个问题严重影响了web的展示效果，包括安卓和IOS都会有这个问题，解决办法同坑1，3D加速设置之后这个问题也解决了</p>
+<h3 id="坑3：适配小米手机"><a href="#坑3：适配小米手机" class="headerlink" title="坑3：适配小米手机"></a>坑3：适配小米手机</h3><p>问题出现在touchmove事件，touchmove事件只触发一次不能连续触发，除了touchmove，touchend更加惨，压根没有触发。<br>其他部分安卓机也可能会有类似的问题（我还没测试），在小米的论坛上，早就有人贴出了<a href="http://www.miui.com/thread-1653419-1-1.html" target="_blank" rel="noopener">问题帖子</a>，“危害武林”的小米却没有解决。不过这个兄弟的解决办法，更像是做广告的，他在给一个付费的移动端框架打广告。我直接PASS了他的方法。我查找了相关资料，终于找到了一个貌似正解的描述：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">On Android ICS if no preventDefault is called on touchstart or the first touchmove, </span><br><span class="line">further touchmove events and the touchend will not be fired.</span><br><span class="line">As a workaround we need to decide in the first touchmove if </span><br><span class="line">this is a scroll (so we don’t call preventDefault) and then manually trigger touchend.</span><br></pre></td></tr></table></figure>
+<p>我给touchstart,touchmove,touchend都加上了<code>e.preventDefault();</code>小米可以全部监听到这三个事件了。不过这带来了更为严重的问题— 列表页中的a标签全部失效无法点击。<code>e.preventDefault();</code>阻止了浏览器的事件的默认效果，所以也就阻止了a标签的跳转，看来这个方法还不能乱加。后来突然脑袋灵光一闪，既然在<code>touchstart</code>中加了<code>event.preventDefault</code>会导致不触发click事件，那我在touchmove中加可以吧？后来经过测试，只能够在touchmove中添加，start和end都不能添加。touchmove中有event.preventDefault()方法，还需要加上方向判断，比如我做的下拉刷新功能，所以我就添加了逻辑：如果手指是往下拉的时候，就在touchmove里添加<code>e.preventDefault();</code> 此时如果不加这个方法，小米手机的浏览器touchmove事件只会触发一次，不能连续触发，所以就不能够出现下拉刷新的效果了，添加该方法就可以连续触发touchmove事件了。<br><strong>出现该问题的原因:</strong>该问题多出现在 Android 4.0 和 4.4 版本里，在touchmove触发的瞬间就触发了touchcancel，然后就没有然后了，所以要在touchmove触发的时候禁止它的默认行为</p>
+<h3 id="坑4：小米手机最后的touchend事件有时候不触发"><a href="#坑4：小米手机最后的touchend事件有时候不触发" class="headerlink" title="坑4：小米手机最后的touchend事件有时候不触发"></a>坑4：小米手机最后的touchend事件有时候不触发</h3><p>页面滚动的时候，正常的事件触发顺序为<code>touchstart -&gt; touchmove -&gt; touchend -&gt;scroll</code> ，我的小米测试机有时候不触发touchend事件，而我在touchend中添加了滚动条回复位置的方法，方法没执行会造成页面中滚动条错位。<br>小米手机测试图：<img src="/uploads/h5-scroll-pic1.png" alt="Alt text"></p>
+<p><strong>别人的解决方法:</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">listenTouchEndForAndroid()&#123;</span><br><span class="line">        <span class="keyword">this</span>.timer = setInterval(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.newTop = <span class="built_in">document</span>.body.scrollTop;</span><br><span class="line">            <span class="comment">//console.log(++count,oldTop,newTop);</span></span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">this</span>.newTop === <span class="keyword">this</span>.oldTop &amp;&amp; <span class="keyword">this</span>.refs.slipDiv.style.webkitTransform !==<span class="string">'translate(0px, 0px)'</span>) &#123;</span><br><span class="line">                <span class="comment">//clearTimeout(this.timer);</span></span><br><span class="line">                <span class="comment">//已停止，写入业务代码</span></span><br><span class="line">                <span class="keyword">this</span>.refs.slipDiv.style.webkitTransform = <span class="string">'translate('</span> + <span class="number">0</span> + <span class="string">'px, '</span> + <span class="number">0</span> + <span class="string">'px)'</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">this</span>.oldTop = <span class="keyword">this</span>.newTop;</span><br><span class="line">                <span class="comment">//this.timer = setTimeout(this.listenTouchEndForAndroid,100);</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,<span class="number">100</span>)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>他的方法是每隔100ms检测两次的滚动条位置是否相同，如果相同，那么就是滚动结束了，我测试了一下，可以模拟touchend事件，而且我的小米手机，滚动的时候，看上去没有卡顿，但是我总感觉这种方法，太牵强了。</p>
+<p><strong>我的解决方法:</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 处理页面滚动加载的方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    handleScroll(e) &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123;networkType&#125; = <span class="keyword">this</span>.props;</span><br><span class="line">        <span class="keyword">if</span> (Tool.reachBottom() &amp;&amp; (Tool.isDownScroll() === <span class="string">"down"</span>) &amp;&amp; (networkType != <span class="string">'No network connection'</span>)) &#123;</span><br><span class="line">            <span class="comment">//到达底部，分页加载数据</span></span><br><span class="line">            <span class="keyword">const</span> &#123;loadState&#125; = <span class="keyword">this</span>.props;</span><br><span class="line">            <span class="keyword">if</span> (!loadState) &#123;</span><br><span class="line">                <span class="keyword">this</span>.loadData();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//解决部分手机，监测不到touchEnd事件，滚动条错位的情况，比如小米</span></span><br><span class="line">        <span class="keyword">if</span>(Tool.isAndroid() &amp;&amp; <span class="built_in">document</span>.body.scrollTop)&#123;</span><br><span class="line">            <span class="keyword">this</span>.refs.slipDiv.style.webkitTransform = <span class="string">'translate('</span> + <span class="number">0</span> + <span class="string">'px, '</span> + <span class="number">0</span> + <span class="string">'px)'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>在滚动事件监听的方法里，判断如果是安卓机并且滚动到页面的头部，给滚动区域强制恢复位置，测试完了发现效果还不错，实现了我的需求。</p>
+<h3 id="坑5：安卓机下拉的时候，会把顶部的状态栏的背景色部分拉到web区域"><a href="#坑5：安卓机下拉的时候，会把顶部的状态栏的背景色部分拉到web区域" class="headerlink" title="坑5：安卓机下拉的时候，会把顶部的状态栏的背景色部分拉到web区域"></a>坑5：安卓机下拉的时候，会把顶部的状态栏的背景色部分拉到web区域</h3><p>测试了部分安卓机，当scroll到顶部的时候，会把机器最顶部的状态栏的背景色部分拉到web区域，会有很奇怪的效果，如果加了e.preventDefault()，将不会触发该效果。</p>
+<h3 id="部分代码"><a href="#部分代码" class="headerlink" title="部分代码"></a>部分代码</h3><p>直接截取我的项目部分中下拉刷新与滚动加载的代码，希望对你有所启发（react框架）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constructor</span>(props, context) &#123;</span><br><span class="line">        <span class="keyword">super</span>(props, context);</span><br><span class="line">        <span class="keyword">this</span>.handleScroll = <span class="keyword">this</span>.handleScroll.bind(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">this</span>.netChange = <span class="keyword">this</span>.netChange.bind(<span class="keyword">this</span>);</span><br><span class="line">        <span class="comment">//初始touch y坐标</span></span><br><span class="line">        <span class="keyword">this</span>.startY = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//是否需要更新</span></span><br><span class="line">        <span class="keyword">this</span>.needUpdate = <span class="literal">false</span>;</span><br><span class="line">        <span class="comment">//是否展示没有数据</span></span><br><span class="line">        <span class="keyword">this</span>.state = &#123;</span><br><span class="line">            <span class="string">"noData"</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="string">"firstPage"</span>: <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 处理页面滚动加载的方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    handleScroll(e) &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123;networkType&#125; = <span class="keyword">this</span>.props;</span><br><span class="line">        <span class="keyword">if</span> (Tool.reachBottom() &amp;&amp; (Tool.isDownScroll() === <span class="string">"down"</span>) &amp;&amp; (networkType != <span class="string">'No network connection'</span>)) &#123;</span><br><span class="line">            <span class="comment">//到达底部，分页加载数据</span></span><br><span class="line">            <span class="keyword">const</span> &#123;loadState&#125; = <span class="keyword">this</span>.props;</span><br><span class="line">            <span class="keyword">if</span> (!loadState) &#123;</span><br><span class="line">                <span class="keyword">this</span>.loadData();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//解决部分手机，监测不到touchEnd事件，滚动条错位的情况，比如小米</span></span><br><span class="line">        <span class="keyword">if</span>(Tool.isAndroid() &amp;&amp; <span class="built_in">document</span>.body.scrollTop)&#123;</span><br><span class="line">            <span class="keyword">this</span>.refs.slipDiv.style.webkitTransform = <span class="string">'translate('</span> + <span class="number">0</span> + <span class="string">'px, '</span> + <span class="number">0</span> + <span class="string">'px)'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    handleTouchStart(e) &#123;</span><br><span class="line">        <span class="comment">//e.preventDefault();</span></span><br><span class="line">        <span class="keyword">let</span> touch = e.touches[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">this</span>.startY = touch.pageY;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    handleTouchMove(e) &#123;</span><br><span class="line">        <span class="keyword">let</span> touch = e.touches[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">this</span>.startY || (<span class="keyword">this</span>.startY = touch.pageY);</span><br><span class="line">        <span class="keyword">let</span> y = touch.pageY - <span class="keyword">this</span>.startY;</span><br><span class="line">        <span class="comment">//  touch.pageY&gt;this.startY向上滚动</span></span><br><span class="line">        <span class="comment">//手指下拉为true，手指上滑为false</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">document</span>.body.scrollTop === <span class="number">0</span> &amp;&amp; touch.pageY &gt; <span class="keyword">this</span>.startY) &#123;</span><br><span class="line">            <span class="comment">/*如果不加e.preventDefault()，部分安卓机touchmove事件只会触发一次，不能连续触发，</span></span><br><span class="line"><span class="comment">            而且当scroll到顶部的时候，会把机器最顶部的状态栏的背景色部分拉到web区域，会有很奇怪的效果</span></span><br><span class="line"><span class="comment">            如果加了e.preventDefault()，将不会触发scroll事件，事件触发顺序为 start-move*n-end  很奇葩</span></span><br><span class="line"><span class="comment">            */</span></span><br><span class="line">            e.preventDefault();</span><br><span class="line">        &#125;</span><br><span class="line">        (y &gt;= <span class="number">0</span>) &amp;&amp; (<span class="keyword">this</span>.refs.slipDiv.style.webkitTransform = <span class="string">'translate('</span> + <span class="number">0</span> + <span class="string">'px, '</span> + y / <span class="number">2</span> + <span class="string">'px)'</span>);</span><br><span class="line">        <span class="comment">//搜索框下拉超过60px才展示</span></span><br><span class="line">        <span class="keyword">if</span> (y &gt; <span class="number">120</span> &amp;&amp; <span class="built_in">document</span>.body.scrollTop === <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//更新</span></span><br><span class="line">            <span class="keyword">this</span>.needUpdate = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    handleTouchEnd(e) &#123;</span><br><span class="line">        <span class="comment">//e.preventDefault();</span></span><br><span class="line">        <span class="keyword">const</span> &#123;actions, networkType&#125; = <span class="keyword">this</span>.props;</span><br><span class="line">        <span class="keyword">this</span>.refs.slipDiv.style.webkitTransform = <span class="string">'translate('</span> + <span class="number">0</span> + <span class="string">'px, '</span> + <span class="number">0</span> + <span class="string">'px)'</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.needUpdate &amp;&amp; (networkType != <span class="string">'No network connection'</span>)) &#123;</span><br><span class="line">            <span class="keyword">this</span>.timeTypeArr = []</span><br><span class="line">            <span class="keyword">this</span>.loadData(<span class="keyword">this</span>.props, <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">this</span>.refreshBadge();</span><br><span class="line">            <span class="keyword">this</span>.needUpdate = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/11/exports/" rel="next" title="exports 与 module.exports">
+                <i class="fa fa-chevron-left"></i> exports 与 module.exports
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/18/mobile-issues/" rel="prev" title="移动端开发中常见的问题汇总">
+                移动端开发中常见的问题汇总 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Sniperyan</p>
+              <p class="site-description motion-element" itemprop="description">叫我起床的是梦想</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#坑1：列表页数据太多，下拉的时候动画效果出不来"><span class="nav-number">1.</span> <span class="nav-text">坑1：列表页数据太多，下拉的时候动画效果出不来</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#坑2：页面向下滚动的时候，fixed固定的元素会错位，甚至抖动"><span class="nav-number">2.</span> <span class="nav-text">坑2：页面向下滚动的时候，fixed固定的元素会错位，甚至抖动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#坑3：适配小米手机"><span class="nav-number">3.</span> <span class="nav-text">坑3：适配小米手机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#坑4：小米手机最后的touchend事件有时候不触发"><span class="nav-number">4.</span> <span class="nav-text">坑4：小米手机最后的touchend事件有时候不触发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#坑5：安卓机下拉的时候，会把顶部的状态栏的背景色部分拉到web区域"><span class="nav-number">5.</span> <span class="nav-text">坑5：安卓机下拉的时候，会把顶部的状态栏的背景色部分拉到web区域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部分代码"><span class="nav-number">6.</span> <span class="nav-text">部分代码</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sniperyan</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

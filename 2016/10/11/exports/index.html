@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="exports 和 module.exports 的区别很多新手可能会迷惑于 exports 和 module.exports 的区别，下面我来说一下两者的区别 exports 和 module.exports 都指向同一个空对象123console.log(module.exports);console.log(exports);console.log(module.exports===expo">
+<meta name="keywords" content="前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="exports 与 module.exports">
+<meta property="og:url" content="https://sniperyan.github.io/2016/10/11/exports/index.html">
+<meta property="og:site_name" content="Sniperyan的个人博客">
+<meta property="og:description" content="exports 和 module.exports 的区别很多新手可能会迷惑于 exports 和 module.exports 的区别，下面我来说一下两者的区别 exports 和 module.exports 都指向同一个空对象123console.log(module.exports);console.log(exports);console.log(module.exports===expo">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://sniperyan.github.io/uploads/exports-pic1.png">
+<meta property="og:updated_time" content="2019-02-02T07:45:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="exports 与 module.exports">
+<meta name="twitter:description" content="exports 和 module.exports 的区别很多新手可能会迷惑于 exports 和 module.exports 的区别，下面我来说一下两者的区别 exports 和 module.exports 都指向同一个空对象123console.log(module.exports);console.log(exports);console.log(module.exports===expo">
+<meta name="twitter:image" content="https://sniperyan.github.io/uploads/exports-pic1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://sniperyan.github.io/2016/10/11/exports/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>exports 与 module.exports | Sniperyan的个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sniperyan的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Full Stack攻城狮</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sniperyan.github.io/2016/10/11/exports/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sniperyan">
+      <meta itemprop="description" content="叫我起床的是梦想">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sniperyan的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">exports 与 module.exports
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-10-11 00:07:54" itemprop="dateCreated datePublished" datetime="2016-10-11T00:07:54+08:00">2016-10-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-02 15:45:46" itemprop="dateModified" datetime="2019-02-02T15:45:46+08:00">2019-02-02</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/js/" itemprop="url" rel="index"><span itemprop="name">js</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="exports-和-module-exports-的区别"><a href="#exports-和-module-exports-的区别" class="headerlink" title="exports 和 module.exports 的区别"></a>exports 和 module.exports 的区别</h2><p>很多新手可能会迷惑于 exports 和 module.exports 的区别，下面我来说一下两者的区别</p>
+<h4 id="exports-和-module-exports-都指向同一个空对象"><a href="#exports-和-module-exports-都指向同一个空对象" class="headerlink" title="exports 和 module.exports 都指向同一个空对象"></a>exports 和 module.exports 都指向同一个空对象</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">module</span>.exports);</span><br><span class="line"><span class="built_in">console</span>.log(exports);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">module</span>.exports===exports);</span><br></pre></td></tr></table></figure>
+<p>代码输出结果如下图<br><img src="/uploads/exports-pic1.png" alt="Alt text"></p>
+<h4 id="exports-导出一个function"><a href="#exports-导出一个function" class="headerlink" title="exports 导出一个function"></a>exports 导出一个function</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//test.js</span></span><br><span class="line">exports.name = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'My name is sniperyan'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//index.js</span></span><br><span class="line"><span class="keyword">var</span> rocker = <span class="built_in">require</span>(<span class="string">'./test.js'</span>);</span><br><span class="line">rocker.name(); <span class="comment">//My name is sniperyan</span></span><br><span class="line"><span class="keyword">import</span> rocker <span class="keyword">from</span> <span class="string">'./test'</span></span><br><span class="line">rocker.name(); <span class="comment">//My name is sniperyan</span></span><br></pre></td></tr></table></figure>
+<p>我这是用babel编译的es6的写法，export导出name方法，require和import导入都可以执行</p>
+<h4 id="module-exports-导出一个function"><a href="#module-exports-导出一个function" class="headerlink" title="module.exports 导出一个function"></a>module.exports 导出一个function</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//test.js</span></span><br><span class="line"><span class="built_in">module</span>.exports.name = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'My name is sniperyan'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//index.js</span></span><br><span class="line"><span class="keyword">var</span> rocker = <span class="built_in">require</span>(<span class="string">'./test.js'</span>);</span><br><span class="line">rocker.name(); <span class="comment">//My name is sniperyan</span></span><br><span class="line"><span class="keyword">import</span> rocker <span class="keyword">from</span> <span class="string">'./test'</span></span><br><span class="line">rocker.name(); <span class="comment">//My name is sniperyan</span></span><br></pre></td></tr></table></figure>
+<p>module.exports导出的方法，require和import导入都可以执行</p>
+<h4 id="Module-exports是真正的接口，exports只不过是它的一个辅助工具"><a href="#Module-exports是真正的接口，exports只不过是它的一个辅助工具" class="headerlink" title="Module.exports是真正的接口，exports只不过是它的一个辅助工具"></a>Module.exports是真正的接口，exports只不过是它的一个辅助工具</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//test.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'module console'</span>);</span><br><span class="line">&#125;;</span><br><span class="line">exports.name = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'My name is sniperyan'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//index.js</span></span><br><span class="line"><span class="keyword">var</span> rocker = <span class="built_in">require</span>(<span class="string">'./test.js'</span>);</span><br><span class="line"><span class="comment">//import rocker from './test'</span></span><br><span class="line">rocker.name();</span><br></pre></td></tr></table></figure>
+<p>这段代码中index.js报错，<code>rocker.name is not a function</code> , 这说明rocker模块忽略了exports收集的name方法，最终返回给调用的是Module.exports而不是exports，但是如果module.exports和exports都指向同一个变量，那最终的结果就如js中的对象引用同理。</p>
+<h4 id="你的模块可以是任何你设置给它的东西。如果你没有显式的给Module-exports设置任何属性和方法，那么你的模块就是exports设置给Module-exports的属性"><a href="#你的模块可以是任何你设置给它的东西。如果你没有显式的给Module-exports设置任何属性和方法，那么你的模块就是exports设置给Module-exports的属性" class="headerlink" title="你的模块可以是任何你设置给它的东西。如果你没有显式的给Module.exports设置任何属性和方法，那么你的模块就是exports设置给Module.exports的属性"></a>你的模块可以是任何你设置给它的东西。如果你没有显式的给Module.exports设置任何属性和方法，那么你的模块就是exports设置给Module.exports的属性</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//test.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">    <span class="keyword">this</span>.about = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name +<span class="string">' is '</span>+ <span class="keyword">this</span>.age +<span class="string">' years old'</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//index.js</span></span><br><span class="line"><span class="keyword">var</span> rocker = <span class="built_in">require</span>(<span class="string">'./test.js'</span>);</span><br><span class="line"><span class="keyword">var</span> r = <span class="keyword">new</span> rocker(<span class="string">'Ozzy'</span>, <span class="number">62</span>);</span><br><span class="line">r.about(); <span class="comment">// Ozzy is 62 years old</span></span><br></pre></td></tr></table></figure>
+<p>如上代码，index.js中使用require方法，因为在模块导出的时候，没有显示的给模块设置任何的属性，如果使用export方法，将会报错，这也就解释了在react-router配置按需加载的时候，container导出的时候需要使用 <code>module.exports</code>而不用 <code>export</code> ，因为配置按需加载的语法使用的是<code>require()</code>引入</p>
+<h4 id="没有显式的给Module-exports设置任何属性和方法，你也可以使用import方法导入"><a href="#没有显式的给Module-exports设置任何属性和方法，你也可以使用import方法导入" class="headerlink" title="没有显式的给Module.exports设置任何属性和方法，你也可以使用import方法导入"></a>没有显式的给Module.exports设置任何属性和方法，你也可以使用import方法导入</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//test.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">    <span class="keyword">this</span>.about = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name +<span class="string">' is '</span>+ <span class="keyword">this</span>.age +<span class="string">' years old'</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//index.js</span></span><br><span class="line"><span class="keyword">import</span> rocker <span class="keyword">from</span> <span class="string">'./test'</span></span><br><span class="line"><span class="keyword">var</span> r = <span class="keyword">new</span> rocker(<span class="string">'Ozzy'</span>, <span class="number">62</span>);</span><br><span class="line">r.about(); <span class="comment">// Ozzy is 62 years old</span></span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>你的模块并不一定非得返回“实例化对象”。你的模块可以是任何合法的javascript对象–boolean, number, date, JSON, string, function, array等等。如果你想你的模块是一个特定的类型就用Module.exports。如果你想的模块是一个典型的“实例化对象”就用exports。前面已经提到module.exports是真正的接口，exports只不过是它的辅助工具。推荐使用exports导出。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/30/date-format-in-ios/" rel="next" title="ios webview 中new Date()的坑">
+                <i class="fa fa-chevron-left"></i> ios webview 中new Date()的坑
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/18/h5-scroll/" rel="prev" title="移动端下拉刷新与滚动加载踩坑">
+                移动端下拉刷新与滚动加载踩坑 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Sniperyan</p>
+              <p class="site-description motion-element" itemprop="description">叫我起床的是梦想</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#exports-和-module-exports-的区别"><span class="nav-number">1.</span> <span class="nav-text">exports 和 module.exports 的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#exports-和-module-exports-都指向同一个空对象"><span class="nav-number">1.0.1.</span> <span class="nav-text">exports 和 module.exports 都指向同一个空对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#exports-导出一个function"><span class="nav-number">1.0.2.</span> <span class="nav-text">exports 导出一个function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#module-exports-导出一个function"><span class="nav-number">1.0.3.</span> <span class="nav-text">module.exports 导出一个function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Module-exports是真正的接口，exports只不过是它的一个辅助工具"><span class="nav-number">1.0.4.</span> <span class="nav-text">Module.exports是真正的接口，exports只不过是它的一个辅助工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#你的模块可以是任何你设置给它的东西。如果你没有显式的给Module-exports设置任何属性和方法，那么你的模块就是exports设置给Module-exports的属性"><span class="nav-number">1.0.5.</span> <span class="nav-text">你的模块可以是任何你设置给它的东西。如果你没有显式的给Module.exports设置任何属性和方法，那么你的模块就是exports设置给Module.exports的属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#没有显式的给Module-exports设置任何属性和方法，你也可以使用import方法导入"><span class="nav-number">1.0.6.</span> <span class="nav-text">没有显式的给Module.exports设置任何属性和方法，你也可以使用import方法导入</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sniperyan</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

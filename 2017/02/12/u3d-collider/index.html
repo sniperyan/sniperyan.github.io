@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="翻译章节 Collecting the Pick Up Objects 英文原文00:02 - 00:04We want to be able to pick up our collectable game00:04 - 00:07objects when our player game object collides with them.00:07 - 00:09To do this we ne">
+<meta name="keywords" content="U3D">
+<meta property="og:type" content="article">
+<meta property="og:title" content="U3D Roll-a-ball tutorial">
+<meta property="og:url" content="https://sniperyan.github.io/2017/02/12/u3d-collider/index.html">
+<meta property="og:site_name" content="Sniperyan的个人博客">
+<meta property="og:description" content="翻译章节 Collecting the Pick Up Objects 英文原文00:02 - 00:04We want to be able to pick up our collectable game00:04 - 00:07objects when our player game object collides with them.00:07 - 00:09To do this we ne">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-02-02T07:45:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="U3D Roll-a-ball tutorial">
+<meta name="twitter:description" content="翻译章节 Collecting the Pick Up Objects 英文原文00:02 - 00:04We want to be able to pick up our collectable game00:04 - 00:07objects when our player game object collides with them.00:07 - 00:09To do this we ne">
+
+
+
+
+
+
+  <link rel="canonical" href="https://sniperyan.github.io/2017/02/12/u3d-collider/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>U3D Roll-a-ball tutorial | Sniperyan的个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sniperyan的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Full Stack攻城狮</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sniperyan.github.io/2017/02/12/u3d-collider/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sniperyan">
+      <meta itemprop="description" content="叫我起床的是梦想">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sniperyan的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">U3D Roll-a-ball tutorial
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-02-12 13:47:08" itemprop="dateCreated datePublished" datetime="2017-02-12T13:47:08+08:00">2017-02-12</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-02 15:45:46" itemprop="dateModified" datetime="2019-02-02T15:45:46+08:00">2019-02-02</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/U3D/" itemprop="url" rel="index"><span itemprop="name">U3D</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>翻译章节 <code>Collecting the Pick Up Objects</code></p>
+<h3 id="英文原文"><a href="#英文原文" class="headerlink" title="英文原文"></a>英文原文</h3><p>00:02 - 00:04<br>We want to be able to pick up our collectable game<br>00:04 - 00:07<br>objects when our player game object collides with them.<br>00:07 - 00:09<br>To do this we need to detect our collisions<br>00:09 - 00:11<br>between the player game object and<br>00:11 - 00:13<br>the PickUp game objects.<br>00:13 - 00:15<br>We will need to have these collisions<br>00:15 - 00:17<br>trigger a new behaviour and we will need to<br>00:17 - 00:19<br>test these collisions to make sure we are<br>00:19 - 00:21<br>picking up the correct objects.<br>00:21 - 00:23<br>The PickUp objects, the player’s sphere,<br>00:23 - 00:25<br>the ground plane and the walls all have<br>00:25 - 00:28<br>colliders that inform us about collisions.<br>00:29 - 00:30<br>If we didn’t test our collisions to find out<br>00:30 - 00:32<br>which objects we have collided with<br>00:32 - 00:34<br>we could collect the wrong objects.<br>00:35 - 00:37<br>We could collect the floor, or the walls.<br>00:37 - 00:40<br>As a matter of face if we didn’t test our collisions<br>00:40 - 00:42<br>on the very first frame of the game we would<br>00:42 - 00:44<br>come in contact with the ground plane<br>00:44 - 00:45<br>and we would collect the ground plane<br>00:45 - 00:48<br>and then we would fall in to the void of the scene space<br>00:48 - 00:50<br>and the game would essentially be over.<br>00:51 - 00:55<br>First, we don’t need our player to remain inactive.<br>00:55 - 00:56<br>so let’s tick the Active checkbox and<br>00:56 - 00:58<br>bring back our player.<br>01:00 - 01:02<br>Next let’s select the PlayerController script<br>01:02 - 01:04<br>and open it for editing.<br>01:04 - 01:06<br>Just a note, we could edit this<br>01:06 - 01:08<br>script regardless of whether the game<br>01:08 - 01:09<br>object is active or not.<br>01:11 - 01:13<br>Now that we have the script open,<br>01:13 - 01:14<br>what code are we going to write?<br>01:15 - 01:17<br>We could write collider<br>01:17 - 01:19<br>and then search the documentation using the<br>01:19 - 01:20<br>hot key combination.<br>01:21 - 01:24<br>But there is a different way that we could do this as well.<br>01:25 - 01:27<br>Let’s return to Unity and look at the details<br>01:27 - 01:29<br>of our player game object.<br>01:30 - 01:32<br>What we are interested in here is the<br>01:32 - 01:34<br>sphere collider component.<br>01:34 - 01:37<br>In the header of each component on the left<br>01:37 - 01:39<br>is the component’s turndown arrow,<br>01:39 - 01:42<br>the icon, the Enable checkbox<br>01:42 - 01:45<br>if it’s available, and the type of the component.<br>01:46 - 01:49<br>On the right is the context sensitive gear gizmo<br>01:49 - 01:52<br>and an icon of a little book with a question mark.<br>01:53 - 01:54<br>Now this is what we need.<br>01:54 - 01:57<br>This is the quick link to the component reference.<br>01:58 - 02:00<br>If we select this icon we are taken<br>02:00 - 02:02<br>not to the scripting reference but to the<br>02:02 - 02:04<br>component reference.<br>02:05 - 02:07<br>We would read this document to find out more<br>02:07 - 02:09<br>about how to use this component in the context<br>02:09 - 02:10<br>of the editor.<br>02:10 - 02:13<br>We, however, want to find out how to<br>02:13 - 02:15<br>script to this component’s class.<br>02:15 - 02:18<br>To do this we simply switch to scripting<br>02:19 - 02:21<br>and we are taken to the scripting reference<br>02:21 - 02:22<br>for the sphere collider.<br>02:23 - 02:26<br>We want to detect and test our collisions.<br>02:26 - 02:28<br>For this project we are going to use<br>02:28 - 02:30<br>OnTriggerEnter.<br>02:37 - 02:40<br>Just imagine if we were, say, a daring plumber<br>02:40 - 02:43<br>and we jumped up to collect a perfect arch of coins<br>02:43 - 02:45<br>and bounced off the very first one as we<br>02:45 - 02:47<br>collected it and fell back to the ground.<br>02:48 - 02:49<br>Not very elegant.<br>02:50 - 02:52<br>This code will give us the ability to detect<br>02:52 - 02:54<br>the contact between our player game object<br>02:54 - 02:56<br>and our PickUp game objects<br>02:56 - 02:59<br>without actually creating a physical collision.<br>03:00 - 03:02<br>The code example however is not exactly<br>03:02 - 03:03<br>what we’re looking for.<br>03:03 - 03:06<br>But that’s okay, we can change that.<br>03:06 - 03:08<br>First, let’s copy the code,<br>03:09 - 03:11<br>and then let’s return to our scripting application.<br>03:12 - 03:15<br>Now that we’re back in scripting let’s paste the code.<br>03:16 - 03:18<br>As we have copied this code from a webpage<br>03:18 - 03:20<br>let’s correct the indents.<br>03:20 - 03:21<br>In this case I’m going to make sure the<br>03:21 - 03:23<br>indents are tabs and that all of the tabs are<br>03:23 - 03:25<br>correctly aligned.<br>03:25 - 03:27<br>Next, let’s look at this code.<br>03:27 - 03:30<br>We are using the function OnTriggerEnter.<br>03:30 - 03:32<br>OnTriggerEnter will be called by Unity<br>03:32 - 03:34<br>when our player game object first touches<br>03:34 - 03:36<br>a trigger collider.<br>03:36 - 03:38<br>We are given as an argument<br>03:38 - 03:41<br>a reference to the trigger collider that we have touched.<br>03:42 - 03:44<br>This is the collider called Other.<br>03:44 - 03:46<br>This reference gives us a way to get a<br>03:46 - 03:48<br>hold of the colliders that we touch.<br>03:49 - 03:51<br>With this code, when we touch another trigger<br>03:51 - 03:54<br>collider we will destroy the game object<br>03:54 - 03:56<br>that the trigger collider is attached to<br>03:56 - 03:59<br>through the reference other.gameObject.<br>03:59 - 04:02<br>By destroying that game object, the game object,<br>04:02 - 04:04<br>all of it’s components and all of it’s<br>04:04 - 04:06<br>children and their components are removed<br>04:06 - 04:08<br>from the scene.<br>04:08 - 04:10<br>For the sake of example in this assignment<br>04:10 - 04:12<br>we won’t destroy the other game object<br>04:12 - 04:14<br>we will deactivate it.<br>04:14 - 04:16<br>Just like we deactivated the player object<br>04:16 - 04:19<br>when we were creating our PickUp objects.<br>04:20 - 04:23<br>First, let’s remove the Destroy(other.gameobject)<br>04:23 - 04:25<br>code from the function.<br>04:25 - 04:27<br>But let’s paste it down below our script<br>04:27 - 04:29<br>as a palette to work with.<br>04:30 - 04:33<br>How will we deactivate our PickUp objects?<br>04:34 - 04:35<br>Well what clues do we have?<br>04:36 - 04:38<br>We can address the other collider’s game<br>04:38 - 04:41<br>object through other.gameObject.<br>04:41 - 04:43<br>We can see this here in the sample code.<br>04:43 - 04:45<br>And we want to test the other game object<br>04:45 - 04:48<br>and if it’s a PickUp object we want to deactivate<br>04:48 - 04:49<br>that game object.<br>04:50 - 04:52<br>So let’s look up GameObject<br>04:52 - 04:55<br>with our hot key combination and see what we can find.<br>04:56 - 04:59<br>Now we have the page on GameObject.<br>04:59 - 05:01<br>There are two important items here that we want.<br>05:02 - 05:04<br>They are tag,<br>05:04 - 05:06<br>tag allows us to identify the game object<br>05:06 - 05:09<br>by comparing the tag value to a string.<br>05:09 - 05:11<br>And SetActive.<br>05:11 - 05:15<br>This is how we activate or deactivate a game object through code.<br>05:16 - 05:18<br>The last item we need to know about is<br>05:18 - 05:20<br>Compare Tag.<br>05:20 - 05:22<br>Compare Tag allows us to efficiently<br>05:22 - 05:27<br>compare the tag of any game object to a sting value.<br>05:28 - 05:32<br>Let’s open up these three items, each in their own tab.<br>05:35 - 05:39<br>Tag allows us to identify a game object by a tag value.<br>05:40 - 05:45<br>We must declare our tags in the Tags and Layers Panel before using them.<br>05:46 - 05:49<br>It is possible to test a tag against a string value directly<br>05:49 - 05:51<br>with code like<br>05:51 - 05:57<br>if gameObject.tag is the same as some string value.<br>05:57 - 06:01<br>But there is a more efficient built-in way to do this,<br>06:01 - 06:03<br>and that is CompareTag<br>06:04 - 06:06<br>With CompareTag we can efficiently<br>06:06 - 06:10<br>compare the tag of any game object with a string value.<br>06:12 - 06:14<br>Let’s copy the sample code and<br>06:14 - 06:16<br>paste it in to our working palette.<br>06:21 - 06:26<br>Now GameObject.SetActive.<br>06:27 - 06:30<br>This is how we activate or deactivate a game object.<br>06:31 - 06:33<br>This is the code equivalent of clicking<br>06:33 - 06:35<br>the Active check box next to the<br>06:35 - 06:37<br>Name field in the Inspector.<br>06:40 - 06:42<br>In our case, just like the code snippet,<br>06:42 - 06:46<br>we will call GameObject.SetActive (false)<br>06:46 - 06:48<br>to deactivate our PickUp game objects.<br>06:50 - 06:55<br>Let’s copy this code and returning to our script editor<br>06:55 - 06:57<br>paste it in to our palette as well.<br>06:59 - 07:01<br>I feel we have enough pieces to write our code<br>07:03 - 07:10<br>so let’s write if (other.gameObject.CompareTag<br>07:11 - 07:13<br>with the string value of PickUp<br>07:14 - 07:18<br>and we will have to define this tag in Unity later.<br>07:19 - 07:24<br>other.gameObject.SetActive (false);<br>07:26 - 07:28<br>Now this code will be called every time<br>07:28 - 07:30<br>we touch a trigger collider.<br>07:30 - 07:33<br>We are given a reference to the collider we touch,<br>07:33 - 07:34<br>we test it’s tag,<br>07:34 - 07:37<br>and if the tag is the same as the string value<br>07:37 - 07:40<br>PickUp we will take the other game object<br>07:40 - 07:42<br>and we will call SetActive (false),<br>07:42 - 07:45<br>which will deactivate that game object.<br>07:45 - 07:48<br>Now we don’t need this code we’ve been saving anymore<br>07:48 - 07:51<br>and keeping it will only confuse the compiler<br>07:51 - 07:52<br>so we can delete it.<br>07:54 - 07:56<br>Let’s save this script and return to Unity<br>07:56 - 07:57<br>and check for errors.<br>07:59 - 08:01<br>The first thing we need to do it set up the tag value<br>08:01 - 08:03<br>for the PickUp objects.<br>08:03 - 08:06<br>Select the prefab asset for the PickUp object.<br>08:06 - 08:08<br>When we look at the tag list<br>08:08 - 08:10<br>we don’t see any tag called PickUp<br>08:10 - 08:12<br>so we need to add one.<br>08:12 - 08:14<br>Select Add Tag.<br>08:15 - 08:19<br>This brings up the Tags and Layers Panel.<br>08:19 - 08:21<br>Here we can customise tags and layers.<br>08:22 - 08:25<br>Note that this list is empty.<br>08:26 - 08:29<br>To create a new custom tag select the + button<br>08:29 - 08:32<br>to add a new row to the tags list.<br>08:33 - 08:37<br>In the new empty element, in our case tag 0,<br>08:37 - 08:40<br>type PickUp, and this is case sensitive<br>08:40 - 08:43<br>and needs to be exactly the same string<br>08:43 - 08:45<br>that we have in our script.<br>08:45 - 08:47<br>If in doubt we can copy and paste<br>08:47 - 08:50<br>this string to get the exact value.<br>08:52 - 08:54<br>When we look back at the prefab asset<br>08:54 - 08:57<br>note that the asset is still untagged.<br>08:57 - 09:00<br>By selecting Add Tag we changed our focus<br>09:00 - 09:02<br>from the prefab asset to the Tag Manager<br>09:02 - 09:05<br>and in the Tag Manager we created our tag.<br>09:05 - 09:07<br>Now we need to apply that tag<br>09:07 - 09:08<br>to the prefab asset.<br>09:09 - 09:11<br>Select the Tag drop down again<br>09:11 - 09:14<br>and see how we now have PickUp in the list.<br>09:14 - 09:16<br>Select this tag from the list and the asset<br>09:16 - 09:17<br>is now tagged PickUp.<br>09:17 - 09:20<br>And with the power of prefabs<br>09:20 - 09:23<br>all of the instances are now tagged PickUp as well.<br>09:25 - 09:27<br>Now let’s test our game.<br>09:27 - 09:29<br>Save the scene and enter play mode.<br>09:33 - 09:36<br>Hmm, okay, our tag is set to PickUp<br>09:36 - 09:38<br>but we are still bouncing off the PickUp cubes<br>09:38 - 09:41<br>just like we are bouncing off the walls.<br>09:41 - 09:43<br>So let’s exit play mode.<br>09:43 - 09:45<br>Before we discuss why we are bouncing off<br>09:45 - 09:47<br>the PickUp cubes rather than picking them up<br>09:47 - 09:49<br>we need to have a brief discussion about<br>09:49 - 09:50<br>Unity’s physics system.<br>09:51 - 09:54<br>I’m going to enter play mode for this discussion.<br>09:58 - 10:01<br>Let’s look at one of our cubes and our player.<br>10:01 - 10:03<br>As an aside we can select two or<br>10:03 - 10:05<br>more game objects at the same time<br>10:05 - 10:07<br>and inspect them all.<br>10:07 - 10:09<br>We do this by holding down the command key<br>10:09 - 10:12<br>on the mac or the control key on the PC,<br>10:12 - 10:13<br>and selecting the game objects.<br>10:14 - 10:16<br>When we select multiple game objects<br>10:16 - 10:18<br>note how the inspector changes to show<br>10:18 - 10:20<br>the common components and property<br>10:20 - 10:22<br>values of the selected game objects.<br>10:23 - 10:26<br>The inspector also allows for multi-object editing.<br>10:26 - 10:28<br>Using multi-object editing I’m going to<br>10:28 - 10:30<br>disable the mesh renderer on both the<br>10:30 - 10:33<br>player’s sphere and the selected cube with a single click.<br>10:34 - 10:36<br>This leaves us with the two green outlines<br>10:36 - 10:39<br>of the collider volumes for these two objects.<br>10:40 - 10:43<br>How do collisions work in Unity’s physics engine?<br>10:44 - 10:46<br>The physics engine does not allow two collider<br>10:46 - 10:47<br>volumes to overlap.<br>10:47 - 10:49<br>When the physics engine detects that any two<br>10:49 - 10:52<br>or more colliders will overlap that frame<br>10:52 - 10:54<br>the physics engine will look at the objects and<br>10:54 - 10:57<br>analyse their speed and rotation and shape<br>10:57 - 10:59<br>and calculate a collision.<br>10:59 - 11:01<br>One of the major factors in this calculation<br>11:01 - 11:03<br>is whether the colliders are static<br>11:03 - 11:05<br>or dynamic.<br>11:05 - 11:08<br>Static colliders are usually non-moving<br>11:08 - 11:10<br>parts of your scene, like the walls, the floor,<br>11:10 - 11:12<br>or the fountain in the courtyard.<br>11:12 - 11:15<br>Dynamic colliders are things that move<br>11:15 - 11:17<br>like the player’s sphere or a car.<br>11:18 - 11:20<br>When calculating a collision the static geometry<br>11:20 - 11:22<br>will not be affected by the collision.<br>11:23 - 11:25<br>But the dynamic objects will be.<br>11:25 - 11:27<br>In our case the player’s sphere is dynamic,<br>11:27 - 11:29<br>or moving geometry, and it is bouncing<br>11:29 - 11:31<br>off the static geometry of the cubes.<br>11:32 - 11:34<br>Just as it bounces off the static geometry<br>11:34 - 11:36<br>of the walls.<br>11:36 - 11:38<br>The physics engine can however allow the<br>11:38 - 11:41<br>penetration or overlap of collider volumes.<br>11:41 - 11:43<br>When it does this the physics engine<br>11:43 - 11:45<br>still calculates the collider volumes and<br>11:45 - 11:47<br>keeps track of the collider overlap.<br>11:48 - 11:50<br>But it doesn’t physically act on the overlapping<br>11:50 - 11:53<br>objects, it doesn’t cause a collision.<br>11:53 - 11:56<br>We do this by making our colliders in to<br>11:56 - 11:58<br>triggers, or trigger colliders.<br>11:58 - 12:00<br>When we make our colliders in to a trigger,<br>12:00 - 12:02<br>or trigger collider, we can detect<br>12:02 - 12:05<br>the contact with that trigger through the<br>12:05 - 12:07<br>OnTrigger event messages.<br>12:07 - 12:09<br>When a collider is a trigger you can do<br>12:09 - 12:11<br>clever things like place a trigger in the middle<br>12:11 - 12:14<br>of a doorway in, say, an adventure game,<br>12:14 - 12:15<br>and when the player enters the trigger<br>12:15 - 12:17<br>the mini-map updates and a message plays<br>12:17 - 12:19<br>‘you have discovered this room’.<br>12:20 - 12:22<br>Or every time your player walks around<br>12:22 - 12:24<br>that corner spiders drop from the ceiling<br>12:24 - 12:26<br>because the player has walked through a trigger.<br>12:27 - 12:30<br>For more information on OnCollision and on<br>12:30 - 12:32<br>trigger messages see the lessons linked below.<br>12:33 - 12:35<br>We are using OnTriggerEnter in our code<br>12:35 - 12:37<br>rather than OnCollisionEnter.<br>12:37 - 12:39<br>So we need to change our collider volumes<br>12:39 - 12:41<br>in to trigger volumes.<br>12:41 - 12:44<br>To do this we must be out of play mode.<br>12:46 - 12:48<br>Let’s select the prefab asset and look at<br>12:48 - 12:50<br>the box collider component.<br>12:50 - 12:52<br>Here we select Is Trigger<br>12:52 - 12:54<br>and again the power of prefabs<br>12:54 - 12:58<br>all of our PickUp objects are now using trigger colliders.<br>12:58 - 13:02<br>Let’s save our scene, enter play mode and test.<br>13:02 - 13:04<br>And as our player enters the trigger<br>13:04 - 13:06<br>we pickup the objects.<br>13:06 - 13:08<br>Excellent.<br>13:09 - 13:11<br>Let’s exit play mode.<br>13:12 - 13:14<br>Everything looks great.<br>13:14 - 13:16<br>We only have one issue.<br>13:16 - 13:19<br>We have made one small mistake,<br>13:19 - 13:21<br>and this is related to how Unity<br>13:21 - 13:22<br>optimises it’s physics.<br>13:23 - 13:25<br>As a performance optimisation Unity<br>13:25 - 13:27<br>calculates all the volumes<br>13:27 - 13:29<br>of all the static colliders in a scene<br>13:29 - 13:32<br>and holds this information in a cache.<br>13:32 - 13:34<br>This makes sense as static colliders<br>13:34 - 13:37<br>shouldn’t move, and this saves recalculating this<br>13:37 - 13:39<br>information every frame.<br>13:39 - 13:42<br>Where we have made our mistake is by rotating our cubes.<br>13:42 - 13:46<br>Any time we move, rotate, or scale a static collider<br>13:46 - 13:49<br>Unity will recalculate all the static colliders again<br>13:49 - 13:51<br>and update the static collider cache.<br>13:51 - 13:54<br>To recalculate the cache takes resources.<br>13:55 - 13:57<br>We can move, rotate or scale dynamic<br>13:57 - 14:00<br>colliders as often as we want and Unity won’t<br>14:00 - 14:02<br>recache any collider volumes.<br>14:02 - 14:04<br>Unity expects us to move colliders.<br>14:04 - 14:06<br>We simply need to indicate to Unity which<br>14:06 - 14:09<br>colliders are dynamic before we move them.<br>14:09 - 14:12<br>We do this by using the rigid body component.<br>14:12 - 14:14<br>Any game object with a collider<br>14:14 - 14:17<br>and a rigid body is considered dynamic.<br>14:18 - 14:20<br>Any game object with a collider attached<br>14:20 - 14:24<br>but no physics rigid body is expected to be static.<br>14:24 - 14:26<br>Currently our PickUp game objects have a<br>14:26 - 14:29<br>box collider but no rigid body.<br>14:29 - 14:31<br>So Unity is recalculating our static<br>14:31 - 14:33<br>collider cache every frame.<br>14:34 - 14:36<br>The solution is to add a rigid body<br>14:36 - 14:38<br>to the PickUp objects.<br>14:38 - 14:41<br>This will move the cubes from being static colliders<br>14:41 - 14:43<br>to being dynamic colliders.<br>14:43 - 14:45<br>Let’s save and play.<br>14:46 - 14:48<br>And our cubes fall through the floor.<br>14:48 - 14:51<br>Gravity pulls them down, and as they are triggers<br>14:51 - 14:53<br>they don’t collide with the floor.<br>14:53 - 14:55<br>Let’s exit play mode.<br>14:55 - 14:58<br>If we look at the rigid body component<br>14:58 - 15:01<br>we could simply disable Use Gravity,<br>15:01 - 15:04<br>which would prevent the cubes from being pulled downwards.<br>15:04 - 15:06<br>This is only a partial solution however.<br>15:07 - 15:09<br>If we did this, even though our cubes<br>15:09 - 15:11<br>would not respond to gravity they would still<br>15:11 - 15:13<br>respond to physics forces<br>15:13 - 15:15<br>There is a better solution.<br>15:15 - 15:18<br>And that is to select Is Kinematic.<br>15:19 - 15:22<br>When we do this we set this rigid body component to be<br>15:22 - 15:24<br>a kinematic rigid body.<br>15:24 - 15:26<br>A kinematic rigid body will not react<br>15:26 - 15:29<br>to physics forces and it can be animated<br>15:29 - 15:31<br>and moved by it’s transform.<br>15:32 - 15:35<br>This is great for everything from objects with colliders<br>15:35 - 15:37<br>like elevators and moving platforms,<br>15:37 - 15:39<br>to objects with triggers, like our collectables<br>15:39 - 15:42<br>that need to be animated or moved by their transform.<br>15:42 - 15:44<br>For more information on the rigid body<br>15:44 - 15:48<br>and Is Kinematic see the lessons linked below.<br>15:49 - 15:52<br>Let’s save our scene and enter play mode to test.<br>15:52 - 15:56<br>Now our behaviour is identical and performant.<br>15:56 - 15:59<br>So, static colliders shouldn’t move,<br>15:59 - 16:01<br>like walls and floors.<br>16:01 - 16:03<br>Dynamic colliders can move,<br>16:03 - 16:05<br>and have a rigid body attached.<br>16:05 - 16:08<br>Standard rigid bodies are moved using physics forces.<br>16:08 - 16:10<br>Kinematic rigid bodies are moved using<br>16:10 - 16:12<br>their transform.<br>16:13 - 16:15<br>In the next assignment we will count our<br>16:15 - 16:17<br>collectable object and make a simple UI<br>16:17 - 16:20<br>to display our score and messages.</p>
+<h3 id="译文"><a href="#译文" class="headerlink" title="译文"></a>译文</h3><p>00:02 - 00:07<br>我们想要拾起可捡起的物体当我们的player撞到它们的时候</p>
+<p>00:07 - 00:13<br>因此我们需要探测到player和可捡起的小方块之间的碰撞</p>
+<p>00:13 - 00:15<br>我们需要这些碰撞触发一个行为，并且这些碰撞能够保证我们捡起正确的物体</p>
+<p>00:21 - 00:23<br>可捡起的小方块，玩家的小球，地板和墙都是可以通知我们有碰撞了的碰撞物体</p>
+<p>00:29 - 00:30<br>如果我们不检测哪个物体发生了碰撞，我们可能会捡起错误的物体</p>
+<p>00:35 - 00:37<br>我们可能会捡起地板或者墙</p>
+<p>00:37 - 00:40<br>事实上如果我们不检测碰撞，我们在进入游戏的第一帧就会把地板给捡起来，然后我们会掉入一个空的场景，游戏就结束了</p>
+<p>00:51 - 00:55<br>首先我们要让player可见</p>
+<p>00:55 - 00:56<br>所以我们要让player回来，勾选上player的框框</p>
+<p>01:00 - 01:02<br>接下爱我们选择PlayerController 脚本，打开编辑</p>
+<p>01:04 - 01:06<br>注意一下，我们可以编辑这个脚本，不管这个物体是否可见</p>
+<p>01:11 - 01:13<br>既然我们打开了这个脚本，那么我们写什么呢？</p>
+<p>01:15 - 01:17<br>我们可以写一个collider，然后用快捷键搜索文档</p>
+<p>01:21 - 01:24<br>但是这里我们可以用一个不同的方法</p>
+<p>01:25 - 01:27<br>我们回到Unity界面看一下player的细节</p>
+<p>01:30 - 01:32<br>注意看Inspector里的 sphere collider 组件</p>
+<p>01:34 - 01:37<br>在每个组件的头部左边有一个可以折叠组建的箭头，一个图标，一个选择框可以控制是否有效，还有一个组件类型的文字</p>
+<p>01:46 - 01:49<br>右边有一个下啦菜单，还有一个带有问号的书的图标</p>
+<p>01:53 - 01:54<br>带有问号的书的图标是这里我们需要的</p>
+<p>01:54 - 01:57<br>这是一个快捷链接到组件参考内容</p>
+<p>01:58 - 02:00<br>选择这个图标会连接到组件参考而不是脚本参考信息</p>
+<p>02:05 - 02:07<br>我们阅读这个文档去了解如何在编辑器中使用组件</p>
+<p>02:10 - 02:13<br>我们也要了解组件的相关脚本</p>
+<p>02:15 - 02:18<br>我们可以选择“switch to scripting”，就会跳转到sphere collider的脚本参考页面</p>
+<p>02:23 - 02:26<br>我们需要探测碰撞</p>
+<p>02:26 - 02:28<br>这个项目，我们需要使用OnTriggerEnter方法</p>
+<p>02:37 - 02:40<br>仅仅想象一下，我们是一个水管工人，我们跳起来捡起每一个硬币然后弹开，硬币落到地面</p>
+<p>02:48 - 02:49<br>不是很优雅的比喻</p>
+<p>02:50 - 02:52<br>OnTriggerEnter方法可以让我们不用创建physical collision就能检测player和可拾起的小方块之间的碰撞</p>
+<p>03:00 - 03:02<br>事例代码不是很适合我们</p>
+<p>03:03 - 03:06<br>我们可以修改一下，回到脚本编辑的页面</p>
+<p>03:12 - 03:15<br>复制一下代码</p>
+<p>03:16 - 03:18<br>调整一下缩进</p>
+<p>03:25 - 03:27<br>接下来看一下代码</p>
+<p>03:27 - 03:30<br>我们使用OnTriggerEnter方法</p>
+<p>03:30 - 03:32<br>当player 第一次碰到触发碰撞的物体，OnTriggerEnter就会调用</p>
+<p>03:36 - 03:38<br>OnTriggerEnter提供了一个参数指代我们碰到的物体</p>
+<p>03:42 - 03:44<br>这个碰撞体叫other</p>
+<p>03:44 - 03:46<br>这样我们就能得到碰撞的物体</p>
+<p>03:49 - 03:51<br>在事例代码里，发生碰撞的时候我们通过other.gameObject关联到物体<br>就可以销毁这个物体</p>
+<p>03:59 - 04:02<br>通过销毁物体，物体的所有组件和子元素都会被从场景里移除</p>
+<p>04:08 - 04:10<br>这里为了示例，我们不销毁它而是使物体无效</p>
+<p>04:14 - 04:16<br>就像取消player的勾选框一样</p>
+<p>04:20 - 04:23<br>首先我们移除“Destroy(other.gameobject)”</p>
+<p>04:25 - 04:27<br>但是我们复制到脚本下面去作为参考用</p>
+<p>04:30 - 04:33<br>我们如何让小方块无效呢？</p>
+<p>04:36 - 04:38<br>我们可以通过other.gameObject得到碰撞的物体</p>
+<p>04:41 - 04:43<br>我们想检测一下物体当我们要让小方块实效的时候</p>
+<p>04:50 - 04:52<br>用快捷键查阅 GameObject脚本</p>
+<p>04:56 - 04:59<br>看下 GameObject页面.</p>
+<p>04:59 - 05:01<br>两个我们需要的属性</p>
+<p>05:02 - 05:04<br>tag，tag可以通过字符串来比较和标记游戏物体和设置是否有效</p>
+<p>05:16 - 05:18<br>最后一个是Compare Tag，Compare Tag可以更高效的比较tag</p>
+<p>05:28 - 05:32<br>我们打开这3个项目，Tag可以定义一个物体，在用之前我们需要声明一下</p>
+<p>05:46 - 05:49<br>用CompareTag方法比较tag更高效</p>
+<p>06:12 - 06:14<br>复制一下代码</p>
+<p>06:21 - 06:26<br>GameObject.SetActive和在Inspector里点击勾选框设置有效和无效效果是一样的</p>
+<p>06:40 - 06:42<br>我们这里通过调用 GameObject.SetActive (false)来让小方块无效</p>
+<p>06:50 - 06:55<br>再复制一下代码</p>
+<p>06:59 - 07:01<br>后面我们需要在Unity中定义tag</p>
+<p>07:26 - 07:28<br>现在每次触发碰撞的时候都会调用我们的方法</p>
+<p>07:59 - 08:01<br>首先我们需要设置一下小方块的tag</p>
+<p>08:03 - 08:06<br>选中prefab资源</p>
+<p>08:06 - 08:08<br>当我们看tag list，我们找不到我们需要的“PickUp”</p>
+<p>08:12 - 08:14<br>选择Add Tag</p>
+<p>08:15 - 08:19<br>增加一个tag<br>在prefab中设置好tag之后，所有的实例的tag都设置好了</p>
+<p>09:25 - 09:27<br>现在测试一下游戏，保存场景，进入游戏模式，但是player仍然被小方块弹开，就像被墙弹开一样</p>
+<p>09:41 - 09:43<br>退出游戏模式</p>
+<p>09:43 - 09:45<br>在我们讨论被弹开而不是拾起物体之前，我们先讨论一下Unity’s physics system.</p>
+<p>09:51 - 09:54<br>我进入游戏模式讨论</p>
+<p>09:58 - 10:01<br>我们看一下player和一个小方块</p>
+<p>10:01 - 10:03<br>我们可以同时选中多个物体，在检查器中操作它们</p>
+<p>10:07 - 10:09<br>按住“command”键来选择物体</p>
+<p>10:14 - 10:16<br>选中多个物体的时候，可以同时对多个物体编辑，在mesh renderer取消勾选框，会看到两个绿色的方框</p>
+<p>10:44 - 10:46<br>物理引擎不允许两个碰撞体重叠（译者注：并不绝对，看后面），</p>
+<p>10:47 - 10:49<br>当物理引擎探测到两个或更多碰撞体可能重叠的时候，物理引擎会分析它们的速度，旋转角度，还有形状等来计算碰撞</p>
+<p>10:59 - 11:01<br>在这个计算中一个主要的因素是碰撞体是静态的还是动态的</p>
+<p>11:05 - 11:08<br>静态的碰撞体通常是不会动的，像墙，地板或者院子里的喷泉</p>
+<p>11:12 - 11:15<br>动态的碰撞体是可以移动的，像player的小球，汽车</p>
+<p>11:18 - 11:20<br>当计算碰撞的时候，一个静态的几何物体不会受碰撞的影响，动态的会受影响</p>
+<p>11:25 - 11:27<br>在我们的案例中，小球是动态的，它被静态的小方块弹开了</p>
+<p>11:32 - 11:34<br>就像被静态的墙弹开了</p>
+<p>11:36 - 11:38<br>然而，我们通过给碰撞体设置triggers，或者triggers碰撞体，物理引擎可以允许碰撞体的穿透或重叠。</p>
+<p>11:41 - 11:43<br>当它这样做时，物理引擎仍然计算碰撞体体积并且跟踪碰撞体重叠</p>
+<p>11:48 - 11:50<br>但它不会物理地作用于重叠的对象，它不会导致碰撞</p>
+<p>12:00 - 12:02<br>我们通过OnTrigger检测到碰撞</p>
+<p>12:33 - 12:35<br>我在我们的代码中使用OnTriggerEnter而不是OnCollisionEnter</p>
+<p>12:37 - 12:39<br>所以我们需要改变我们的碰撞器为一个trigger值</p>
+<p>12:41 - 12:44<br>我们需要离开play模式</p>
+<p>12:46 - 12:48<br>我们选中prefab资源，在collider组件中选中Trigger，这一次所有的小方块都会使用trigger碰撞器</p>
+<p>12:58 - 13:02<br>保存场景，进入play模式测试</p>
+<p>13:02 - 13:04<br>当我们的小球进入到触发器时我们捡起了小方块</p>
+<p>13:06 - 13:08<br>完美<br>13:09 - 13:11<br>离开play模式</p>
+<p>13:12 - 13:14<br>看起来很好</p>
+<p>13:14 - 13:16<br>我们仅有一个问题</p>
+<p>13:16 - 13:19<br>我们犯了一个小错误关于Unity如何优化物理操作</p>
+<p>13:23 - 13:25<br>作为一个性能优化Unity会计算场景中所有静态碰撞体的值并且保存在缓存中</p>
+<p>13:32 - 13:34<br>这是有道理的，因为静态碰撞者不应该移动，这将保存每帧重新计算的信息</p>
+<p>13:39 - 13:42<br>我们犯错的地方在于我们旋转了小方块</p>
+<p>13:42 - 13:46<br>每一次我们移动，旋转或者缩放静态碰撞体，Unity会重新计算静态碰撞并且更新他的缓存</p>
+<p>13:51 - 13:54<br>重新计算占用资源了</p>
+<p>13:55 - 13:57<br>只要Unity不重新计算缓存碰撞值，我们就可以移动，旋转或者缩放静态碰撞体</p>
+<p>14:02 - 14:04<br>Unity期望我们移动碰撞</p>
+<p>14:04 - 14:06<br>在我们移动物体之前，我们需要告诉Unity哪些碰撞体是动态的</p>
+<p>14:09 - 14:12<br>我们可以使用rigid body组件</p>
+<p>14:12 - 14:14<br>只要game object拥有碰撞体和rigid body就可以被认为是动态的</p>
+<p>14:18 - 14:20<br>任何一个game object都有碰撞体属性但是没有rigid body，所以就会被认为是静态的了</p>
+<p>14:24 - 14:26<br>当前我们的小方块有box collider但是没有刚体</p>
+<p>14:29 - 14:31<br>所以Unity会在每帧重新计算静态collider缓存</p>
+<p>14:34 - 14:36<br>解决办法是给小方块加上刚体属性就可以捡起物体了</p>
+<p>14:38 - 14:41<br>这会让小方块从静态碰撞体变为动态碰撞体</p>
+<p>14:43 - 14:45<br>保存，play</p>
+<p>14:46 - 14:48<br>所有的小方块都会往下掉</p>
+<p>14:48 - 14:51<br>重力会把它们拉下去，因为他们是触发器，他们不会与地板碰撞。</p>
+<p>14:53 - 14:55<br>退出play模式</p>
+<p>14:55 - 14:58<br>看一下刚体组件我们可以简单的让重力失效就可以阻止小方块被下拉</p>
+<p>15:04 - 15:06<br>但这只是一个部分解决方案</p>
+<p>15:07 - 15:09<br>如果我们这样做了，即使小方块不会在重力作用上被影响也会被其他的物理作用力所影响</p>
+<p>15:13 - 15:15<br>这里有一个更好的解决办法</p>
+<p>15:15 - 15:18<br>我们选择Kinematic</p>
+<p>15:19 - 15:22<br>选中了之后我们会设置刚体成为一个运动学刚体</p>
+<p>15:24 - 15:26<br>运动学刚体不受物理作用力的影响，但是可以动画运动</p>
+<p>15:32 - 15:35<br>这对一些像升降机，移动平台，类似我们小方块带触发器并且需要动画控制变化的物体来说太棒了</p>
+<p>15:49 - 15:52<br>保存场景退出play模式</p>
+<p>15:52 - 15:56<br>现在看起来不错</p>
+<p>15:56 - 15:59<br>所以，静态碰撞体不应该动，像墙和地板，动态碰撞体可移动，并且有rigid body组件</p>
+<p>16:05 - 16:08<br>标准的刚体在外力作用下运动，Kinematic刚体通过变形动画运动</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这章节概念比较多，所以需要好好理解，下面总结一下</p>
+<ol>
+<li>新建一个game object，此时这个物体只有transform属性，没有其他属性，在场景里看不到</li>
+<li>新建的3d物体，比如sphere，cube是静态的，但是它们默认具体碰撞体属性</li>
+<li>一般情况下，物理引擎不允许两个碰撞体重叠，当物理引擎检测到发生碰撞时，动态的碰撞体会被弹开，不会发生重叠或者穿透，静态的碰撞体依旧保持不动</li>
+<li>当我们给碰撞体添加了触发器之后，碰撞体就可以重叠或者穿透了，通过OnTriggerEnter检测碰撞</li>
+<li>Unity会计算场景中所有静态碰撞体的值并且保存在缓存中，如果静态碰撞体发生动画变形运动，那么Unity每一帧都会计算该静态碰撞体的值并且缓存在缓存中，这会占用大量的资源，解决办法是给小方块添加刚体属性，一个物体具有碰撞体和刚体属性就会被认为是一个动态的碰撞体，这样就不会每一帧都会缓存碰撞值（小方块cube天生就具有碰撞体的组件，所以只需要添加刚体组件就行）</li>
+<li>给小方块添加刚体组件之后，小方块不能被地板接住，会直接掉下去，解决办法是在刚体组件里选择Kinematic刚体属性，Kinematic刚体不受物理作用力的影响，但是可以动画运动</li>
+<li>为什么小方块添加刚体组件不能被地板托举住而小球可以被地板托举住不往下掉？因为小方块在碰撞体里面勾选了触发器选项，带触发器的碰撞体可以在碰撞的时候穿透和重叠，所以就需要小方块在刚体里面勾选Kinematic刚体属性，这样就不受外力的影响了</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/U3D/" rel="tag"># U3D</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/27/rn-movie/" rel="next" title="react-native 电影app">
+                <i class="fa fa-chevron-left"></i> react-native 电影app
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Sniperyan</p>
+              <p class="site-description motion-element" itemprop="description">叫我起床的是梦想</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#英文原文"><span class="nav-number">1.</span> <span class="nav-text">英文原文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#译文"><span class="nav-number">2.</span> <span class="nav-text">译文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sniperyan</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

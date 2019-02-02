@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="1.浏览器渲染的图层 网上的说法：选择『Show composited layer borders』以后，就能看到有动画3d变换的元素会被一个黄色的边框圈起来，表示放到了一个新的『复合层（composited layer）』中渲染 个人的体会：控制好渲染的图层，解决了我在开发过程中 如果页面内容过多，ios端css3动画出不来的问题（页面整体下拉拉不动） (这个兄弟跟我的问题类似) 解决办法：开启">
+<meta name="keywords" content="前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次技术分享">
+<meta property="og:url" content="https://sniperyan.github.io/2016/11/29/leaving-share/index.html">
+<meta property="og:site_name" content="Sniperyan的个人博客">
+<meta property="og:description" content="1.浏览器渲染的图层 网上的说法：选择『Show composited layer borders』以后，就能看到有动画3d变换的元素会被一个黄色的边框圈起来，表示放到了一个新的『复合层（composited layer）』中渲染 个人的体会：控制好渲染的图层，解决了我在开发过程中 如果页面内容过多，ios端css3动画出不来的问题（页面整体下拉拉不动） (这个兄弟跟我的问题类似) 解决办法：开启">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://sniperyan.github.io/uploads/tru-app-pic1.png">
+<meta property="og:image" content="https://sniperyan.github.io/uploads/tru-app-pic2.png">
+<meta property="og:image" content="https://sniperyan.github.io/uploads/h5-scroll-pic1.png">
+<meta property="og:image" content="https://sniperyan.github.io/uploads/tru-app-pic4.png">
+<meta property="og:image" content="https://sniperyan.github.io/uploads/tru-app-pic3.png">
+<meta property="og:updated_time" content="2019-02-02T07:45:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记一次技术分享">
+<meta name="twitter:description" content="1.浏览器渲染的图层 网上的说法：选择『Show composited layer borders』以后，就能看到有动画3d变换的元素会被一个黄色的边框圈起来，表示放到了一个新的『复合层（composited layer）』中渲染 个人的体会：控制好渲染的图层，解决了我在开发过程中 如果页面内容过多，ios端css3动画出不来的问题（页面整体下拉拉不动） (这个兄弟跟我的问题类似) 解决办法：开启">
+<meta name="twitter:image" content="https://sniperyan.github.io/uploads/tru-app-pic1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://sniperyan.github.io/2016/11/29/leaving-share/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>记一次技术分享 | Sniperyan的个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sniperyan的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Full Stack攻城狮</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sniperyan.github.io/2016/11/29/leaving-share/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sniperyan">
+      <meta itemprop="description" content="叫我起床的是梦想">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sniperyan的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">记一次技术分享
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-11-29 21:27:50" itemprop="dateCreated datePublished" datetime="2016-11-29T21:27:50+08:00">2016-11-29</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-02 15:45:46" itemprop="dateModified" datetime="2019-02-02T15:45:46+08:00">2019-02-02</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/js/" itemprop="url" rel="index"><span itemprop="name">js</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/js/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-浏览器渲染的图层"><a href="#1-浏览器渲染的图层" class="headerlink" title="1.浏览器渲染的图层"></a>1.浏览器渲染的图层</h3><p> <strong>网上的说法</strong>：选择『Show composited layer borders』以后，就能看到有动画3d变换的元素会被一个黄色的边框圈起来，表示放到了一个新的『复合层（composited layer）』中渲染</p>
+<p><strong>个人的体会</strong>：控制好渲染的图层，解决了我在开发过程中 如果页面内容过多，ios端css3动画出不来的问题（页面整体下拉拉不动）<br><img src="/uploads/tru-app-pic1.png" alt="Alt text"></p>
+<p>(这个兄弟跟我的问题类似)</p>
+<p><strong>解决办法</strong>：开启3D加速  (css中添加 <code>transform:translateZ(0);</code>)</p>
+<p><strong>原理</strong>：webkit在绘制页面时会将结构分为各种层，当层足够大时就会变成很大的平铺层。这各一来webkit在每次页面结构发生变化时不需要都渲染整个页面而是渲染对应层了，这对渲染速度来说相当的重要。webkit会给各种层分配一定大小的“备份存储区”在内存里缓存起来，这就是绘制层的上下文，通过这个上下文就可以很容易的实现各种效果（动画，3D变换等），“备份存储区”内存占用大小不仅依层而定，跟设备和显示方式也是有关的，假设这在普通屏幕下是1：1的，但在Retina屏幕下则是1：2的，并且放大时这个量会成倍增加；一张图片是10X10，普通屏幕分配的就是10X10，Retina初始则是20X20。这也表明Retina是更加消耗内存的。当层很大时，意味着“备份存储区”会消耗更大的内存，为了避免这点，webkit并不会绘制一个很大的层来存储一个很大的页面，比如说平铺层则会拆分成很多的块来绘制，即尽占用尽可能小的内存，只是将可视范围内的那部分渲染出来。这就是为什么我们在大页面滚动时会发现下面的内容慢慢显示，向上滚动时上面的内容还慢慢显示的原因。(抄来的)</p>
+<p><strong>还有一个小问题</strong>：所有安卓机都有，如果页面上有不停的repaint的地方并且页面是分层渲染的而不是一个整体，当页面上的元素发生transform变化的时候，如果该变化，不是一个连续的变化，页面会有渲染的瑕疵。（这个问题貌似网上没有相关的描述，我不知道是不是我搜索的关键字不对，反正没有搜到）该问题对应的场景是安卓机的列表页上，有倒计时在不停的变化，如果下拉一下页面，页面就会渲染混乱，感觉有什么层隐藏在底部一样，而ios没有这个问题，我尝试了将页面做成一个层渲染，就不存在该问题，但是一个层渲染，ios又会有拉不动的问题，最后，我加了一个<code>this.refs.slipDiv.style.webkitTransition = &#39;-webkit-transform 0.2s ease 0s&#39;;</code> 使动画线性变化，这样就解决了渲染瑕疵的问题！</p>
+<p><strong>总结</strong>：这个和PC上的情况完全不同，因为在PC上，由于其高性能的硬件，加上强劲的显卡，使得页面渲染的性能非常之高。而在手机上完全不同，有限的硬件性能，加上没有显卡这类专门处理显示的硬件，使得所有页面渲染的工作都由CPU来执行。加上CPU本身的执行频率有限，就会造成页面渲染缓慢。3D加速非常的牛逼，以前的只知道可以开启gpu加速（图形处理器 英语：Graphics Processing Unit，缩写：GPU），具体更深层次的，也没理解过。现在知道了，<strong>还可以在备份存储区，用上缓存</strong>。</p>
+<p>相关文档地址：</p>
+<ol>
+<li><p><a href="http://div.io/topic/1348" target="_blank" rel="noopener">CSS3硬件加速也有坑</a></p>
+</li>
+<li><p><a href="https://www.zhihu.com/question/34556725" target="_blank" rel="noopener">在做 iOS 和 Android 的 HTML5 开发时，你都掉到过哪些坑里？</a></p>
+</li>
+<li><p><a href="http://www.iunbug.com/archives/2012/09/19/411.html" target="_blank" rel="noopener">运用webkit绘制渲染页面原理解决iscroll4闪动的问题</a></p>
+</li>
+</ol>
+<h3 id="2-部分安卓机webview没有touchend事件"><a href="#2-部分安卓机webview没有touchend事件" class="headerlink" title="2.部分安卓机webview没有touchend事件"></a>2.部分安卓机webview没有touchend事件</h3><p>论坛截图：</p>
+<p><img src="/uploads/tru-app-pic2.png" alt="Alt text"></p>
+<p>我自己亲自用田总小米测试的结果：</p>
+<p><img src="/uploads/h5-scroll-pic1.png" alt="Alt text"></p>
+<p><strong>给我造成的问题</strong>：页面滚动的时候，正常的事件触发顺序为touchstart -&gt; touchmove -&gt; touchend -&gt;scroll ，我的小米测试机有时候不触发touchend事件，而我在touchend中添加了滚动条回复位置的方法，方法没执行会造成页面中滚动条错位。</p>
+<p><strong>解决办法</strong>：论坛给的方法更像做广告的，给了一个花钱用的框架<code>Sencha  Touch</code>，我也没法实验。暂时没有什么有效的解决办法，事件取不到，只能用别的方法处理。</p>
+<p>网上看了一个模拟touchend的方法：他的方法是每隔100ms检测两次的滚动条位置是否相同，如果相同，那么就是滚动结束了，我测试了一下，可以模拟touchend事件，而且我的小米手机，滚动的时候，看上去没有卡顿，但是我总感觉这种方法，太牵强了。</p>
+<p>我的变通解决办法：在滚动事件监听的方法里，判断如果是安卓机并且滚动到页面的头部，给滚动区域强制恢复位置，测试完了发现效果还不错</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(Tool.isAndroid() &amp;&amp; <span class="built_in">document</span>.body.scrollTop)&#123;</span><br><span class="line">        <span class="keyword">this</span>.refs.slipDiv.style.webkitTransform = <span class="string">'translate('</span> + <span class="number">0</span> + <span class="string">'px, '</span> + <span class="number">0</span> + <span class="string">'px)'</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>总结</strong>：这个问题很坑爹，除了小米外还有不少安卓机有这个问题，遇到了要特殊对待。</p>
+<p>相关文档地址：</p>
+<ol>
+<li><a href="http://www.miui.com/forum.php?mod=viewthread&amp;tid=1653419" target="_blank" rel="noopener">米3自带浏览器和webview不支持touchstart,touchmove,touchend事件怎搞</a></li>
+</ol>
+<h3 id="3-React使用总结"><a href="#3-React使用总结" class="headerlink" title="3.React使用总结"></a>3.React使用总结</h3><p>感觉各个生命周期还是需要熟练掌握，个人体会就如下几点：</p>
+<ol>
+<li><p><code>shouldComponentUpdate</code> 需要好好的理解一下。返回false就不需要render，默认是返回true。</p>
+</li>
+<li><p><code>componentWillReceiveProps</code> container中有一个组件有props接受，该页面所有的组件都会触发这个方法</p>
+</li>
+<li><p>同一个router（#/smOrderListfinish），工程师端列表已完成页面，如果改变页面后面的参数，比如这样：（#/smOrderListfinish?&amp;col=col2&amp;StartDate=2016-11-01&amp;EndDate=2016-12-01&amp;_k=1qampo）。你猜页面会刷新吗？<br>答案：<strong>不会</strong>，那如何在一个页面，通过改变url参数，不改变hash值（也就是路由不跳转，而让页面刷新呢）。我们可以手动的修改state，state变化了，页面也就刷新了</p>
+</li>
+</ol>
+<p>其实这段逻辑不容易写，我们要利用好<code>componentWillReceiveProps</code>里的默认参数<code>nextProps</code>，我的实现方法：</p>
+<p><img src="/uploads/tru-app-pic4.png" alt="Alt text"></p>
+<p><img src="/uploads/tru-app-pic3.png" alt="Alt text"></p>
+<p>上面代码在<code>componentWillReceiveProps</code>里判断前后的path是否相同，如果不同则对state进行操作，从而达到页面内容变化的目的，我在这个项目里不少地方都用了类似的逻辑，这段逻辑是通用的</p>
+<p><strong>总结</strong>：还是要以官方的API为准</p>
+<h3 id="4-chrome-TimeLine"><a href="#4-chrome-TimeLine" class="headerlink" title="4.chrome TimeLine"></a>4.chrome TimeLine</h3><p>60fps是理想值，30-60fps不会卡顿，不过实际中，肯定会有低于30fps的</p>
+<p>相关文档地址：</p>
+<ol>
+<li><a href="https://segmentfault.com/a/1190000003991459?_ea=537807" target="_blank" rel="noopener">使用Chrome DevTools的Timeline分析页面性能</a></li>
+</ol>
+<h3 id="5-app到后台，js不会执行"><a href="#5-app到后台，js不会执行" class="headerlink" title="5.app到后台，js不会执行"></a>5.app到后台，js不会执行</h3><p>ios是这样，安卓部分是这样，这种情况会造成页面上的计时器会不准确，解决办法看下面文档：</p>
+<p>相关文档地址：</p>
+<ol>
+<li><a href="https://imququ.com/post/mobile-web-and-js-timer.html" target="_blank" rel="noopener">移动 Web 与 JavaScript 定时器</a></li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/18/mobile-issues/" rel="next" title="移动端开发中常见的问题汇总">
+                <i class="fa fa-chevron-left"></i> 移动端开发中常见的问题汇总
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/30/apply-and-call/" rel="prev" title="apply和call">
+                apply和call <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Sniperyan</p>
+              <p class="site-description motion-element" itemprop="description">叫我起床的是梦想</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-浏览器渲染的图层"><span class="nav-number">1.</span> <span class="nav-text">1.浏览器渲染的图层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-部分安卓机webview没有touchend事件"><span class="nav-number">2.</span> <span class="nav-text">2.部分安卓机webview没有touchend事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-React使用总结"><span class="nav-number">3.</span> <span class="nav-text">3.React使用总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-chrome-TimeLine"><span class="nav-number">4.</span> <span class="nav-text">4.chrome TimeLine</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-app到后台，js不会执行"><span class="nav-number">5.</span> <span class="nav-text">5.app到后台，js不会执行</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sniperyan</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

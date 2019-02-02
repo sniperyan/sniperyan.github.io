@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="首先要搞清楚几个概念 物理像素(physical pixel)：手机屏幕最小的物理显示单元，即分辨率750×1334，横向750个，纵向1334个  设备独立像素–CSS像素   ，一个CSS像素占用一个物理像素，dpr=1，一个CSS像素占用2个物理像素，dpr=2 dpr:设备像素比(device pixel ratio)：物理像素 / 设备独立像素 // 在某一方向上，x方向或者y方向，在j">
+<meta name="keywords" content="前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动端适配总结">
+<meta property="og:url" content="https://sniperyan.github.io/2016/03/05/mobile-adaption/index.html">
+<meta property="og:site_name" content="Sniperyan的个人博客">
+<meta property="og:description" content="首先要搞清楚几个概念 物理像素(physical pixel)：手机屏幕最小的物理显示单元，即分辨率750×1334，横向750个，纵向1334个  设备独立像素–CSS像素   ，一个CSS像素占用一个物理像素，dpr=1，一个CSS像素占用2个物理像素，dpr=2 dpr:设备像素比(device pixel ratio)：物理像素 / 设备独立像素 // 在某一方向上，x方向或者y方向，在j">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-02-02T07:45:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="移动端适配总结">
+<meta name="twitter:description" content="首先要搞清楚几个概念 物理像素(physical pixel)：手机屏幕最小的物理显示单元，即分辨率750×1334，横向750个，纵向1334个  设备独立像素–CSS像素   ，一个CSS像素占用一个物理像素，dpr=1，一个CSS像素占用2个物理像素，dpr=2 dpr:设备像素比(device pixel ratio)：物理像素 / 设备独立像素 // 在某一方向上，x方向或者y方向，在j">
+
+
+
+
+
+
+  <link rel="canonical" href="https://sniperyan.github.io/2016/03/05/mobile-adaption/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>移动端适配总结 | Sniperyan的个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sniperyan的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Full Stack攻城狮</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sniperyan.github.io/2016/03/05/mobile-adaption/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sniperyan">
+      <meta itemprop="description" content="叫我起床的是梦想">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sniperyan的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">移动端适配总结
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-03-05 20:55:33" itemprop="dateCreated datePublished" datetime="2016-03-05T20:55:33+08:00">2016-03-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-02 15:45:46" itemprop="dateModified" datetime="2019-02-02T15:45:46+08:00">2019-02-02</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/js/" itemprop="url" rel="index"><span itemprop="name">js</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/js/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="首先要搞清楚几个概念"><a href="#首先要搞清楚几个概念" class="headerlink" title="首先要搞清楚几个概念"></a>首先要搞清楚几个概念</h2><ol>
+<li>物理像素(physical pixel)：手机屏幕最小的物理显示单元，即分辨率750×1334，横向750个，纵向1334个 </li>
+<li>设备独立像素–CSS像素   ，一个CSS像素占用一个物理像素，dpr=1，一个CSS像素占用2个物理像素，dpr=2</li>
+<li>dpr:设备像素比(device pixel ratio)：物理像素 / 设备独立像素 // 在某一方向上，x方向或者y方向，在javascript中，可以通过window.devicePixelRatio获取到当前设备的dpr。</li>
+</ol>
+<h2 id="视口"><a href="#视口" class="headerlink" title="视口"></a>视口</h2><ol>
+<li>布局视口：浏览器厂商定的视口大小，一般768px ~ 1024px  查看方法： document.documentElement.clientWidth</li>
+<li>视觉视口：是用户正在看到的网页的区域，大小是屏幕中CSS像素的数量。<br>window.innerWidth/Height返回视觉视口的尺寸</li>
+<li>理想视口：布局视口明显对用户是不友好的，完全忽略了手机本身的尺寸，理想视口即屏幕的宽度<br>screen.width/height返回理想视口的尺寸，有严重的兼容性问题—可能返回两种值：<br>用三星S5实际测试，screen.width，设备内置浏览器显示的是360，下载的浏览器，uc，显示的是 1080</li>
+</ol>
+<h2 id="常见的适配方法："><a href="#常见的适配方法：" class="headerlink" title="常见的适配方法："></a>常见的适配方法：</h2><ol>
+<li><p>固定高度，宽度自适应：垂直方向用定值，水平方向用百分比、定值、flex都行。这样设置之后，我们就可以不用管手机屏幕的尺寸进行开发了。缺点 是会感觉横向拉伸或压缩，优点是兼容性不错<br>方法：使用了完美视口： </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta name=<span class="string">"viewport"</span> content=<span class="string">"width=device-width,initial-scale=1"</span>&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>利用 rem 布局（完美适配解决方案）：目前一般根据iphone6的屏幕宽度设定rem的值（即 html 的 font-size），然后根据页面宽度计算调整rem的值，适配各种屏幕。利用该方案，还可以根据 devicePixelRatio 设定 initial-scale 来放大 viewport，使页面按照物理像素渲染，提升清晰度。<br>优点：清晰度高，能达到物理像素的清晰度。 能解决 DPR 引起的“1像素”问题。 向后兼容较好，即便屏幕宽度增加、PPI 增加该方案依旧适用。<br>缺点：适配 js 需尽可能早进入，减少（避免）viewport 变化引起的重绘。 某些Android机会丢掉 rem 小数部分。 需要预编译库进行单位转换。 <strong> 由于部分安卓机不允许缩放，所以安卓机全部放弃高清适配即安卓设置initial-scale=1 </strong></p>
+</li>
+</ol>
+<h2 id="rem适配详细方法"><a href="#rem适配详细方法" class="headerlink" title="rem适配详细方法"></a>rem适配详细方法</h2><ol>
+<li><p>首先，gulp管理工程，配置自动编译less。如果美工给的psd是640的宽度，那么mobileAdapt.js中计算rem的时候就除以10得到rem值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rem = docEl.clientWidth * dpr / <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>相应的，在编写样式表的less文件中，开头定义一个计算rem的基数，该基数值为@ppr: 64px/1rem;</p>
+</li>
+<li>如果美工给的psd宽度是750，那么js中除以10，less中的基数设置为@ppr:75px/1rem。（64<em>10=640,75</em>10=750，懂了吧）</li>
+<li>这样配置，写less样式的时候，按照psd中的宽度，间距，直接写px实际值作为单位，但是，需要除以@ppr。比如，psd中宽度是640px，那么，less里面就写640px/@ppr。编译less之后，你写的宽度会被自动转化成rem的值（我的方案只是用了一个除法单位换算的小技巧而已）。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>实际上做了这几件事情： </p>
+<ol>
+<li>动态生成 viewport </li>
+<li>屏幕宽度设置 rem的大小，即给<html>设置font-size </html></li>
+<li>根据设备像素比（window.devicePixelRatio）给<html>设置data-dpr（css hack用），1和3都是为了适应高清屏幕</html></li>
+</ol>
+<h2 id="示例源码"><a href="#示例源码" class="headerlink" title="示例源码"></a>示例源码</h2><p>本文中适配方案参考自阿里的移动端适配方案，<a href="https://github.com/sniperyan/Mobile-adaptation-scheme" target="_blank" rel="noopener">本文示例源码</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/12/React-dev-summary-1/" rel="prev" title="React开发总结（1）：使用高阶组件">
+                React开发总结（1）：使用高阶组件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Sniperyan</p>
+              <p class="site-description motion-element" itemprop="description">叫我起床的是梦想</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#首先要搞清楚几个概念"><span class="nav-number">1.</span> <span class="nav-text">首先要搞清楚几个概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#视口"><span class="nav-number">2.</span> <span class="nav-text">视口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见的适配方法："><span class="nav-number">3.</span> <span class="nav-text">常见的适配方法：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rem适配详细方法"><span class="nav-number">4.</span> <span class="nav-text">rem适配详细方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例源码"><span class="nav-number">6.</span> <span class="nav-text">示例源码</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sniperyan</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
